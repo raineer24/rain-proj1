@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "/login", pathMatch: "full" },
+  { path: "", redirectTo: "", pathMatch: "full" },
   { path: "login", component: AuthPageComponent },
 ];
 
