@@ -7,9 +7,14 @@ import { AppComponent } from "./app.component";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 import { SharedModule } from "./shared/shared.module";
 import { MainNavigationBarComponent } from "./components/presentational/navigation/m-navigation-bar/m-navigation-bar.component";
-
+import { NavigationBarComponent } from "./components/containers/navigation/navigation-bar/navigation-bar.component";
 @NgModule({
-  declarations: [AppComponent, AuthPageComponent, MainNavigationBarComponent],
+  declarations: [
+    AppComponent,
+    AuthPageComponent,
+    MainNavigationBarComponent,
+    NavigationBarComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
