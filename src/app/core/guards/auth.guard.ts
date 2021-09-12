@@ -26,6 +26,7 @@ export class AuthGuard implements CanActivate {
       select(selectAuthUser),
       filter((user) => !!user),
       map((user) => {
+        console.log("user", user);
         if (!user) {
           this.router.navigateByUrl("/login");
           return false;
