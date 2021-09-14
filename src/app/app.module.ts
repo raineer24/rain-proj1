@@ -6,20 +6,18 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 import { SharedModule } from "./shared/shared.module";
-import { MainNavigationBarComponent } from "./components/presentational/navigation/m-navigation-bar/m-navigation-bar.component";
-import { NavigationBarComponent } from "./components/containers/navigation/navigation-bar/navigation-bar.component";
-import { NetworkMembersComponent } from "./components/containers/network/network-members/network-members.component";
 import { UserComponent } from "./components/containers/user/user.container";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
 import { EffectsModule } from "@ngrx/effects";
+import { LoginFormComponent } from "./components/presentational/auth/login-form/login-form.component";
 @NgModule({
   declarations: [
     AppComponent,
     AuthPageComponent,
-    MainNavigationBarComponent,
     UserComponent,
+    LoginFormComponent,
   ],
   imports: [
     BrowserModule,
