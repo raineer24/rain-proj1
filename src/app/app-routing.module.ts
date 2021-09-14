@@ -3,19 +3,20 @@ import { Routes, RouterModule } from "@angular/router";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 import { NetworkMembersComponent } from "./components/containers/network/network-members/network-members.component";
 import { AuthGuard } from "./core/guards/auth.guard";
+import { UserComponent } from "./components/containers/user/user.container";
 const routes: Routes = [
-  { path: "", redirectTo: "/network", pathMatch: "full" },
+  { path: "", redirectTo: "/user", pathMatch: "full" },
   { path: "login", component: AuthPageComponent },
   {
-    path: "network",
-    component: NetworkMembersComponent,
-    canActivate: [AuthGuard],
+    path: "user",
+    component: UserComponent,
+    //canActivate: [AuthGuard],
     //data: { roles: ["User", "Admin"] },
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
