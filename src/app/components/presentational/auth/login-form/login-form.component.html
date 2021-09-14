@@ -1,3 +1,9 @@
-<mat-card>
-  <h3>login form</h3>
+<mat-card *ngIf="form; else noForm">
+  <mat-card-header class="card-header-container">
+    <img mat-card-image src="/assets//edublock-logo-login.png" class="card-header-container-image">
+  </mat-card-header>
 </mat-card>
+<ng-template #noForm>
+  <!-- <app-loading-bar></app-loading-bar> -->
+  <h3>wtf</h3>
+</ng-template>
