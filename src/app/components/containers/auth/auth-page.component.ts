@@ -7,5 +7,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
   styleUrls: ["./auth-page.component.scss"],
 })
 export class AuthPageComponent implements OnInit {
+  form: FormGroup;
   ngOnInit(): void {}
 }

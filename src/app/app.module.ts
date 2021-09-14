@@ -12,6 +12,9 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
 import { EffectsModule } from "@ngrx/effects";
 import { LoginFormComponent } from "./components/presentational/auth/login-form/login-form.component";
+import { MaterialModule } from "./shared/materialize/materialize.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,8 +24,11 @@ import { LoginFormComponent } from "./components/presentational/auth/login-form/
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     SharedModule,
+    MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducers),
     StoreDevtoolsModule.instrument({
