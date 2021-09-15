@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { LoginUser } from "../../../store/actions/auth.actions";
+import { UserCredentialsModel } from "../../../core/models";
 
 @Component({
   selector: "app-auth-page",
@@ -26,5 +27,15 @@ export class AuthPageComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
     });
+  }
+
+  onLogin() {
+    console.log("clicked");
+    const payload: UserCredentialsModel = {
+      email: this.form.get("email").value,
+      password: this.form.get("password").value,
+    };
+    console.log("payload", payload);
+    this.store.dispatch(new LoginUser(payload));
   }
 }

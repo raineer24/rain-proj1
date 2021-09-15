@@ -7,6 +7,7 @@ import { environment } from "../../../environments/environment";
   providedIn: "root",
 })
 export class AuthService {
+  private baseUrl = environment.apiUrl;
   httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",
@@ -14,6 +15,8 @@ export class AuthService {
   };
   constructor(private http: HttpClient) {}
   login(credentials: UserCredentialsModel): Observable<{}> {
-    return this.http.post("api/login", credentials, this.httpOptions);
+    console.log("clicked service");
+    const url = `${this.baseUrl}/api/v2/users/login`;
+    return this.http.post(url, credentials, this.httpOptions);
   }
 }
