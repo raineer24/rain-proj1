@@ -14,6 +14,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { LoginFormComponent } from "./components/presentational/auth/login-form/login-form.component";
 import { MaterialModule } from "./shared/materialize/materialize.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppEffects } from "./store/app.effects";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     MaterialModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(AppReducers),
+    EffectsModule.forRoot(AppEffects),
     StoreDevtoolsModule.instrument({
       maxAge: 42,
       logOnly: environment.production,

@@ -21,4 +21,8 @@ export class ErrorsService {
       return httpErrorObject.message;
     }
   }
+
+  unsetError() {
+    this.snackBar.dismiss();
+  }
 }
