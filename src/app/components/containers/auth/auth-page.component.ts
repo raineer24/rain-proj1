@@ -6,6 +6,8 @@ import {
   Validators,
   AbstractControl,
 } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { LoginUser } from "../../../store/actions/auth.actions";
 
 @Component({
   selector: "app-auth-page",
@@ -15,7 +17,10 @@ import {
 export class AuthPageComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private store: Store<AppState>
+  ) {}
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
