@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { UserDetailsModel } from "../../core/models/users/user-details.model";
-
+import { UserCredentialsModel } from "../../core/models/users/user-credentials.model";
 export enum AuthActionsTypes {
   GetCurrentUser = "[Auth-User] Get Current",
   GetCurrentUserSuccess = "[Auth-User] Get Current Success",
@@ -20,4 +20,16 @@ export class GetCurrentUserSuccess implements Action {
   constructor(public payload: UserDetailsModel) {}
 }
 
-export type AuthActions = GetCurrentUserSuccess | GetCurrentUser;
+export class LoginUser implements Action {
+  public readonly type = AuthActionsTypes.LoginUser;
+
+  constructor(public payload: UserCredentialsModel) {}
+}
+
+export class LoginUserSuccess implements Action {
+  public readonly type = AuthActionsTypes.LoginUserSuccess;
+
+  constructor(public payload: any) {}
+}
+
+export type AuthActions = LoginUser | GetCurrentUserSuccess | GetCurrentUser;
