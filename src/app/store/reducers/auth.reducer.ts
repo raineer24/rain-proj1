@@ -30,6 +30,14 @@ export function authReducer(
         authUser: action.payload,
         isLoading: false,
       };
+
+    case AuthActionsTypes.LOGIN_SUCCESS: {
+      return {
+        ...state,
+        isAuthenticated: true,
+        authUser: action.payload,
+      };
+    }
   }
 }
 

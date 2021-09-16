@@ -15,6 +15,7 @@ import { LoginFormComponent } from "./components/presentational/auth/login-form/
 import { MaterialModule } from "./shared/materialize/materialize.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppEffects } from "./store/app.effects";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AppEffects } from "./store/app.effects";
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     AppRoutingModule,
     SharedModule,
     MaterialModule,
