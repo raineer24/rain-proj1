@@ -19,31 +19,31 @@ export class AuthEffects {
     private router: Router
   ) {}
 
-  // @Effect()
-  // loginUser$ = this.actions$.pipe(
-  //   ofType<LoginUser>(AuthActionsTypes.LoginUser),
-  //   map((action) => action.payload),
-  //   switchMap((credential) =>
-  //     this.authService.login(credential).pipe(
-  //       map((user) => new LoginUserSuccess(user)),
-  //       catchError((error) => of(new SetError(error)))
-  //     )
-  //   )
-  // );
-
   @Effect()
-  LogIn = this.actions$.pipe(
-    ofType<LoginUser>(AuthActionsTypes.LOGIN_SUCCESS),
-    map((action: LoginUser) => action.payload),
-    switchMap((credential) => {
-      return this.authService.login(credential).pipe(
-        map((user) => {
-          return new LoginUserSuccess(user);
-        }),
+  loginUser$ = this.actions$.pipe(
+    ofType<LoginUser>(AuthActionsTypes.LoginUser),
+    map((action) => action.payload),
+    switchMap((credential) =>
+      this.authService.login(credential).pipe(
+        map((user) => new LoginUserSuccess(user)),
         catchError((error) => of(new SetError(error)))
-      );
-    })
+      )
+    )
   );
+
+  // @Effect()
+  // LogIn = this.actions$.pipe(
+  //   ofType<LoginUser>(AuthActionsTypes.LoginUserSuccess),
+  //   map((action: LoginUser) => action.payload),
+  //   switchMap((credential) => {
+  //     return this.authService.login(credential).pipe(
+  //       map((user) => {
+  //         return new LoginUserSuccess(user);
+  //       }),
+  //       catchError((error) => of(new SetError(error)))
+  //     );
+  //   })
+  // );
 
   // @Effect()
   // loginUserSuccess$ = this.actions$.pipe(

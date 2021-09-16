@@ -4,8 +4,8 @@ import { UserCredentialsModel } from "../../core/models/users/user-credentials.m
 export enum AuthActionsTypes {
   GetCurrentUser = "[Auth-User] Get Current",
   GetCurrentUserSuccess = "[Auth-User] Get Current Success",
-  LOGIN = "[Auth] Login",
-  LOGIN_SUCCESS = "[Auth] Login Success",
+  LoginUser = "[Auth-User] Login",
+  LoginUserSuccess = "[Auth-User] Login Success",
 }
 
 export class GetCurrentUser implements Action {
@@ -21,13 +21,13 @@ export class GetCurrentUserSuccess implements Action {
 }
 
 export class LoginUser implements Action {
-  public readonly type = AuthActionsTypes.LOGIN;
+  public readonly type = AuthActionsTypes.LoginUser;
 
   constructor(public payload: any) {}
 }
 
 export class LoginUserSuccess implements Action {
-  public readonly type = AuthActionsTypes.LOGIN_SUCCESS;
+  public readonly type = AuthActionsTypes.LoginUserSuccess;
 
   constructor(public payload: any) {}
 }

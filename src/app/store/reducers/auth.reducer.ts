@@ -31,7 +31,7 @@ export function authReducer(
         isLoading: false,
       };
 
-    case AuthActionsTypes.LOGIN_SUCCESS: {
+    case AuthActionsTypes.LoginUserSuccess: {
       return {
         ...state,
         isAuthenticated: true,
