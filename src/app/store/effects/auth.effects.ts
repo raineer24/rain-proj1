@@ -45,10 +45,10 @@ export class AuthEffects {
   //   })
   // );
 
-  @Effect()
+  @Effect({ dispatch: false })
   loginUserSuccess$ = this.actions$.pipe(
     ofType<LoginUserSuccess>(AuthActionsTypes.LoginUserSuccess),
-    tap(() => this.router.navigateByUrl("/user"))
+    tap(() => this.router.navigate(["/user"]))
     //switchMap(() => [new GetCurrentUser(false), new GetNetworkPersonalIdentity()])
   );
 }
