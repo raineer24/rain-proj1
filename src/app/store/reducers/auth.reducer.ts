@@ -38,6 +38,10 @@ export function authReducer(
         authUser: action.payload,
       };
     }
+
+    default: {
+      return state;
+    }
   }
 }
 
