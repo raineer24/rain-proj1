@@ -4,6 +4,8 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { LogoutUser } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
+import { selectAuthUser } from "../../../store/reducers/auth.reducer";
+import { UserDetailsModel } from "../../../core/models";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "app-user",
@@ -14,8 +16,12 @@ import { AppState } from "../../../store/app.state";
   styles: [``],
 })
 export class UserComponent implements OnInit {
+  user$: Observable<UserDetailsModel>;
   constructor(private store: Store<AppState>) {}
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.user$ = this.store.select(selectAuthUser);
+    console.log("this users", this.user$);
+  }
 
   logoutx() {
     console.log("clicked");
