@@ -38,6 +38,12 @@ export function authReducer(
         authUser: action.payload,
       };
     }
+    case AuthActionsTypes.LogoutUser:
+      return {
+        ...state,
+        authUser: null,
+        isLoading: false,
+      };
 
     default: {
       return state;

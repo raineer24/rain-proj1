@@ -8,6 +8,7 @@ import {
   AuthActionsTypes,
   LoginUser,
   LoginUserSuccess,
+  LogoutUser,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
@@ -50,5 +51,13 @@ export class AuthEffects {
     ofType<LoginUserSuccess>(AuthActionsTypes.LoginUserSuccess),
     tap(() => this.router.navigate(["/user"]))
     //switchMap(() => [new GetCurrentUser(false), new GetNetworkPersonalIdentity()])
+  );
+
+  @Effect({ dispatch: false })
+  logoutUser$ = this.actions$.pipe(
+    ofType<LogoutUser>(AuthActionsTypes.LogoutUser),
+    tap(() => {
+      this.router.navigate(["/auth/login"]);
+    })
   );
 }
