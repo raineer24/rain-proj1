@@ -8,14 +8,17 @@ import { AppState } from "../../../store/app.state";
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "app-user",
   template: `<h2>test user component</h2>
-    <button mat-stroked-button (click)="(logout)">Logout</button>`,
+    <button type="button" mat-stroked-button (click)="logoutx()">
+      Logout
+    </button> `,
   styles: [``],
 })
 export class UserComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
   ngOnInit() {}
 
-  logout() {
+  logoutx() {
+    console.log("clicked");
     this.store.dispatch(new LogoutUser());
   }
 }

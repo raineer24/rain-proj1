@@ -57,7 +57,8 @@ export class AuthEffects {
   logoutUser$ = this.actions$.pipe(
     ofType<LogoutUser>(AuthActionsTypes.LogoutUser),
     tap(() => {
-      this.router.navigate(["/auth/login"]);
+      console.log("clicked effex");
+      this.router.navigate(["/login"]);
     })
   );
 }
