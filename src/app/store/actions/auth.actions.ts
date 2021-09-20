@@ -6,6 +6,7 @@ export enum AuthActionsTypes {
   GetCurrentUserSuccess = "[Auth-User] Get Current Success",
   LoginUser = "[Auth-User] Login",
   LoginUserSuccess = "[Auth-User] Login Success",
+  LogoutUser = "[Auth-User] Logout",
 }
 
 export class GetCurrentUser implements Action {
@@ -32,8 +33,13 @@ export class LoginUserSuccess implements Action {
   constructor(public payload: any) {}
 }
 
+export class LogoutUser implements Action {
+  public readonly type = AuthActionsTypes.LogoutUser;
+}
+
 export type AuthActions =
   | LoginUser
   | GetCurrentUserSuccess
   | GetCurrentUser
-  | LoginUserSuccess;
+  | LoginUserSuccess
+  | LogoutUser;
