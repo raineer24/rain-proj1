@@ -6,11 +6,13 @@ import { createSelector } from "@ngrx/store";
 export interface AuthState {
   authUser: UserDetailsModel;
   isLoading: boolean;
+  isAuthenticated: boolean;
 }
 
 export const initialAuthState: AuthState = {
   authUser: null,
   isLoading: false,
+  isAuthenticated: false,
 };
 
 export function authReducer(
@@ -43,6 +45,7 @@ export function authReducer(
         ...state,
         authUser: null,
         isLoading: false,
+        isAuthenticated: false,
       };
 
     default: {
@@ -56,5 +59,3 @@ export const selectAuthUser = createSelector(
   selectAuthState,
   (state: AuthState) => state.authUser
 );
-
-
