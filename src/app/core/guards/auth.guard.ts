@@ -23,9 +23,10 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> {
     console.log("AuthGuard.canActivate()");
     return this.store
-      .select((s) => !s.auth)
+      .select((s) => !!s.auth.isAuthenticated)
       .pipe(
         tap((isAuthenticated) => {
+          console.log("s", isAuthenticated);
           if (!isAuthenticated) {
             this.router.navigateByUrl("/login");
             // this.store.dispatch(
