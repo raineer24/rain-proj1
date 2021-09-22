@@ -14,7 +14,7 @@ export function localStorageSyncReducer(
   reducer: ActionReducer<any>
 ): ActionReducer<any> {
   return localStorageSync({
-    keys: ["login", "books"],
+    keys: ["auth"],
     rehydrate: true,
     storage: sessionStorage,
   })(reducer);
