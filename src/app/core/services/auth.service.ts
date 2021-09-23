@@ -19,4 +19,10 @@ export class AuthService {
     const url = `${this.baseUrl}/api/v2/users/login`;
     return this.http.post(url, credentials, this.httpOptions);
   }
+
+  getUser(id: string): Observable<any> {
+    const url = `${this.baseUrl}/api/v2/users/${id}`;
+
+    return this.http.get<any>(url, this.httpOptions);
+  }
 }

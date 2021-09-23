@@ -20,19 +20,6 @@ export function authReducer(
   action: AuthActions
 ) {
   switch (action.type) {
-    case AuthActionsTypes.GetCurrentUser:
-      return {
-        ...state,
-        authUser: null,
-        isLoading: true,
-      };
-    case AuthActionsTypes.GetCurrentUserSuccess:
-      return {
-        ...state,
-        authUser: action.payload,
-        isLoading: false,
-      };
-
     case AuthActionsTypes.LoginUserSuccess: {
       return {
         ...state,
