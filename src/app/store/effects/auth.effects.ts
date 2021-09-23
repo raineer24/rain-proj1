@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
-import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 import {
   AuthActionsTypes,
+  GetUserAction,
   LoginUser,
   LoginUserSuccess,
   LogoutUser,
+  GetUserSuccessAction,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
@@ -34,20 +36,6 @@ export class AuthEffects {
     )
   );
 
-  // @Effect()
-  // LogIn = this.actions$.pipe(
-  //   ofType<LoginUser>(AuthActionsTypes.LoginUserSuccess),
-  //   map((action: LoginUser) => action.payload),
-  //   switchMap((credential) => {
-  //     return this.authService.login(credential).pipe(
-  //       map((user) => {
-  //         return new LoginUserSuccess(user);
-  //       }),
-  //       catchError((error) => of(new SetError(error)))
-  //     );
-  //   })
-  // );
-
   @Effect({ dispatch: false })
   loginUserSuccess$ = this.actions$.pipe(
     ofType<LoginUserSuccess>(AuthActionsTypes.LoginUserSuccess),
@@ -61,6 +49,21 @@ export class AuthEffects {
     tap(() => {
       console.log("clicked effex");
       this.router.navigate(["/login"]);
+    })
+  );
+
+  @Effect()
+  getUserInfo$ = this.actions$.pipe(
+    ofType<GetUserAction>(AuthActionsTypes.GET_USER),
+    map((action) => action.payload),
+    mergeMap((payload) => {
+      return this.authService.getUser(payload.id).pipe(
+        map((user) => {
+          console.log("user", user);
+          return new GetUserSuccessAction(user);
+        }),
+        catchError((error) => of(new SetError(error)))
+      );
     })
   );
 }
