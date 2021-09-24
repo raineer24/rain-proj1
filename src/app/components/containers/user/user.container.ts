@@ -21,11 +21,12 @@ import {
   selector: "app-user",
   template: `<h2>test user component</h2>
     <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
-    <mat-toolbar *ngIf="appState$ | async as state"
-      ><div>
-        {{ state.auth.authUser.username | titlecase }}
-      </div></mat-toolbar
-    > `,
+    <div *ngIf="appState$ | async as state">
+      {{ state.auth.authUser.username | titlecase }}
+      <div class="col-sm-12" *ngIf="state.auth.authUser?.user_profile == 0">
+        <h4>You have not yet setup a profile, please add some info</h4>
+      </div>
+    </div> `,
   styles: [``],
 })
 export class UserComponent implements OnInit {
