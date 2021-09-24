@@ -23,9 +23,19 @@ import {
     <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
     <div *ngIf="appState$ | async as state">
       {{ state.auth.authUser.username | titlecase }}
-      <div class="col-sm-12" *ngIf="state.auth.authUser?.user_profile == 0">
+      <ng-container
+        class="col-sm-12"
+        *ngIf="state.auth.authUser?.user_profile == 0; else profile"
+      >
         <h4>You have not yet setup a profile, please add some info</h4>
-      </div>
+      </ng-container>
+      <ng-template #profile>
+        <mat-toolbar class="nav">
+          <a mat-button>Edit Profile</a>
+          <a mat-button>Add Experience</a>
+          <a mat-button>Add Education</a>
+        </mat-toolbar></ng-template
+      >
     </div> `,
   styles: [``],
 })
