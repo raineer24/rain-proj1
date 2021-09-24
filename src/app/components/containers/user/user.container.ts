@@ -1,12 +1,21 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { LogoutUser } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
 import { selectAuthUser } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
+import { GetUserAction } from "../../../store/actions/auth.actions";
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  take,
+} from "rxjs/operators";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "app-user",
@@ -26,17 +35,25 @@ export class UserComponent implements OnInit {
   user$: Observable<UserDetailsModel>;
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
+    this.store.pipe(select(selectAuthUser), take(1)).subscribe((data) => {
+      console.log("data", data);
+      this.id = data["id"];
+      console.log("this id", this.id);
+      this.store.dispatch(new GetUserAction({ id: this.id }));
+    });
+
     console.log(
       "id",
       this.store.select((str) => str["auth"].authUser.id)
     );
-    this.user$ = this.store.select(selectAuthUser);
-    console.log("this users", this.user$);
-    this.user$.subscribe((data) => {
-      console.log("data", data.id);
-      this.id = data.id;
-      console.log("id data", typeof this.id);
-    });
+    //  this.user$ = this.store.select(selectAuthUser);
+    // console.log("this users", this.user$);
+    // this.user$.subscribe((data) => {
+    //   console.log("data", data.id);
+    //   this.id = data.id;
+    //   console.log("id data", typeof this.id);
+
+    // });
     this.appState$ = this.store;
     console.log("appstate", this.appState$);
   }

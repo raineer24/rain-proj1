@@ -35,6 +35,18 @@ export function authReducer(
         isAuthenticated: false,
       };
 
+    case AuthActionsTypes.GET_USER:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case AuthActionsTypes.GET_USER_SUCCESS:
+      //action.payload.profileImageUrl += '?'+ new Date().getMilliseconds();
+      return {
+        ...state,
+        authUser: action.payload,
+      };
+
     default: {
       return state;
     }

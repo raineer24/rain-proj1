@@ -1,7 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
-import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  take,
+} from "rxjs/operators";
 import { Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 import {
@@ -56,11 +63,12 @@ export class AuthEffects {
   getUserInfo$ = this.actions$.pipe(
     ofType<GetUserAction>(AuthActionsTypes.GET_USER),
     map((action) => action.payload),
-    mergeMap((payload) => {
+    switchMap((payload) => {
       return this.authService.getUser(payload.id).pipe(
+        take(1),
         map((user) => {
           console.log("user", user);
-          return new GetUserSuccessAction(user);
+          return new GetUserSuccessAction(user["user"]);
         }),
         catchError((error) => of(new SetError(error)))
       );
