@@ -12,7 +12,12 @@ import { UserCredentialsModel } from "../../../../core/models/users/user-credent
 })
 export class RegisterPageComponent implements OnInit {
   form: FormGroup;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required]),
+    });
+  }
 
   onRegister() {}
 }
