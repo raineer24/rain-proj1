@@ -17,7 +17,8 @@ import { UserCredentialsModel } from "../../../../core/models/users/user-credent
 })
 export class RegisterPageComponent implements OnInit {
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
-  constructor(private fb: FormBuilder) {}
+  fd = new FormData();
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
 
   form: FormGroup;
   ngOnInit(): void {
@@ -44,7 +45,22 @@ export class RegisterPageComponent implements OnInit {
     });
   }
 
-  onRegister() {
+  onRegister(e) {
     console.log("this.form.value", this.form.value);
+    if (e.target !== undefined) {
+      // const postData = new FormData();
+      this.fd.append("image", e.target.files[0]);
+      console.log("fd", this.fd.get("image"));
+
+      return (this.form.value.image = this.fd);
+      //console.log("value signup form data", postData);
+    }
+    this.fd.append("email", this.form.value.email);
+    this.fd.append("password", this.form.value.password);
+    this.fd.append("username", this.form.value.username);
+    this.fd.append("first_name", this.form.value.first_name);
+    this.fd.append("password2", this.form.value.password2);
+
+    this.store.dispatch(new RegisterUser(this.fd));
   }
 }

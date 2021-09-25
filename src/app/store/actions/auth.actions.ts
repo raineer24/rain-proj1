@@ -15,7 +15,7 @@ export enum AuthActionsTypes {
 export class RegisterUser implements Action {
   public readonly type = AuthActionsTypes.RegisterUser;
 
-  constructor(public payload: UserCredentialsModel) {}
+  constructor(public payload: UserDetailsModel | FormData) {}
 }
 
 export class RegisterUseSuccess implements Action {
