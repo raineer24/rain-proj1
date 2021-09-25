@@ -11,5 +11,8 @@ import { UserCredentialsModel } from "../../../../core/models/users/user-credent
   styleUrls: ["./register-page.component.scss"],
 })
 export class RegisterPageComponent implements OnInit {
+  form: FormGroup;
   ngOnInit(): void {}
+
+  onRegister() {}
 }
