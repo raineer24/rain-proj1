@@ -1,5 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from "@angular/forms";
 import { AppState } from "../../../../store/app.state";
 import { Store } from "@ngrx/store";
 import { RegisterUser } from "../../../../store/actions/auth.actions";
@@ -11,13 +16,35 @@ import { UserCredentialsModel } from "../../../../core/models/users/user-credent
   styleUrls: ["./register-page.component.scss"],
 })
 export class RegisterPageComponent implements OnInit {
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
+  constructor(private fb: FormBuilder) {}
+
   form: FormGroup;
   ngOnInit(): void {
-    this.form = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
+    this.initForm();
+  }
+
+  initForm() {
+    this.form = this.fb.group({
+      email: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(this.emailPattern),
+        ]),
+      ],
+      password: [
+        "",
+        Validators.compose([Validators.required, Validators.minLength(6)]),
+      ],
+      username: ["", Validators.required],
+      first_name: ["", Validators.required],
+      image: [null, Validators.required],
+      password2: [null, Validators.required],
     });
   }
 
-  onRegister() {}
+  onRegister() {
+    console.log("this.form.value", this.form.value);
+  }
 }
