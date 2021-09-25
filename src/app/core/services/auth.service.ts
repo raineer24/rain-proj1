@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { UserDetailsModel, UserCredentialsModel } from "../models";
 import { environment } from "../../../environments/environment";
+import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 @Injectable({
   providedIn: "root",
 })
@@ -24,5 +25,11 @@ export class AuthService {
     const url = `${this.baseUrl}/api/v2/users/${id}`;
 
     return this.http.get<any>(url, this.httpOptions);
+  }
+
+  public registerUsers(data) {
+    const url = `${this.baseUrl}/api/v2/users/register`;
+    //const url = `api/v2/users/register`;
+    return this.http.post(url, data).pipe(map((data) => data));
   }
 }
