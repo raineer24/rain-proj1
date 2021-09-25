@@ -45,16 +45,9 @@ export class RegisterPageComponent implements OnInit {
     });
   }
 
-  onRegister(e) {
+  onRegister() {
     console.log("this.form.value", this.form.value);
-    if (e.target !== undefined) {
-      // const postData = new FormData();
-      this.fd.append("image", e.target.files[0]);
-      console.log("fd", this.fd.get("image"));
 
-      return (this.form.value.image = this.fd);
-      //console.log("value signup form data", postData);
-    }
     this.fd.append("email", this.form.value.email);
     this.fd.append("password", this.form.value.password);
     this.fd.append("username", this.form.value.username);
