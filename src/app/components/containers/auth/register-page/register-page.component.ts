@@ -10,4 +10,6 @@ import { UserCredentialsModel } from "../../../../core/models/users/user-credent
   templateUrl: "./register-page.component.html",
   styleUrls: ["./register-page.component.scss"],
 })
-export class RegisterPageComponent implements OnInit {}
+export class RegisterPageComponent implements OnInit {
+  ngOnInit(): void {}
+}

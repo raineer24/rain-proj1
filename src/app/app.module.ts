@@ -28,6 +28,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     AuthPageComponent,
     UserComponent,
     LoginFormComponent,
+    RegisterPageComponent,
   ],
   imports: [
     BrowserModule,

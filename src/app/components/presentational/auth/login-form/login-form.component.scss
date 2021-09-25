@@ -1,0 +1,34 @@
+  
+.form-container {
+  width: 100%;
+  display: block;
+}
+
+.card-header-container {
+  width: 100%;;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-header-container-image {
+  max-width: 200px;
+  max-height: 150px;
+}
+
+.form-control-container {
+  width: 100%;
+  display: flex;
+  padding: 8px;
+  margin: 8px;
+  justify-content: center;
+}
+
+.form-control-input {
+  padding-top: 8px;
+  margin-top: 8px;
+  width: 40%;
+}
+
+.form-control-button {
+  width: 40%;
+}
