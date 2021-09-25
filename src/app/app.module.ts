@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppEffects } from "./store/app.effects";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import * as fromApp from "./store/app.reducers";
-
+import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
 const metaReducers: Array<MetaReducer<any, any>> = [
   fromApp.localStorageSyncReducer,

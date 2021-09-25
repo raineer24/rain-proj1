@@ -8,6 +8,20 @@ export enum AuthActionsTypes {
   GET_USER = "[User] GET_USER",
   GET_USER_SUCCESS = "[User] GET_USER_SUCCESS",
   GET_USER_FAIL = "[User] GET_USER_FAIL",
+  RegisterUser = "[Auth-User] Register User",
+  RegisterUseSuccess = "[Auth-User] Register User Success",
+}
+
+export class RegisterUser implements Action {
+  public readonly type = AuthActionsTypes.RegisterUser;
+
+  constructor(public payload: UserCredentialsModel) {}
+}
+
+export class RegisterUseSuccess implements Action {
+  public readonly type = AuthActionsTypes.RegisterUseSuccess;
+
+  constructor(public payload: any) {}
 }
 
 export class GetUserAction implements Action {
