@@ -48,7 +48,8 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.store.pipe(select(selectAuthUser), take(1)).subscribe((data) => {
       console.log("data", data);
-      this.id = data["id"];
+      this.id = data;
+      //this.id = data["id"];
       console.log("this id", this.id);
       this.store.dispatch(new GetUserAction({ id: this.id }));
     });

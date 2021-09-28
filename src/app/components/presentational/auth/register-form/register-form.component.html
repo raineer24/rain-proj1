@@ -3,7 +3,7 @@
     <form [formGroup]="form" class="form-container" role="form">
       <mat-label>Profile Picture: </mat-label>
       <img src="https://www.w3schools.com/howto/img_avatar.png" /> <br />
-      <input class="input-file" type="file" formControlName="image" class="form-control" />
+      <input class="input-file" type="file" formControlName="image" (change)="onChange($event)" class="form-control" />
       <div class="form-control-container">
         <mat-form-field class="form-control-input">
           <mat-label>Email</mat-label>
@@ -15,14 +15,14 @@
         <mat-form-field class="form-control-input">
           <mat-label>Username</mat-label>
           <input matInput placeholder="username" formControlName="username">
-          <mat-hint align="end">The email of the user</mat-hint>
+          <mat-hint align="end">The username of the user</mat-hint>
         </mat-form-field>
       </div>
       <div class="form-control-container">
         <mat-form-field class="form-control-input">
           <mat-label>First Name</mat-label>
           <input matInput placeholder="first_name" formControlName="first_name">
-          <mat-hint align="end">The email of the user</mat-hint>
+          <mat-hint align="end">The first name of the user</mat-hint>
         </mat-form-field>
       </div>
       <div class="form-control-container">
