@@ -9,7 +9,7 @@ export enum AuthActionsTypes {
   GET_USER_SUCCESS = "[User] GET_USER_SUCCESS",
   GET_USER_FAIL = "[User] GET_USER_FAIL",
   RegisterUser = "[Auth-User] Register User",
-  RegisterUseSuccess = "[Auth-User] Register User Success",
+  RegisterUserSuccess = "[Auth-User] Register User Success",
 }
 
 export class RegisterUser implements Action {
@@ -18,8 +18,8 @@ export class RegisterUser implements Action {
   constructor(public payload: UserDetailsModel | FormData) {}
 }
 
-export class RegisterUseSuccess implements Action {
-  public readonly type = AuthActionsTypes.RegisterUseSuccess;
+export class RegisterUserSuccess implements Action {
+  public readonly type = AuthActionsTypes.RegisterUserSuccess;
 
   constructor(public payload: any) {}
 }
@@ -62,4 +62,5 @@ export type AuthActions =
   | LogoutUser
   | GetUserAction
   | GetUserSuccessAction
-  | GetUserFailAction;
+  | GetUserFailAction
+  | RegisterUserSuccess;
