@@ -19,7 +19,7 @@ import {
   LogoutUser,
   GetUserSuccessAction,
   RegisterUser,
-  RegisterUseSuccess,
+  RegisterUserSuccess,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
@@ -37,7 +37,7 @@ export class AuthEffects {
     map((action) => action.payload),
     switchMap((userCredentials) =>
       this.authService.registerUsers(userCredentials).pipe(
-        map((data) => new RegisterUseSuccess(data)),
+        map((data) => new RegisterUserSuccess(data)),
         catchError((error) => of(new SetError(error)))
       )
     )
@@ -45,7 +45,7 @@ export class AuthEffects {
 
   @Effect({ dispatch: false })
   registerUserSuccess$ = this.actions$.pipe(
-    ofType<RegisterUseSuccess>(AuthActionsTypes.RegisterUseSuccess),
+    ofType<RegisterUserSuccess>(AuthActionsTypes.RegisterUserSuccess),
     tap(() => this.router.navigateByUrl("/login"))
   );
 
