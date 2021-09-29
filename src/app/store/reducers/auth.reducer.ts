@@ -20,6 +20,20 @@ export function authReducer(
   action: AuthActions
 ) {
   switch (action.type) {
+    case AuthActionsTypes.RegisterUserSuccess: {
+      return {
+        ...state,
+        isAuthenticated: true,
+        authUser: action.payload,
+      };
+    }
+    case AuthActionsTypes.LoginUserSuccess: {
+      return {
+        ...state,
+        isAuthenticated: true,
+        authUser: action.payload,
+      };
+    }
     case AuthActionsTypes.LoginUserSuccess: {
       return {
         ...state,
@@ -56,5 +70,5 @@ export function authReducer(
 const selectAuthState = (state: AppState) => state.auth;
 export const selectAuthUser = createSelector(
   selectAuthState,
-  (state: AuthState) => state.authUser
+  (state: AuthState) => state.authUser.id
 );

@@ -22,11 +22,13 @@
       <a mat-button routerLink="/register" class="form-control-button">If you do not have an account you can register
         here</a>
     </div>
+
     <div class="form-control-container">
       <button mat-raised-button class="form-control-button" color="primary" [disabled]="!form.valid"
         (click)="login.emit()">Login
       </button>
     </div>
+
   </form>
 </mat-card-content>
 <ng-template #noForm>
