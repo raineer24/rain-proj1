@@ -1,4 +1,4 @@
-import { UserDetailsModel } from "../../core/models/users/user-details.model";
+import { UserDetailsModel, UserFetch } from "../../core/models";
 import { AuthActions, AuthActionsTypes } from "../actions/auth.actions";
 import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
@@ -12,6 +12,11 @@ export interface AuthState extends EntityState<UserDetailsModel> {
 
 export const adapter: EntityAdapter<UserDetailsModel> =
   createEntityAdapter<UserDetailsModel>();
+
+export const userProfileAdapter: EntityAdapter<UserFetch> =
+  createEntityAdapter<UserFetch>({
+    selectId: (userprofile) => userprofile.id,
+  });
 
 export const initialAuthState: AuthState = adapter.getInitialState({
   // additional entity state properties
