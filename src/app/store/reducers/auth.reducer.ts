@@ -2,18 +2,29 @@ import { UserDetailsModel } from "../../core/models/users/user-details.model";
 import { AuthActions, AuthActionsTypes } from "../actions/auth.actions";
 import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
+import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
-export interface AuthState {
+export interface AuthState extends EntityState<UserDetailsModel> {
   authUser: UserDetailsModel;
   isLoading: boolean;
   isAuthenticated: boolean;
 }
 
-export const initialAuthState: AuthState = {
+export const adapter: EntityAdapter<UserDetailsModel> =
+  createEntityAdapter<UserDetailsModel>();
+
+export const initialAuthState: AuthState = adapter.getInitialState({
+  // additional entity state properties
   authUser: null,
   isLoading: false,
   isAuthenticated: false,
-};
+});
+
+// export const initialAuthState: AuthState = {
+//   authUser: null,
+//   isLoading: false,
+//   isAuthenticated: false,
+// };
 
 export function authReducer(
   state: AuthState = initialAuthState,
