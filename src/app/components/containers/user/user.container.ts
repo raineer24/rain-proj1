@@ -19,7 +19,7 @@ import {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "app-user",
-  template: `<h2>test user component</h2>
+  template: `
     <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
     <div *ngIf="appState$ | async as state">
       {{ state.auth.authUser.username | titlecase }}
@@ -28,6 +28,7 @@ import {
         *ngIf="state.auth.authUser?.user_profile == 0; else profile"
       >
         <h4>You have not yet setup a profile, please add some info</h4>
+        <button [routerLink]="['/add']">CREATE PROFILE</button>
       </ng-container>
       <ng-template #profile>
         <mat-toolbar class="nav">
@@ -36,7 +37,8 @@ import {
           <a mat-button>Add Education</a>
         </mat-toolbar></ng-template
       >
-    </div> `,
+    </div>
+  `,
   styles: [``],
 })
 export class UserComponent implements OnInit {

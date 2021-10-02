@@ -6,6 +6,7 @@ import { AppComponent } from "./app.component";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 import { SharedModule } from "./shared/shared.module";
 import { UserComponent } from "./components/containers/user/user.container";
+import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
 import { StoreModule, MetaReducer } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
@@ -31,6 +32,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     LoginFormComponent,
     RegisterPageComponent,
     RegisterFormComponent,
+    CreateProfileComponent,
   ],
   imports: [
     BrowserModule,
