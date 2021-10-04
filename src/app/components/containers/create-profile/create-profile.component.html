@@ -1,9 +1,29 @@
-<div fxLayout="column" class="wrap-user" fxLayoutAlign="start center" fxLayoutGap.lt-lg="16px" fxLayoutGap="16px">
-  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="6px">
-    <div class="user-info-container" fxLayout="row" fxLayoutAlign="start stretch" fxLayoutWrap fxLayout.lt-md="column"
-      fxLayoutGap="2px">
-      <h1>create profile component</h1>
-      <form [formGroup]="profForm" class="form"></form>
+<div fxLayout="row" fxLayoutAlign="center" class="login-card">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h1>create profile component</h1>
+    <div fxLayout="column" fxLayoutAlign="center center">
+
+      <form fxLayoutAlign="strech" fxLayout="column" [formGroup]="profForm" class="form">
+        <app-dropdown [basicForm]="profForm" [status]="selectedStatus" (jobSelected)="setJob($event)"
+          [selected]="dropdownSelected" [isDisabled]="disableForm">
+        </app-dropdown>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+          <mat-icon>
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+          </mat-icon>
+          <mat-form-field class="example">
+            <mat-label>Company</mat-label>
+            <input matInput placeholder="Company" name="company_name" required formControlName="company_name">
+            <mat-hint>Could be your own company or one you work for</mat-hint>
+            <mat-error *ngIf="profForm.get('company_name').hasError('required')">
+              Company is Required!
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </form>
+
+
     </div>
 
   </div>

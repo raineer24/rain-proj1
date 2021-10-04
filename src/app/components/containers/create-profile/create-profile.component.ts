@@ -32,31 +32,48 @@ import { UserFetch } from "src/app/core/models";
 })
 export class CreateProfileComponent implements OnInit {
   profForm: FormGroup;
+  @Input() disableForm: boolean;
+  dropdownSelected: string;
+  selectedStatus: String = "";
   constructor(
     private store: Store<AppState>,
     private formBuilder: FormBuilder
   ) {}
   ngOnInit() {
+    this.profForm = this.formBuilder.group({
+      status: [null, Validators.required],
+      website: ["", Validators.required],
+      bio: ["", Validators.required],
+      //githubusername: ["", Validators.required],
+      job_location: ["", Validators.required],
+      company_name: [""],
+      areas_of_expertise: ["", Validators.required],
+      instagram_handle: [""],
+      facebook_handle: [""],
+      youtube_handle: [""],
+      twitter_handle: [""],
+      //id: data,
+    });
     this.store.pipe(select(selectAuthUser), take(1)).subscribe((data) => {
       console.log("data", data);
       // this.id = data;
       //this.id = data["id"];
       //  console.log("this id", this.id);
       // this.store.dispatch(new GetUserAction({ id: this.id }));
-      this.profForm = this.formBuilder.group({
-        status: [null, Validators.required],
-        website: ["", Validators.required],
-        bio: ["", Validators.required],
-        //githubusername: ["", Validators.required],
-        job_location: ["", Validators.required],
-        company_name: [""],
-        areas_of_expertise: ["", Validators.required],
-        instagram_handle: [""],
-        facebook_handle: [""],
-        youtube_handle: [""],
-        twitter_handle: [""],
-        id: data,
-      });
     });
+  }
+  get status() {
+    return this.profForm.get("status");
+  }
+
+  setJob(value) {
+    this.selectedStatus = value;
+    let val = this.profForm.get("status").setValue(value);
+    console.log("positions.value", this.status.value);
+    console.log("val", val);
+
+    if (value === "Other") {
+      this.profForm.get("status").reset();
+    }
   }
 }
