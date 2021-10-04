@@ -11,4 +11,18 @@
       Job title is required
     </mat-error>
   </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+
+    <div *ngIf='selected'>
+      <mat-icon>
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+      </mat-icon>
+      <mat-form-field class="example" *ngIf="selected == 'Other'">
+        <mat-label>Custom value</mat-label>
+        <input matInput placeholder="Enter custom value" name="status" formControlName="status" required>
+        <mat-hint>Could be your own company or one you work for</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
 </div>

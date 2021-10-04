@@ -18,3 +18,45 @@
   position: relative;
   display: flex;
 }
+.example-card {
+    width: 350px;
+    padding: 0;
+    margin: 0;
+}
+
+.example{
+    width: 250px;
+    margin-top: 10px;
+}
+
+.login-card{
+    margin: 25px;
+}
+
+.title{
+    font-family: "Cera Pro", "HelveticaNeue", "Helvetica Neue", "HelveticaNeueRoman", "HelveticaNeue-Roman", "Helvetica Neue Roman", "TeXGyreHerosRegular", "Helvetica", "Tahoma", "Geneva", "Arial", sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #0f346c;
+    letter-spacing: 0.1em;
+    background-color: rgb(241, 156, 28);
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.example-button{
+    margin: 5px;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    background-color: rgb(241, 156, 28);
+    justify-content: center;
+    width: 100px;
+    color: white;
+    outline: none;
+    transition: 0.5s ease;
+}
+
+.example-button:hover {
+    transform: scale(1.10);
+    box-shadow: 5px 5px 10px #871A1A;
+}

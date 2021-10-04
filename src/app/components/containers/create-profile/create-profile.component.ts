@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Subscription, Observable, of, Subject } from "rxjs";
+import { MatIconRegistry } from "@angular/material/icon";
+
 import {
   skipWhile,
   skip,
@@ -37,7 +39,9 @@ export class CreateProfileComponent implements OnInit {
   selectedStatus: String = "";
   constructor(
     private store: Store<AppState>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitzer: DomSanitizer
   ) {}
   ngOnInit() {
     this.profForm = this.formBuilder.group({
