@@ -37,12 +37,32 @@ export class CreateProfileComponent implements OnInit {
   @Input() disableForm: boolean;
   dropdownSelected: string;
   selectedStatus: String = "";
+  show = false;
   constructor(
     private store: Store<AppState>,
     private formBuilder: FormBuilder,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitzer: DomSanitizer
-  ) {}
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer
+  ) {
+    iconRegistry.addSvgIcon(
+      "thumbs-up",
+      sanitizer.bypassSecurityTrustResourceUrl(
+        "assets/img/twitter-black-shape.svg"
+      )
+    );
+    iconRegistry.addSvgIcon(
+      "inst",
+      sanitizer.bypassSecurityTrustResourceUrl("assets/img/instagram.svg")
+    );
+    iconRegistry.addSvgIcon(
+      "utube",
+      sanitizer.bypassSecurityTrustResourceUrl("assets/img/youtube.svg")
+    );
+    iconRegistry.addSvgIcon(
+      "fb",
+      sanitizer.bypassSecurityTrustResourceUrl("assets/img/facebook.svg")
+    );
+  }
   ngOnInit() {
     this.profForm = this.formBuilder.group({
       status: [null, Validators.required],
@@ -69,6 +89,8 @@ export class CreateProfileComponent implements OnInit {
   get status() {
     return this.profForm.get("status");
   }
+
+  onFormSubmit() {}
 
   setJob(value) {
     this.selectedStatus = value;
