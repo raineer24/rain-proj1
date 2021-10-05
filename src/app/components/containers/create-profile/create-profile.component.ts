@@ -34,13 +34,16 @@ import { UserFetch } from "src/app/core/models";
 })
 export class CreateProfileComponent implements OnInit {
   isAddMode: boolean;
+  id: string;
   profForm: FormGroup;
   @Input() disableForm: boolean;
   dropdownSelected: string;
   selectedStatus: String = "";
+
   show = false;
   constructor(
     private store: Store<AppState>,
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
@@ -65,6 +68,8 @@ export class CreateProfileComponent implements OnInit {
     );
   }
   ngOnInit() {
+    this.id = this.route.snapshot.params["id"];
+    this.isAddMode = !this.id;
     this.profForm = this.formBuilder.group({
       status: [null, Validators.required],
       website: ["", Validators.required],

@@ -8,6 +8,7 @@ import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
 import { GetUserAction } from "../../../store/actions/auth.actions";
+
 import {
   catchError,
   map,
@@ -31,17 +32,20 @@ import {
         <button [routerLink]="['/add']">CREATE PROFILE</button>
       </ng-container>
       <ng-template #profile>
-        <mat-toolbar class="nav">
-          <a mat-button>Edit Profile</a>
-          <a mat-button>Add Experience</a>
-          <a mat-button>Add Education</a>
-        </mat-toolbar></ng-template
+        <div *ngFor="let profile of state.auth.authUser?.user_profile">
+          <mat-toolbar class="nav">
+            <a mat-button routerLink="edit/{{ profile.id }}">Edit Profile</a>
+            <a mat-button>Add Experience</a>
+            <a mat-button>Add Education</a>
+          </mat-toolbar>
+        </div></ng-template
       >
     </div>
   `,
   styles: [``],
 })
 export class UserComponent implements OnInit {
+  isAddMode: boolean;
   id: string;
   appState$: Observable<fromApp.AppState>;
   userInfo$: Observable<UserDetailsModel>;
@@ -51,6 +55,7 @@ export class UserComponent implements OnInit {
     this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
       console.log("data", data);
       this.id = data;
+      this.isAddMode = !this.id;
       //this.id = data["id"];
       console.log("this id", this.id);
       this.store.dispatch(new GetUserAction({ id: this.id }));

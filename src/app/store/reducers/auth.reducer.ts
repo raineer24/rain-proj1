@@ -84,9 +84,15 @@ export function authReducer(
 }
 
 const selectAuthState = (state: AppState) => state.auth;
+
 export const selectAuthUser = createSelector(
   selectAuthState,
   (state: AuthState) => state.authUser
+);
+
+export const selectAuthUserProfile = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.authUser.user_profile.ids
 );
 
 export const selectAuthUserId = createSelector(
