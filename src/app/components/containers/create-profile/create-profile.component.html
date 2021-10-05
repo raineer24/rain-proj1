@@ -2,6 +2,10 @@
   <div fxLayout="column" fxLayoutAlign="center" class="login-card">
     <h1>create profile component</h1>
     <div fxLayout="column" fxLayoutAlign="center center">
+      <a [routerLink]="['/user']">Go To Home</a>
+
+      <h1 *ngIf="!isAddMode">Edit User</h1>
+      <h1 *ngIf="isAddMode">Add User</h1>
 
       <form fxLayoutAlign="strech" fxLayout="column" [formGroup]="profForm" class="form">
         <app-dropdown [basicForm]="profForm" [status]="selectedStatus" (jobSelected)="setJob($event)"

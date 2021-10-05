@@ -15,7 +15,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { AppState } from "../../../store/app.state";
-import { selectAuthUser } from "../../../store/reducers/auth.reducer";
+import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import {
   FormBuilder,
   FormGroup,
@@ -33,6 +33,7 @@ import { UserFetch } from "src/app/core/models";
   styleUrls: ["./create-profile.component.scss"],
 })
 export class CreateProfileComponent implements OnInit {
+  isAddMode: boolean;
   profForm: FormGroup;
   @Input() disableForm: boolean;
   dropdownSelected: string;
@@ -78,7 +79,7 @@ export class CreateProfileComponent implements OnInit {
       twitter_handle: [""],
       //id: data,
     });
-    this.store.pipe(select(selectAuthUser), take(1)).subscribe((data) => {
+    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
       console.log("data", data);
       // this.id = data;
       //this.id = data["id"];

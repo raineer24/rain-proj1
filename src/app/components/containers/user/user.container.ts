@@ -4,7 +4,7 @@ import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { LogoutUser } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
-import { selectAuthUser } from "../../../store/reducers/auth.reducer";
+import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
 import { GetUserAction } from "../../../store/actions/auth.actions";
@@ -48,7 +48,7 @@ export class UserComponent implements OnInit {
   user$: Observable<UserDetailsModel>;
   constructor(private store: Store<AppState>) {}
   ngOnInit(): void {
-    this.store.pipe(select(selectAuthUser), take(1)).subscribe((data) => {
+    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
       console.log("data", data);
       this.id = data;
       //this.id = data["id"];
