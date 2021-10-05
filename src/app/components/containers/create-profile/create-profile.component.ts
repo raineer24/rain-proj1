@@ -144,6 +144,44 @@ export class CreateProfileComponent implements OnInit {
 
   onFormSubmit() {}
 
+  get twitter() {
+    return this.profForm.get("twitter_handle");
+  }
+
+  get yt() {
+    return this.profForm.get("youtube_handle");
+  }
+
+  get ig() {
+    return this.profForm.get("instagram_handle");
+  }
+
+  get fb() {
+    return this.profForm.get("facebook_handle");
+  }
+
+  private updateUser() {
+    const updatedProfile: UserFetch = {
+      company_name: this.profForm.get("company_name").value,
+      website: this.profForm.get("website").value,
+      job_location: this.profForm.get("job_location").value,
+      status: this.profForm.get("status").value,
+      bio: this.profForm.get("bio").value,
+      areas_of_expertise: this.profForm.get("areas_of_expertise").value,
+      id: this.profForm.get("id").value,
+      // youtube_handle: this.profForm.get("youtube_handle").value,
+      //instagram_handle: this.profForm.get("instagram_handle").value,
+      // facebook_handle: this.profForm.get("facebook_handle").value,
+      //twitter_handle: this.profForm.get("twitter_handle").value,
+      twitter_handle: this.twitter.value,
+      youtube_handle: this.yt.value,
+      instagram_handle: this.ig.value,
+      facebook_handle: this.fb.value,
+    };
+
+    this.store.dispatch(new AuthActions.UpdateProfile(updatedProfile));
+  }
+
   setJob(value) {
     this.selectedStatus = value;
     let val = this.profForm.get("status").setValue(value);
