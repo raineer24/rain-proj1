@@ -142,7 +142,13 @@ export class CreateProfileComponent implements OnInit {
     return this.profForm.get("status");
   }
 
-  onFormSubmit() {}
+  onFormSubmit() {
+    if (this.isAddMode) {
+      this.createUser();
+    } else {
+      this.updateUser();
+    }
+  }
 
   get twitter() {
     return this.profForm.get("twitter_handle");
@@ -159,6 +165,8 @@ export class CreateProfileComponent implements OnInit {
   get fb() {
     return this.profForm.get("facebook_handle");
   }
+
+  private createUser() {}
 
   private updateUser() {
     const updatedProfile: UserFetch = {

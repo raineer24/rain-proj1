@@ -36,6 +36,18 @@ export function authReducer(
   action: AuthActions
 ) {
   switch (action.type) {
+    case AuthActionsTypes.UPDATE_PROFILE_SUCCESS: {
+      return {
+        ...adapter.updateOne(
+          {
+            id: action.payload.id,
+            changes: {},
+          },
+          state
+        ),
+      };
+    }
+
     case AuthActionsTypes.RegisterUserSuccess: {
       return {
         ...state,
@@ -92,7 +104,7 @@ export const selectAuthUser = createSelector(
 
 export const selectAuthUserProfile = createSelector(
   selectAuthState,
-  (state: AuthState) => state.authUser.user_profile.ids
+  (state: AuthState) => state.authUser.user_profile
 );
 
 export const selectAuthUserId = createSelector(

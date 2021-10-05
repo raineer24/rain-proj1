@@ -9,6 +9,7 @@ export enum AuthActionsTypes {
   GET_USER = "[User] GET_USER",
   GET_USER_SUCCESS = "[User] GET_USER_SUCCESS",
   UPDATE_PROFILE = "[User] Update Profile",
+  UPDATE_PROFILE_SUCCESS = "[User] Update Success",
   GET_USER_FAIL = "[User] GET_USER_FAIL",
   RegisterUser = "[Auth-User] Register User",
   RegisterUserSuccess = "[Auth-User] Register User Success",
@@ -17,6 +18,16 @@ export enum AuthActionsTypes {
 export class UpdateProfile implements Action {
   readonly type = AuthActionsTypes.UPDATE_PROFILE;
   constructor(public payload: UserFetch) {}
+}
+
+export class UpdateProfileSucess implements Action {
+  readonly type = AuthActionsTypes.UPDATE_PROFILE_SUCCESS;
+  constructor(
+    public payload: {
+      id: number;
+      payload: UserFetch;
+    }
+  ) {}
 }
 
 export class RegisterUser implements Action {
@@ -71,4 +82,5 @@ export type AuthActions =
   | GetUserSuccessAction
   | GetUserFailAction
   | RegisterUserSuccess
-  | UpdateProfile;
+  | UpdateProfile
+  | UpdateProfileSucess;

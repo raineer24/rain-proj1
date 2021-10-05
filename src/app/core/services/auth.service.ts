@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { UserDetailsModel, UserCredentialsModel } from "../models";
+import { UserDetailsModel, UserCredentialsModel, UserFetch } from "../models";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 @Injectable({
@@ -19,6 +19,22 @@ export class AuthService {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
     return this.http.post(url, credentials, this.httpOptions);
+  }
+
+  updateProfile(profile: UserFetch): Observable<UserFetch> {
+    console.log("update click");
+
+    return this.http.patch<UserFetch>(
+      `${this.baseUrl}/api/v2/users/profile/${profile.id}`,
+      profile
+    );
+    // .pipe(
+    //   tap((data) => {
+    //     console.log("UPDATE PROFILE DATA :", data);
+    //     console.log("clicked");
+    //     this.router.navigate(["/admin"]);
+    //   })
+    // );
   }
 
   getUser(id: string): Observable<any> {

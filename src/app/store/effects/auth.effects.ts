@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
+import * as AuthActions from "../../store/actions/auth.actions";
+import { UserCredentialsModel, UserFetch } from "../../core/models/";
 import {
   catchError,
   map,
@@ -30,6 +32,24 @@ export class AuthEffects {
     private actions$: Actions,
     private router: Router
   ) {}
+
+  @Effect()
+  UpdateProfile$: Observable<any> = this.actions$.pipe(
+    ofType(AuthActions.AuthActionsTypes.UPDATE_PROFILE),
+    map((action: AuthActions.UpdateProfile) => action.payload),
+    mergeMap((user: UserFetch) =>
+      this.authService.updateProfile(user).pipe(
+        map(
+          (updateProfile: UserFetch) =>
+            new AuthActions.UpdateProfileSucess({
+              id: updateProfile.id,
+              payload: updateProfile,
+            })
+        ),
+        catchError((error) => of(new SetError(error)))
+      )
+    )
+  );
 
   @Effect()
   registerUser$ = this.actions$.pipe(
