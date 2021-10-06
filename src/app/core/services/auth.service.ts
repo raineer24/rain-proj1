@@ -10,12 +10,18 @@ import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 export class AuthService {
   private baseUrl = environment.apiUrl;
   private currentUserSubject: BehaviorSubject<UserCredentialsModel>;
+  public currentUser: Observable<UserCredentialsModel>;
   httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",
     }),
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<UserCredentialsModel>(
+      JSON.parse(localStorage.getItem("currentUser"))
+    );
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
   login(credentials: UserCredentialsModel): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
