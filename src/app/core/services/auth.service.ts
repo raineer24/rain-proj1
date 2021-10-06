@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { UserDetailsModel, UserCredentialsModel, UserFetch } from "../models";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError, first, switchMap } from "rxjs/operators";
@@ -9,16 +9,32 @@ import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 })
 export class AuthService {
   private baseUrl = environment.apiUrl;
+  private currentUserSubject: BehaviorSubject<UserCredentialsModel>;
   httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",
     }),
   };
   constructor(private http: HttpClient) {}
-  login(credentials: UserCredentialsModel): Observable<{}> {
+  login(credentials: UserCredentialsModel): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
-    return this.http.post(url, credentials, this.httpOptions);
+    return this.http
+      .post<UserCredentialsModel>(url, credentials, this.httpOptions)
+      .pipe(
+        map((user) => {
+          console.log("user", user);
+          if (user) {
+            localStorage.setItem("currentUser", JSON.stringify(user));
+            this.currentUserSubject.next(user);
+          }
+          return user;
+        })
+      );
+  }
+
+  public get currentUserValue(): UserCredentialsModel {
+    return this.currentUserSubject.value;
   }
 
   updateProfile(profile: UserFetch): Observable<UserFetch> {
@@ -28,13 +44,6 @@ export class AuthService {
       `${this.baseUrl}/api/v2/users/profile/${profile.id}`,
       profile
     );
-    // .pipe(
-    //   tap((data) => {
-    //     console.log("UPDATE PROFILE DATA :", data);
-    //     console.log("clicked");
-    //     this.router.navigate(["/admin"]);
-    //   })
-    // );
   }
 
   getUser(id: string): Observable<any> {

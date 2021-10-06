@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppEffects } from "./store/app.effects";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import * as fromApp from "./store/app.reducers";
+import { JwtInterceptor } from "./core/guards/jwt.interceptor";
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { RegisterFormComponent } from "./components/presentational/auth/register-form/register-form.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -54,7 +55,9 @@ const metaReducers: Array<MetaReducer<any, any>> = [
       logOnly: environment.production,
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
