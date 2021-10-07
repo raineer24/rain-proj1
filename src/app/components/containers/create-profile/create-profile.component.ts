@@ -38,7 +38,7 @@ import { UserFetch } from "src/app/core/models";
   templateUrl: "./create-profile.component.html",
   styleUrls: ["./create-profile.component.scss"],
 })
-export class CreateProfileComponent implements OnInit {
+export class CreateProfileComponent implements OnInit, OnDestroy {
   profile$: UserFetch;
   isAddMode: boolean;
   id: string;
@@ -169,7 +169,7 @@ export class CreateProfileComponent implements OnInit {
   private createUser() {}
 
   private updateUser() {
-    const updatedProfile: UserFetch = {
+    const updatedProfile = {
       company_name: this.profForm.get("company_name").value,
       website: this.profForm.get("website").value,
       job_location: this.profForm.get("job_location").value,

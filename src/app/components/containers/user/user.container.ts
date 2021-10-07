@@ -1,21 +1,27 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { Store, select, ActionsSubject } from "@ngrx/store";
+import { Observable, Subject } from "rxjs";
 import { LogoutUser } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
 import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
-import { UserDetailsModel } from "../../../core/models";
+import { UserDetailsModel, UserFetch } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
 import { GetUserAction } from "../../../store/actions/auth.actions";
-
+import * as AuthActions from "../../../store/actions/auth.actions";
+import { ofType } from "@ngrx/effects";
 import {
-  catchError,
-  map,
-  mergeMap,
-  switchMap,
-  tap,
+  skipWhile,
+  skip,
   take,
+  filter,
+  first,
+  takeUntil,
 } from "rxjs/operators";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,7 +40,9 @@ import {
       <ng-template #profile>
         <div *ngFor="let profile of state.auth.authUser?.user_profile">
           <mat-toolbar class="nav">
-            <a mat-button routerLink="edit/{{ profile.id }}">Edit Profile</a>
+            <a mat-button routerLink="edit/{{ profile.users_id }}"
+              >Edit Profile</a
+            >
             <a mat-button>Add Experience</a>
             <a mat-button>Add Education</a>
           </mat-toolbar>
@@ -44,13 +52,18 @@ import {
   `,
   styles: [``],
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
+  profile$: UserFetch;
+  destroyed$ = new Subject<boolean>();
   isAddMode: boolean;
   id: string;
   appState$: Observable<fromApp.AppState>;
   userInfo$: Observable<UserDetailsModel>;
   user$: Observable<UserDetailsModel>;
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private actionsSubj: ActionsSubject
+  ) {}
   ngOnInit(): void {
     this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
       console.log("data", data);
@@ -75,6 +88,24 @@ export class UserComponent implements OnInit {
     // });
     this.appState$ = this.store;
     console.log("appstate", this.appState$);
+
+    this.actionsSubj
+      .pipe(
+        ofType(AuthActions.AuthActionsTypes.GET_USER_SUCCESS),
+        takeUntil(this.destroyed$)
+      )
+      .subscribe((data: any) => {
+        console.log("xdatas", data);
+        // console.log("xdata", data["payload"]["user_profile"][0]);
+        this.profile$ = data["payload"]["user_profile"][0];
+        console.log("profile", this.profile$.users_id);
+        /* hooray, success, show notification alert etc.. */
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   logoutx() {

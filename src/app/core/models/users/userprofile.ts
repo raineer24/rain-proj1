@@ -14,4 +14,5 @@ export interface UserFetch {
   user_experience?: Array<any>;
   user_profile?: Array<any>;
   user_skill?: Array<any>;
+  users_id: string;
 }

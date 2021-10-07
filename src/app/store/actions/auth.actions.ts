@@ -17,7 +17,7 @@ export enum AuthActionsTypes {
 
 export class UpdateProfile implements Action {
   readonly type = AuthActionsTypes.UPDATE_PROFILE;
-  constructor(public payload: UserFetch) {}
+  constructor(public payload: any) {}
 }
 
 export class UpdateProfileSucess implements Action {

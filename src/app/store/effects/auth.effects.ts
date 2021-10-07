@@ -40,7 +40,7 @@ export class AuthEffects {
     mergeMap((user: UserFetch) =>
       this.authService.updateProfile(user).pipe(
         map(
-          (updateProfile: UserFetch) =>
+          (updateProfile) =>
             new AuthActions.UpdateProfileSucess({
               id: updateProfile.id,
               payload: updateProfile,

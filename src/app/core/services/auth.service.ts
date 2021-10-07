@@ -44,14 +44,14 @@ export class AuthService {
   }
 
   updateProfile(profile: UserFetch): Observable<UserFetch> {
-    console.log("update click");
+    console.log("update click", profile);
 
     return this.http.patch<UserFetch>(
-      `${this.baseUrl}/api/v2/users/profile/${profile.id}`,
+      `${this.baseUrl}/api/v2/users/profile/${profile.users_id}`,
       profile
     );
   }
-
+  s;
   getUser(id: string): Observable<any> {
     const url = `${this.baseUrl}/api/v2/users/${id}`;
 
