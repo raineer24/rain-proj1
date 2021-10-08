@@ -3,6 +3,7 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
+import { AppState } from "../../store/app.state";
 import {
   catchError,
   map,
@@ -11,8 +12,10 @@ import {
   tap,
   take,
 } from "rxjs/operators";
+import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
+
 import {
   AuthActionsTypes,
   GetUserAction,
@@ -30,7 +33,8 @@ export class AuthEffects {
   constructor(
     private authService: AuthService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   @Effect()
@@ -41,11 +45,16 @@ export class AuthEffects {
       this.authService.updateProfile(user).pipe(
         map(
           (updateProfile) =>
+            //  console.log("updatePRofile", updateProfile);
             new AuthActions.UpdateProfileSucess({
               id: updateProfile.id,
               payload: updateProfile,
             })
         ),
+        tap(() => {
+          console.log("user id string", user.id);
+          this.store.dispatch(new GetUserAction({ id: user.id.toString() }));
+        }),
         catchError((error) => of(new SetError(error)))
       )
     )
@@ -67,6 +76,14 @@ export class AuthEffects {
   registerUserSuccess$ = this.actions$.pipe(
     ofType<RegisterUserSuccess>(AuthActionsTypes.RegisterUserSuccess),
     tap(() => this.router.navigateByUrl("/login"))
+  );
+
+  @Effect({ dispatch: false })
+  UpdateProfile$Success$ = this.actions$.pipe(
+    ofType<AuthActions.UpdateProfileSucess>(
+      AuthActionsTypes.UPDATE_PROFILE_SUCCESS
+    ),
+    tap(() => this.router.navigateByUrl("/user"))
   );
 
   @Effect()
