@@ -45,9 +45,12 @@ export class AuthService {
 
   updateProfile(profile: UserFetch): Observable<UserFetch> {
     console.log("update click", profile);
+    const user_id = JSON.parse(sessionStorage.getItem("auth"));
+    console.log("user.id", user_id["authUser"].user_profile[0].users_id);
+    let users_id = user_id["authUser"].user_profile[0].users_id;
 
     return this.http.patch<UserFetch>(
-      `${this.baseUrl}/api/v2/users/profile/${profile.users_id}`,
+      `${this.baseUrl}/api/v2/users/profile/${users_id}`,
       profile
     );
   }
