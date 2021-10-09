@@ -98,7 +98,7 @@ export class UserComponent implements OnInit, OnDestroy {
         console.log("xdatas", data);
         // console.log("xdata", data["payload"]["user_profile"][0]);
         this.profile$ = data["payload"]["user_profile"][0];
-        console.log("profile", this.profile$.users_id);
+        //onsole.log("profile", this.profile$.users_id);
         /* hooray, success, show notification alert etc.. */
       });
   }
