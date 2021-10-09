@@ -6,6 +6,8 @@ import { AppComponent } from "./app.component";
 import { AuthPageComponent } from "./components/containers/auth/auth-page.component";
 import { SharedModule } from "./shared/shared.module";
 import { UserComponent } from "./components/containers/user/user.container";
+import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
+import { AppDropdownComponent } from "./components/containers/create-profile/app-dropdown/app-dropdown.component";
 import { StoreModule, MetaReducer } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
@@ -16,8 +18,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppEffects } from "./store/app.effects";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import * as fromApp from "./store/app.reducers";
+import { JwtInterceptor } from "./core/guards/jwt.interceptor";
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { RegisterFormComponent } from "./components/presentational/auth/register-form/register-form.component";
+import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
 const metaReducers: Array<MetaReducer<any, any>> = [
   fromApp.localStorageSyncReducer,
@@ -31,8 +35,11 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     LoginFormComponent,
     RegisterPageComponent,
     RegisterFormComponent,
+    CreateProfileComponent,
+    AppDropdownComponent,
   ],
   imports: [
+    FlexLayoutModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -48,7 +55,9 @@ const metaReducers: Array<MetaReducer<any, any>> = [
       logOnly: environment.production,
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,25 +1,53 @@
-import { UserDetailsModel } from "../../core/models/users/user-details.model";
+import { UserDetailsModel, UserFetch } from "../../core/models";
 import { AuthActions, AuthActionsTypes } from "../actions/auth.actions";
 import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
+import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 
-export interface AuthState {
+export interface AuthState extends EntityState<UserDetailsModel> {
   authUser: UserDetailsModel;
   isLoading: boolean;
   isAuthenticated: boolean;
 }
 
-export const initialAuthState: AuthState = {
+export const adapter: EntityAdapter<UserDetailsModel> =
+  createEntityAdapter<UserDetailsModel>();
+
+export const userProfileAdapter: EntityAdapter<UserFetch> =
+  createEntityAdapter<UserFetch>({
+    selectId: (userprofile) => userprofile.id,
+  });
+
+export const initialAuthState: AuthState = adapter.getInitialState({
+  // additional entity state properties
   authUser: null,
   isLoading: false,
   isAuthenticated: false,
-};
+});
+
+// export const initialAuthState: AuthState = {
+//   authUser: null,
+//   isLoading: false,
+//   isAuthenticated: false,
+// };
 
 export function authReducer(
   state: AuthState = initialAuthState,
   action: AuthActions
 ) {
   switch (action.type) {
+    case AuthActionsTypes.UPDATE_PROFILE_SUCCESS: {
+      return {
+        ...adapter.updateOne(
+          {
+            id: action.payload.id,
+            changes: {},
+          },
+          state
+        ),
+      };
+    }
+
     case AuthActionsTypes.RegisterUserSuccess: {
       return {
         ...state,
@@ -68,7 +96,18 @@ export function authReducer(
 }
 
 const selectAuthState = (state: AppState) => state.auth;
+
 export const selectAuthUser = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.authUser
+);
+
+export const selectAuthUserProfile = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.authUser.user_profile
+);
+
+export const selectAuthUserId = createSelector(
   selectAuthState,
   (state: AuthState) => state.authUser.id
 );

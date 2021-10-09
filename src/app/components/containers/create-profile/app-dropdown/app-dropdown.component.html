@@ -1,0 +1,28 @@
+<div [formGroup]="basicForm">
+  <mat-form-field class="form-element">
+    <mat-label>* Select Professional Status</mat-label>
+    <mat-select [attr.disabled]="isDisabled" [(value)]="selected" (selectionChange)="onChangeJob($event.value)">
+      <mat-option *ngFor="let pos of jobTitle" [value]="pos.value">
+        {{pos.viewValue}}
+      </mat-option>
+    </mat-select>
+    <mat-hint>Give us an idea of where you are at in your career</mat-hint>
+    <mat-error>
+      Job title is required
+    </mat-error>
+  </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+
+    <div *ngIf='selected'>
+      <mat-icon>
+        <i class="fa fa-user-circle" aria-hidden="true"></i>
+      </mat-icon>
+      <mat-form-field class="example" *ngIf="selected == 'Other'">
+        <mat-label>Custom value</mat-label>
+        <input matInput placeholder="Enter custom value" name="status" formControlName="status" required>
+        <mat-hint>Could be your own company or one you work for</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+</div>
