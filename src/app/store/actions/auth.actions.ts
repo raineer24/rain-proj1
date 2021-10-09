@@ -13,6 +13,18 @@ export enum AuthActionsTypes {
   GET_USER_FAIL = "[User] GET_USER_FAIL",
   RegisterUser = "[Auth-User] Register User",
   RegisterUserSuccess = "[Auth-User] Register User Success",
+  CREATE_PROFILE = "[User] Create Profile ",
+  CREATE_PROFILE_SUCCESS = "[User] Create Profile Success",
+}
+
+export class createProfile implements Action {
+  readonly type = AuthActionsTypes.CREATE_PROFILE;
+  constructor(public payload: any) {}
+}
+
+export class createProfileSuccess implements Action {
+  readonly type = AuthActionsTypes.CREATE_PROFILE_SUCCESS;
+  constructor(public payload: any) {}
 }
 
 export class UpdateProfile implements Action {
@@ -83,4 +95,6 @@ export type AuthActions =
   | GetUserFailAction
   | RegisterUserSuccess
   | UpdateProfile
-  | UpdateProfileSucess;
+  | UpdateProfileSucess
+  | createProfile
+  | createProfileSuccess;
