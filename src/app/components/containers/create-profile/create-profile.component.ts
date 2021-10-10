@@ -166,7 +166,9 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
     return this.profForm.get("facebook_handle");
   }
 
-  private createUser() {}
+  private createUser() {
+    this.store.dispatch(new AuthActions.createProfile(this.profForm.value));
+  }
 
   private updateUser() {
     const updatedProfile = {
