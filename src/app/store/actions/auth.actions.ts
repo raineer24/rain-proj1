@@ -34,12 +34,7 @@ export class UpdateProfile implements Action {
 
 export class UpdateProfileSucess implements Action {
   readonly type = AuthActionsTypes.UPDATE_PROFILE_SUCCESS;
-  constructor(
-    public payload: {
-      id: number;
-      payload: UserFetch;
-    }
-  ) {}
+  constructor(public payload: any) {}
 }
 
 export class RegisterUser implements Action {

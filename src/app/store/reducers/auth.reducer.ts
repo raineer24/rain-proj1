@@ -36,12 +36,25 @@ export function authReducer(
   action: AuthActions
 ) {
   switch (action.type) {
-    case AuthActionsTypes.UPDATE_PROFILE_SUCCESS: {
+    case AuthActionsTypes.CREATE_PROFILE_SUCCESS: {
       return {
         ...adapter.updateOne(
           {
             id: action.payload.id,
             changes: {},
+          },
+          state
+        ),
+      };
+    }
+    case AuthActionsTypes.UPDATE_PROFILE_SUCCESS: {
+      return {
+        ...adapter.updateOne(
+          {
+            id: action.payload.id,
+            changes: {
+              user_profile: action.payload,
+            },
           },
           state
         ),
