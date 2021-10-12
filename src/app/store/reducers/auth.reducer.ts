@@ -48,12 +48,14 @@ export function authReducer(
       };
     }
     case AuthActionsTypes.UPDATE_PROFILE_SUCCESS: {
+      console.log("update profile success", action.payload.payload.userp);
+      console.log("STATE", state);
       return {
         ...adapter.updateOne(
           {
-            id: action.payload.id,
+            id: action.payload.payload.userp.id,
             changes: {
-              user_profile: action.payload,
+              user_profile: action.payload.payload.userp,
             },
           },
           state
