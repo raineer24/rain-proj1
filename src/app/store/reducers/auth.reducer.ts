@@ -3,6 +3,7 @@ import { AuthActions, AuthActionsTypes } from "../actions/auth.actions";
 import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
+import { createReducer, on } from "@ngrx/store";
 
 export interface AuthState extends EntityState<UserDetailsModel> {
   authUser: UserDetailsModel;
