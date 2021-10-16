@@ -25,6 +25,6 @@ export const authReducer = createReducer(
   on(
     AuthActions.loginSuccess,
 
-    (state, { payload }) => ({ ...state, payload, isAuthenticated: true })
+    (state, { user }) => ({ ...state, user, isAuthenticated: true })
   )
 );
