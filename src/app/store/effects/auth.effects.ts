@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
@@ -16,16 +16,16 @@ import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 
-import {
-  AuthActionsTypes,
-  GetUserAction,
-  LoginUser,
-  LoginUserSuccess,
-  LogoutUser,
-  GetUserSuccessAction,
-  RegisterUser,
-  RegisterUserSuccess,
-} from "../actions/auth.actions";
+// import {
+//   AuthActionsTypes,
+//   GetUserAction,
+//   LoginUser,
+//   LoginUserSuccess,
+//   LogoutUser,
+//   GetUserSuccessAction,
+//   RegisterUser,
+//   RegisterUserSuccess,
+// } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
