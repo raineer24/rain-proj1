@@ -35,6 +35,13 @@ export class AuthEffects {
   //   )
   // );
 
+  // loginSuccess = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(loginSuccess),
+  //     tap(() => this.router.navigate(["/user"]))
+  //   )
+  // );
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
@@ -42,7 +49,7 @@ export class AuthEffects {
         this.authService.login({ email, password }).pipe(
           map((data) => {
             console.log("data", data);
-            return loginSuccess(data["user"]);
+            return loginSuccess({ user: data["user"] });
           }),
           catchError((error) => of(new SetError(error)))
         )

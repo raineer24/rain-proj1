@@ -1,9 +1,10 @@
 import { Action } from "@ngrx/store";
-import { UserDetailsModel, IError } from "../../core/models/";
 import {
   UserCredentialsModel,
   UserFetch,
   LoginUserDto,
+  UserDetailsModel,
+  IError,
 } from "../../core/models/";
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
