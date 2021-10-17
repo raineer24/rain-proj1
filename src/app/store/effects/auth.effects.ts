@@ -18,7 +18,12 @@ import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 
-import { login, loginSuccess } from "../actions/auth.actions";
+import {
+  login,
+  loginSuccess,
+  loggedOut,
+  logout,
+} from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
@@ -66,6 +71,17 @@ export class AuthEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      map(() => {
+        AuthService.clearToken();
+        this.router.navigateByUrl("/login");
+        return loggedOut();
+      })
+    )
   );
 
   constructor(

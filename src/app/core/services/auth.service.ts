@@ -23,6 +23,10 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
+  static clearToken(): void {
+    localStorage.removeItem("currentUser");
+  }
+
   public createProfile(data): Observable<any> {
     const url = `${this.baseUrl}/api/v2/users/profile`;
     const token = JSON.parse(localStorage.getItem("currentUser")).token;

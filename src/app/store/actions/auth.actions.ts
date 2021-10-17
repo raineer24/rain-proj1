@@ -23,3 +23,6 @@ export const loginSuccess = createAction(
   "[Auth] Login Pango Success",
   props<{ user: any }>()
 );
+
+export const logout = createAction("[Auth] Logout");
+export const loggedOut = createAction("[Auth] Logged out");

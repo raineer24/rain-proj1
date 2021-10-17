@@ -7,7 +7,7 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, Subject } from "rxjs";
-//import { LogoutUser } from "../../../store/actions/auth.actions";
+import { logout } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
 //import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserFetch } from "../../../core/models";
@@ -109,6 +109,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   logoutx() {
     console.log("clicked");
-    // this.store.dispatch(new LogoutUser());
+    this.store.dispatch(logout());
   }
 }
