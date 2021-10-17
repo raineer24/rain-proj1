@@ -57,6 +57,17 @@ export class AuthEffects {
     )
   );
 
+  loginSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess),
+        tap(() => {
+          this.router.navigateByUrl("/");
+        })
+      ),
+    { dispatch: false }
+  );
+
   constructor(
     private readonly actions$: Actions,
     private authService: AuthService,
