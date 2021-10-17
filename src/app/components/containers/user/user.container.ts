@@ -7,12 +7,12 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, Subject } from "rxjs";
-import { LogoutUser } from "../../../store/actions/auth.actions";
+//import { LogoutUser } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
-import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
+//import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserFetch } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
-import { GetUserAction } from "../../../store/actions/auth.actions";
+//import { GetUserAction } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import { ofType } from "@ngrx/effects";
 import {
@@ -65,14 +65,14 @@ export class UserComponent implements OnInit, OnDestroy {
     private actionsSubj: ActionsSubject
   ) {}
   ngOnInit(): void {
-    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
-      console.log("data", data);
-      this.id = data;
-      this.isAddMode = !this.id;
-      //this.id = data["id"];
-      console.log("this id", this.id);
-      this.store.dispatch(new GetUserAction({ id: this.id }));
-    });
+    // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
+    //   console.log("data", data);
+    //   this.id = data;
+    //   this.isAddMode = !this.id;
+    //   //this.id = data["id"];
+    //   console.log("this id", this.id);
+    //   this.store.dispatch(new GetUserAction({ id: this.id }));
+    // });
 
     console.log(
       "id",
@@ -89,18 +89,17 @@ export class UserComponent implements OnInit, OnDestroy {
     this.appState$ = this.store;
     console.log("appstate", this.appState$);
 
-    this.actionsSubj
-      .pipe(
-        ofType(AuthActions.AuthActionsTypes.GET_USER_SUCCESS),
-        takeUntil(this.destroyed$)
-      )
-      .subscribe((data: any) => {
-        console.log("xdatas", data);
-        // console.log("xdata", data["payload"]["user_profile"][0]);
-        this.profile$ = data["payload"]["user_profile"][0];
-        //onsole.log("profile", this.profile$.users_id);
-        /* hooray, success, show notification alert etc.. */
-      });
+    // this.actionsSubj
+    //   .pipe(
+    //     ofType(AuthActions.AuthActionsTypes.GET_USER_SUCCESS),
+    //     takeUntil(this.destroyed$)
+    //   )
+    //   .subscribe((data: any) => {
+    //     console.log("xdatas", data);
+
+    //     this.profile$ = data["payload"]["user_profile"][0];
+
+    //   });
   }
 
   ngOnDestroy() {
@@ -110,6 +109,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   logoutx() {
     console.log("clicked");
-    this.store.dispatch(new LogoutUser());
+    // this.store.dispatch(new LogoutUser());
   }
 }

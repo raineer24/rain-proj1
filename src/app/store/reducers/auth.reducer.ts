@@ -28,3 +28,10 @@ export const authReducer = createReducer(
     (state, { user }) => ({ ...state, user, isAuthenticated: true })
   )
 );
+
+const selectAuthState = (state: AppState) => state.auth;
+
+export const selectAuthUser = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.authUser
+);

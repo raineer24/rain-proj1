@@ -8,17 +8,17 @@ import {
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
 
-export const loginSuccess = createAction(
-  "[Auth/API] Login Success", //
-  props<{ user: any }>()
-);
-
 export const loginFailure = createAction(
   "[Auth/API] Login Failure", //
   props<{ error: IError }>()
 );
 
 export const login = createAction(
-  "[Login Form] Login",
-  props<{ dto: LoginUserDto }>()
+  "[Auth] Pango Login",
+  props<{ email: string; password: string }>()
+);
+
+export const loginSuccess = createAction(
+  "[Auth] Login Pango Success",
+  props<{ user: any }>()
 );
