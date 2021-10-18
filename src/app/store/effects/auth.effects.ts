@@ -15,7 +15,7 @@ import {
   exhaustMap,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
-import { Observable, of } from "rxjs";
+import { merge, Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 
 import {
@@ -23,29 +23,28 @@ import {
   loginSuccess,
   loggedOut,
   logout,
+  register,
+  registerSuccess,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  // login$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActions.login),
-  //     exhaustMap(({ dto }) =>
-  //       this.authService.login(dto).pipe(
-  //         map((user) => AuthActions.loginSuccess({ user })),
-  //         catchError((error) => of(new SetError(error)))
-  //       )
-  //     )
-  //   )
-  // );
-
-  // loginSuccess = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(loginSuccess),
-  //     tap(() => this.router.navigate(["/user"]))
-  //   )
-  // );
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(register),
+      map((action) => action.payload),
+      mergeMap((register) =>
+        this.authService.registerUsers(register).pipe(
+          map((data) => {
+            console.log("data", data);
+            return loginSuccess({ user: data["user"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
 
   login$ = createEffect(() =>
     this.actions$.pipe(
@@ -54,7 +53,7 @@ export class AuthEffects {
         this.authService.login({ email, password }).pipe(
           map((data) => {
             console.log("data", data);
-            return loginSuccess({ user: data["user"] });
+            return registerSuccess({ user: data["user"] });
           }),
           catchError((error) => of(new SetError(error)))
         )
