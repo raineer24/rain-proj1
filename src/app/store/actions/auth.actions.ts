@@ -14,6 +14,18 @@ export const loginFailure = createAction(
   props<{ error: IError }>()
 );
 
+export const register = createAction(
+  "[Auth] Pango Register",
+  props<{
+    payload: any | FormData;
+  }>()
+);
+export const registerFailure = createAction("[Auth] Register Pango Failure");
+export const registerSuccess = createAction(
+  "[Auth] Register Pango Success",
+  props<{ user: any }>()
+);
+
 export const login = createAction(
   "[Auth] Pango Login",
   props<{ email: string; password: string }>()
