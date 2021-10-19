@@ -6,7 +6,7 @@ import {
   FormControl,
 } from "@angular/forms";
 import { AppState } from "../../../../store/app.state";
-//import { RegisterUser } from "../../../../store/actions/auth.actions";
+import { register } from "../../../../store/actions/auth.actions";
 import { Store } from "@ngrx/store";
 
 @Component({
@@ -61,7 +61,10 @@ export class RegisterFormComponent implements OnInit {
     console.log("fd username", this.fd.get("username"));
 
     // console.log("form.value", this.form.value);
-    //this.store.dispatch(new RegisterUser(this.fd));
+
+    const payload = this.fd;
+
+    this.store.dispatch(register({ payload }));
   }
 
   onChange(event) {

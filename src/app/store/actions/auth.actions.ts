@@ -17,7 +17,7 @@ export const loginFailure = createAction(
 export const register = createAction(
   "[Auth] Pango Register",
   props<{
-    payload: any | FormData;
+    payload: FormData;
   }>()
 );
 export const registerFailure = createAction("[Auth] Register Pango Failure");
