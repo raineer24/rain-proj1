@@ -27,7 +27,13 @@ export const authReducer = createReducer(
     ...state,
     authUser: user,
     isAuthenticated: true,
-  }))
+  })),
+  on(AuthActions.signupSuccess, (state, action) => {
+    return {
+      ...state,
+      loading: false,
+    };
+  })
 );
 
 const selectAuthState = (state: AppState) => state.auth;
