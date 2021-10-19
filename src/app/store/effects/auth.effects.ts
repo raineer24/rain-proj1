@@ -37,8 +37,12 @@ export class AuthEffects {
       mergeMap((register) =>
         this.authService.registerUsers(register).pipe(
           map((data) => {
+            this.router.navigate(["/login"]);
             console.log("data", data);
-            return loginSuccess({ user: data["user"] });
+
+            return {
+              type: AuthActions.SIGNUP_SUCCESS,
+            };
           }),
           catchError((error) => of(new SetError(error)))
         )
@@ -53,7 +57,7 @@ export class AuthEffects {
         this.authService.login({ email, password }).pipe(
           map((data) => {
             console.log("data", data);
-            return registerSuccess({ user: data["user"] });
+            return loginSuccess({ user: data["user"] });
           }),
           catchError((error) => of(new SetError(error)))
         )
