@@ -28,12 +28,11 @@ export const authReducer = createReducer(
     authUser: user,
     isAuthenticated: true,
   })),
-  on(AuthActions.signupSuccess, (state, action) => {
-    return {
-      ...state,
-      loading: false,
-    };
-  })
+  on(AuthActions.registerSuccess, (state, { user }) => ({
+    ...state,
+    authUser: user,
+    isAuthenticated: true,
+  }))
 );
 
 const selectAuthState = (state: AppState) => state.auth;

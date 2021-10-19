@@ -9,7 +9,7 @@ import {
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
 
-export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+//export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
 export const loginFailure = createAction(
   "[Auth/API] Login Failure", //
@@ -28,7 +28,7 @@ export const registerSuccess = createAction(
   props<{ user: any }>()
 );
 
-export const signupSuccess = createAction(SIGNUP_SUCCESS);
+//export const signupSuccess = createAction(SIGNUP_SUCCESS);
 
 export const login = createAction(
   "[Auth] Pango Login",

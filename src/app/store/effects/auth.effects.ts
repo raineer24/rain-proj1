@@ -40,9 +40,7 @@ export class AuthEffects {
             this.router.navigate(["/login"]);
             console.log("data", data);
 
-            return {
-              type: AuthActions.SIGNUP_SUCCESS,
-            };
+            return registerSuccess({ user: data["data"] });
           }),
           catchError((error) => of(new SetError(error)))
         )
