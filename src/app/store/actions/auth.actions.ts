@@ -8,6 +8,7 @@ import {
 } from "../../core/models/";
 import { Update } from "@ngrx/entity";
 import { createAction, props } from "@ngrx/store";
+import { AnyFn } from "@ngrx/store/src/selector";
 
 //export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
@@ -21,6 +22,18 @@ export const register = createAction(
   props<{
     payload: FormData;
   }>()
+);
+
+export const getUser = createAction(
+  "GET USER",
+  props<{
+    id: string;
+  }>()
+);
+
+export const getUserSuccess = createAction(
+  "[Auth] Get Current User Success",
+  props<{ payload: any }>()
 );
 export const registerFailure = createAction("[Auth] Register Pango Failure");
 export const registerSuccess = createAction(
