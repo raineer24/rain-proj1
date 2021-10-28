@@ -12,6 +12,11 @@ import { AnyFn } from "@ngrx/store/src/selector";
 
 //export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
+export const UpdateProfile = createAction(
+  "[User] Update Profile", //
+  props<{ payload: any }>()
+);
+
 export const loginFailure = createAction(
   "[Auth/API] Login Failure", //
   props<{ error: IError }>()
