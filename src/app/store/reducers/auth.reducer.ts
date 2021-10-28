@@ -22,6 +22,12 @@ export const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
+
+  on(AuthActions.getUserSuccess, (state, { payload }) => ({
+    ...state,
+    authUser: payload,
+    loading: false,
+  })),
   on(AuthActions.login, (state, action) => {
     return {
       ...state,
@@ -53,4 +59,9 @@ const selectAuthState = (state: AppState) => state.auth;
 export const selectAuthUser = createSelector(
   selectAuthState,
   (state: AuthState) => state.authUser
+);
+
+export const selectAuthUserId = createSelector(
+  selectAuthState,
+  (state: AuthState) => state.authUser.id
 );

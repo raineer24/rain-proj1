@@ -25,11 +25,30 @@ import {
   logout,
   register,
   registerSuccess,
+  getUser,
+  getUserSuccess,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  getCurrentUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUser),
+      map((action) => action.id),
+      switchMap((payload) => {
+        return this.authService.getUser(payload).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return getUserSuccess({ payload: user["user"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(register),

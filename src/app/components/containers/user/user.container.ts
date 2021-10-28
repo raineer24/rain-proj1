@@ -9,10 +9,10 @@ import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, Subject } from "rxjs";
 import { logout } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.state";
-//import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
+import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserFetch } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
-//import { GetUserAction } from "../../../store/actions/auth.actions";
+import { getUser } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import { ofType } from "@ngrx/effects";
 import {
@@ -65,14 +65,14 @@ export class UserComponent implements OnInit, OnDestroy {
     private actionsSubj: ActionsSubject
   ) {}
   ngOnInit(): void {
-    // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
-    //   console.log("data", data);
-    //   this.id = data;
-    //   this.isAddMode = !this.id;
-    //   //this.id = data["id"];
-    //   console.log("this id", this.id);
-    //   this.store.dispatch(new GetUserAction({ id: this.id }));
-    // });
+    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
+      console.log("data", data);
+      this.id = data;
+      this.isAddMode = !this.id;
+      //this.id = data["id"];
+      console.log("this id", this.id);
+      this.store.dispatch(getUser({ id: this.id }));
+    });
 
     console.log(
       "id",
