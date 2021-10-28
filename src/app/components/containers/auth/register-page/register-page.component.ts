@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import { AppState } from "../../../../store/app.state";
 import { Store } from "@ngrx/store";
-import { RegisterUser } from "../../../../store/actions/auth.actions";
+//import { RegisterUser } from "../../../../store/actions/auth.actions";
 import { UserCredentialsModel } from "../../../../core/models/users/user-credentials.model";
 
 @Component({

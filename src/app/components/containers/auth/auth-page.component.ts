@@ -7,8 +7,8 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import { Store } from "@ngrx/store";
-import { LoginUser } from "../../../store/actions/auth.actions";
-import { UserCredentialsModel } from "../../../core/models";
+import { login } from "../../../store/actions/auth.actions";
+import { UserCredentialsModel, LoginUserDto } from "../../../core/models";
 
 @Component({
   selector: "app-auth-page",
@@ -31,11 +31,11 @@ export class AuthPageComponent implements OnInit {
 
   onLogin() {
     console.log("clicked");
-    const payload: UserCredentialsModel = {
+    const payload = {
       email: this.form.get("email").value,
       password: this.form.get("password").value,
     };
     console.log("payload", payload);
-    this.store.dispatch(new LoginUser(payload));
+    this.store.dispatch(login(payload));
   }
 }

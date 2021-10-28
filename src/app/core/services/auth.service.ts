@@ -22,6 +22,19 @@ export class AuthService {
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
+
+  static clearToken(): void {
+    localStorage.removeItem("currentUser");
+  }
+
+  public createProfile(data): Observable<any> {
+    const url = `${this.baseUrl}/api/v2/users/profile`;
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    return this.http.post(url, data, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
+  }
+
   login(credentials: UserCredentialsModel): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;

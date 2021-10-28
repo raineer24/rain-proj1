@@ -1,86 +1,57 @@
 import { Action } from "@ngrx/store";
-import { UserDetailsModel } from "../../core/models/users/user-details.model";
-import { UserCredentialsModel, UserFetch } from "../../core/models/";
+import {
+  UserCredentialsModel,
+  UserFetch,
+  LoginUserDto,
+  UserDetailsModel,
+  IError,
+} from "../../core/models/";
 import { Update } from "@ngrx/entity";
-export enum AuthActionsTypes {
-  LoginUser = "[Auth-User] Login",
-  LoginUserSuccess = "[Auth-User] Login Success",
-  LogoutUser = "[Auth-User] Logout",
-  GET_USER = "[User] GET_USER",
-  GET_USER_SUCCESS = "[User] GET_USER_SUCCESS",
-  UPDATE_PROFILE = "[User] Update Profile",
-  UPDATE_PROFILE_SUCCESS = "[User] Update Success",
-  GET_USER_FAIL = "[User] GET_USER_FAIL",
-  RegisterUser = "[Auth-User] Register User",
-  RegisterUserSuccess = "[Auth-User] Register User Success",
-}
+import { createAction, props } from "@ngrx/store";
+import { AnyFn } from "@ngrx/store/src/selector";
 
-export class UpdateProfile implements Action {
-  readonly type = AuthActionsTypes.UPDATE_PROFILE;
-  constructor(public payload: any) {}
-}
+//export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
-export class UpdateProfileSucess implements Action {
-  readonly type = AuthActionsTypes.UPDATE_PROFILE_SUCCESS;
-  constructor(
-    public payload: {
-      id: number;
-      payload: UserFetch;
-    }
-  ) {}
-}
+export const loginFailure = createAction(
+  "[Auth/API] Login Failure", //
+  props<{ error: IError }>()
+);
 
-export class RegisterUser implements Action {
-  public readonly type = AuthActionsTypes.RegisterUser;
+export const register = createAction(
+  "[Auth] Pango Register",
+  props<{
+    payload: FormData;
+  }>()
+);
 
-  constructor(public payload: UserDetailsModel | FormData) {}
-}
+export const getUser = createAction(
+  "GET USER",
+  props<{
+    id: string;
+  }>()
+);
 
-export class RegisterUserSuccess implements Action {
-  public readonly type = AuthActionsTypes.RegisterUserSuccess;
+export const getUserSuccess = createAction(
+  "[Auth] Get Current User Success",
+  props<{ payload: any }>()
+);
+export const registerFailure = createAction("[Auth] Register Pango Failure");
+export const registerSuccess = createAction(
+  "[Auth] Register Pango Success",
+  props<{ user: any }>()
+);
 
-  constructor(public payload: any) {}
-}
+//export const signupSuccess = createAction(SIGNUP_SUCCESS);
 
-export class GetUserAction implements Action {
-  readonly type = AuthActionsTypes.GET_USER;
+export const login = createAction(
+  "[Auth] Pango Login",
+  props<{ email: string; password: string }>()
+);
 
-  constructor(public payload: { id: string }) {}
-}
+export const loginSuccess = createAction(
+  "[Auth] Login Pango Success",
+  props<{ user: any }>()
+);
 
-export class GetUserSuccessAction implements Action {
-  readonly type = AuthActionsTypes.GET_USER_SUCCESS;
-
-  constructor(public payload: any) {}
-}
-export class GetUserFailAction implements Action {
-  readonly type = AuthActionsTypes.GET_USER_FAIL;
-  constructor(public payload: any) {}
-}
-
-export class LoginUser implements Action {
-  public readonly type = AuthActionsTypes.LoginUser;
-
-  constructor(public payload: any) {}
-}
-
-export class LoginUserSuccess implements Action {
-  public readonly type = AuthActionsTypes.LoginUserSuccess;
-
-  constructor(public payload: any) {}
-}
-
-export class LogoutUser implements Action {
-  public readonly type = AuthActionsTypes.LogoutUser;
-}
-
-export type AuthActions =
-  | LoginUser
-  | LoginUserSuccess
-  | LogoutUser
-  | GetUserAction
-  | GetUserSuccessAction
-  | GetUserFailAction
-  | RegisterUserSuccess
-  | UpdateProfile
-  | UpdateProfileSucess;
+export const logout = createAction("[Auth] Logout");
+export const loggedOut = createAction("[Auth] Logged out");

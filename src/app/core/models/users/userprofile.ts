@@ -16,3 +16,8 @@ export interface UserFetch {
   user_skill?: Array<any>;
   users_id: string;
 }
+
+export interface LoginUserDto {
+  email: string;
+  password: string;
+}

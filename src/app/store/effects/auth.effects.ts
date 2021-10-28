@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
 import { AppState } from "../../store/app.state";
+
 import {
   catchError,
   map,
@@ -11,124 +12,103 @@ import {
   switchMap,
   tap,
   take,
+  exhaustMap,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
-import { Observable, of } from "rxjs";
+import { merge, Observable, of } from "rxjs";
 import { AuthService } from "../../core/services/auth.service";
 
 import {
-  AuthActionsTypes,
-  GetUserAction,
-  LoginUser,
-  LoginUserSuccess,
-  LogoutUser,
-  GetUserSuccessAction,
-  RegisterUser,
-  RegisterUserSuccess,
+  login,
+  loginSuccess,
+  loggedOut,
+  logout,
+  register,
+  registerSuccess,
+  getUser,
+  getUserSuccess,
 } from "../actions/auth.actions";
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  getCurrentUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUser),
+      map((action) => action.id),
+      switchMap((payload) => {
+        return this.authService.getUser(payload).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return getUserSuccess({ payload: user["user"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(register),
+      map((action) => action.payload),
+      mergeMap((register) =>
+        this.authService.registerUsers(register).pipe(
+          map((data) => {
+            this.router.navigate(["/login"]);
+            console.log("data", data);
+
+            return registerSuccess({ user: data["data"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
+  login$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(login),
+      mergeMap(({ email, password }) =>
+        this.authService.login({ email, password }).pipe(
+          map((data) => {
+            console.log("data", data);
+            return loginSuccess({ user: data["user"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
+  loginSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginSuccess),
+        tap(() => {
+          this.router.navigateByUrl("/");
+        })
+      ),
+    { dispatch: false }
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      map(() => {
+        AuthService.clearToken();
+        this.router.navigateByUrl("/login");
+        return loggedOut();
+      })
+    )
+  );
+
   constructor(
+    private readonly actions$: Actions,
     private authService: AuthService,
-    private actions$: Actions,
+    // private actions$: Actions,
     private router: Router,
     private store: Store<AppState>
   ) {}
-
-  @Effect()
-  UpdateProfile$: Observable<any> = this.actions$.pipe(
-    ofType(AuthActions.AuthActionsTypes.UPDATE_PROFILE),
-    map((action: AuthActions.UpdateProfile) => action.payload),
-    mergeMap((user: UserFetch) =>
-      this.authService.updateProfile(user).pipe(
-        map(
-          (updateProfile) =>
-            //  console.log("updatePRofile", updateProfile);
-            new AuthActions.UpdateProfileSucess({
-              id: updateProfile.id,
-              payload: updateProfile,
-            })
-        ),
-        tap(() => {
-          console.log("user id string", user.id);
-          this.store.dispatch(new GetUserAction({ id: user.id.toString() }));
-        }),
-        catchError((error) => of(new SetError(error)))
-      )
-    )
-  );
-
-  @Effect()
-  registerUser$ = this.actions$.pipe(
-    ofType<RegisterUser>(AuthActionsTypes.RegisterUser),
-    map((action) => action.payload),
-    switchMap((userCredentials) =>
-      this.authService.registerUsers(userCredentials).pipe(
-        map((data) => new RegisterUserSuccess(data)),
-        catchError((error) => of(new SetError(error)))
-      )
-    )
-  );
-
-  @Effect({ dispatch: false })
-  registerUserSuccess$ = this.actions$.pipe(
-    ofType<RegisterUserSuccess>(AuthActionsTypes.RegisterUserSuccess),
-    tap(() => this.router.navigateByUrl("/login"))
-  );
-
-  @Effect({ dispatch: false })
-  UpdateProfile$Success$ = this.actions$.pipe(
-    ofType<AuthActions.UpdateProfileSucess>(
-      AuthActionsTypes.UPDATE_PROFILE_SUCCESS
-    ),
-    tap(() => this.router.navigateByUrl("/user"))
-  );
-
-  @Effect()
-  loginUser$ = this.actions$.pipe(
-    ofType<LoginUser>(AuthActionsTypes.LoginUser),
-    map((action) => action.payload),
-    switchMap((credential) =>
-      this.authService.login(credential).pipe(
-        map((user) => {
-          return new LoginUserSuccess(user["user"]);
-        }),
-        catchError((error) => of(new SetError(error)))
-      )
-    )
-  );
-
-  @Effect({ dispatch: false })
-  loginUserSuccess$ = this.actions$.pipe(
-    ofType<LoginUserSuccess>(AuthActionsTypes.LoginUserSuccess),
-    tap(() => this.router.navigate(["/user"]))
-    //switchMap(() => [new GetCurrentUser(false), new GetNetworkPersonalIdentity()])
-  );
-
-  @Effect({ dispatch: false })
-  logoutUser$ = this.actions$.pipe(
-    ofType<LogoutUser>(AuthActionsTypes.LogoutUser),
-    tap(() => {
-      console.log("clicked effex");
-      this.router.navigate(["/login"]);
-    })
-  );
-
-  @Effect()
-  getUserInfo$ = this.actions$.pipe(
-    ofType<GetUserAction>(AuthActionsTypes.GET_USER),
-    map((action) => action.payload),
-    switchMap((payload) => {
-      return this.authService.getUser(payload.id).pipe(
-        take(1),
-        map((user) => {
-          console.log("user", user);
-          return new GetUserSuccessAction(user["user"]);
-        }),
-        catchError((error) => of(new SetError(error)))
-      );
-    })
-  );
 }
