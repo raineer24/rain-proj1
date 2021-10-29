@@ -32,6 +32,25 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  updateProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.UpdateProfile),
+      map((action) => action.payload),
+      switchMap((payload) => {
+        return this.authService.updateProfile(payload).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return AuthActions.UpdateProfileSuccess({
+              user_profile: user["user"],
+            });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
   getCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getUser),

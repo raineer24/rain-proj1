@@ -31,6 +31,13 @@ export const initialState: AuthState = adapter.getInitialState({
 export const authReducer = createReducer(
   initialState,
 
+  on(AuthActions.UpdateProfile, (state, { payload: { id } }) =>
+    adapter.updateOne(
+      { id, changes: { user_profile: state.entities[id].user_profile } },
+      state
+    )
+  ),
+
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
     authUser: payload,
