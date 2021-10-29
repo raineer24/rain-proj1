@@ -28,6 +28,11 @@ export const initialState: AuthState = adapter.getInitialState({
 //   authUser: null,
 // };
 
+export const articleAdapter: EntityAdapter<UserFetch> =
+  createEntityAdapter<UserFetch>({
+    selectId: (u_profile) => u_profile.id,
+  });
+
 export const authReducer = createReducer(
   initialState,
 

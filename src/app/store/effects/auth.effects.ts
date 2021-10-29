@@ -42,7 +42,7 @@ export class AuthEffects {
           map((user) => {
             console.log("user", user);
             return AuthActions.UpdateProfileSuccess({
-              user_profile: user["user"],
+              user_profile: user["userp"],
             });
           }),
           catchError((error) => of(new SetError(error)))
