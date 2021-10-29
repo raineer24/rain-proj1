@@ -36,12 +36,19 @@ export const articleAdapter: EntityAdapter<UserFetch> =
 export const authReducer = createReducer(
   initialState,
 
-  on(AuthActions.UpdateProfile, (state, { payload: { id } }) =>
-    adapter.updateOne(
-      { id, changes: { user_profile: state.entities[id].user_profile } },
-      state
-    )
-  ),
+  // on(AuthActions.UpdateProfile, (state, { payload: { id } }) =>
+  //   adapter.updateOne(
+  //     { id, changes: { user_profile: state.entities[id].user_profile } },
+  //     state
+  //   )
+  // ),
+  on(AuthActions.UpdateProfileSuccess, (state, action) => {
+    const scopeEntity = { ...state };
+    console.log("scope", scopeEntity);
+    console.log(action.payload);
+    console.log("entities", state.authUser.user_profile);
+    return adapter.updateOne(action.payload, state);
+  }),
 
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,

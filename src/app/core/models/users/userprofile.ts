@@ -1,5 +1,5 @@
 export interface UserFetch {
-  id: number;
+  id: string;
   company_name: string;
   website: string;
   job_location: string;
