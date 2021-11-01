@@ -56,7 +56,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
-  updateProfile(profile: UserFetch): Observable<UserFetch> {
+  updateProfile(profile: UserFetch) {
     console.log("update click", profile);
     const user_id = JSON.parse(sessionStorage.getItem("auth"));
     console.log("user.id", user_id["authUser"].user_profile[0].users_id);

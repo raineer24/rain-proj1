@@ -34,6 +34,9 @@ export const authReducer = createReducer(
   initialState,
 
   on(AuthActions.upsertProfileSuccess, (state, { profileId, u_profile }) => {
+    console.log("profileId", profileId);
+    console.log("u profile", u_profile);
+    console.log("state", state);
     return adapter.updateOne(
       { id: profileId, changes: { user_profile: u_profile } },
       state

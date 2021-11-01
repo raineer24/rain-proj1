@@ -32,17 +32,18 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  updateProfile$ = createEffect(() =>
+  upsertProfile$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.UpdateProfile),
-      map((action) => action.payload),
+      ofType(AuthActions.upsertProfile),
+      //  map((action) => action.profileId),
       switchMap((payload) => {
-        return this.authService.updateProfile(payload).pipe(
+        return this.authService.updateProfile(payload.u_profile).pipe(
           take(1),
           map((user) => {
             console.log("user", user);
-            return AuthActions.UpdateProfileSuccess({
-              payload: user["userp"],
+            return AuthActions.upsertProfileSuccess({
+              profileId: payload.profileId,
+              u_profile: user["userp"],
             });
           }),
           catchError((error) => of(new SetError(error)))
@@ -50,7 +51,6 @@ export class AuthEffects {
       })
     )
   );
-
   getCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getUser),
