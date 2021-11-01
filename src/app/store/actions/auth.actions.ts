@@ -12,14 +12,13 @@ import { AnyFn } from "@ngrx/store/src/selector";
 
 //export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
-export const UpdateProfileSuccess = createAction(
-  "[User/API] User Profile Success",
-  props<{ payload: any }>()
+export const upsertProfile = createAction(
+  "[Profile] Upsert profile ",
+  props<{ profileId: string; u_profile: UserFetch }>()
 );
-
-export const UpdateProfile = createAction(
-  "[User] Update Profile", //
-  props<{ payload: any }>()
+export const upsertProfileSuccess = createAction(
+  "[Profile] Upsert profile  success",
+  props<{ profileId: string; u_profile: UserFetch[] }>()
 );
 
 export const loginFailure = createAction(

@@ -16,7 +16,9 @@ export interface AuthState extends EntityState<UserDetailsModel> {
 // }
 
 export const adapter: EntityAdapter<UserDetailsModel> =
-  createEntityAdapter<UserDetailsModel>({});
+  createEntityAdapter<UserDetailsModel>({
+    selectId: (profile: UserDetailsModel) => profile.id,
+  });
 
 export const initialState: AuthState = adapter.getInitialState({
   isAuthenticated: null,
@@ -48,6 +50,10 @@ export const authReducer = createReducer(
     console.log(action.payload);
     console.log("entities", state.authUser.user_profile);
     return adapter.updateOne(action.payload, state);
+    // return adapter.updateOne(
+    //   { id, changes: { user_profile: state.entities[id].user_profile } },
+    //   state
+    // );
   }),
 
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
