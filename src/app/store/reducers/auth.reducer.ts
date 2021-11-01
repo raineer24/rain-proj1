@@ -30,31 +30,27 @@ export const initialState: AuthState = adapter.getInitialState({
 //   authUser: null,
 // };
 
-export const articleAdapter: EntityAdapter<UserFetch> =
-  createEntityAdapter<UserFetch>({
-    selectId: (u_profile) => u_profile.id,
-  });
-
 export const authReducer = createReducer(
   initialState,
 
-  // on(AuthActions.UpdateProfile, (state, { payload: { id } }) =>
-  //   adapter.updateOne(
-  //     { id, changes: { user_profile: state.entities[id].user_profile } },
-  //     state
-  //   )
-  // ),
-  on(AuthActions.UpdateProfileSuccess, (state, action) => {
-    const scopeEntity = { ...state };
-    console.log("scope", scopeEntity);
-    console.log(action.payload);
-    console.log("entities", state.authUser.user_profile);
-    return adapter.updateOne(action.payload, state);
-    // return adapter.updateOne(
-    //   { id, changes: { user_profile: state.entities[id].user_profile } },
-    //   state
-    // );
+  on(AuthActions.upsertProfileSuccess, (state, { profileId, u_profile }) => {
+    return adapter.updateOne(
+      { id: profileId, changes: { user_profile: u_profile } },
+      state
+    );
   }),
+
+  // on(AuthActions.UpdateProfileSuccess, (state, action) => {
+  //   const scopeEntity = { ...state };
+  //   console.log("scope", scopeEntity);
+  //   console.log(action.payload);
+  //   console.log("entities", state.authUser.user_profile);
+  //   return adapter.updateOne(action.payload, state);
+  //   // return adapter.updateOne(
+  //   //   { id, changes: { user_profile: state.entities[id].user_profile } },
+  //   //   state
+  //   // );
+  // }),
 
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
