@@ -4,7 +4,7 @@ import { Subscription, Observable, of, Subject } from "rxjs";
 import { MatIconRegistry } from "@angular/material/icon";
 //import { GetUserAction } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
-import { getUser, UpdateProfile } from "../../../store/actions/auth.actions";
+import { getUser } from "../../../store/actions/auth.actions";
 import {
   skipWhile,
   skip,
@@ -166,6 +166,23 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
     //this.store.dispatch(new AuthActions.createProfile(this.profForm.value));
   }
 
+  // async save() {
+  //   if (this.productItemForm.valid) {
+  //     this.store.dispatch(
+  //       productActions.upsertProductItem({
+  //         productId: this.productId,
+  //         productItem: <ProductItem>{
+  //           itemId: this.item.value.id,
+  //           itemName: this.item.value.name,
+  //           unitCost: this.item.value.unitCost,
+  //           quantity: this.quantity.value,
+  //           uom: "piece",
+  //         },
+  //       })
+  //     );
+  //   }
+  // }
+
   private updateUser() {
     const payload = {
       company_name: this.profForm.get("company_name").value,
@@ -185,7 +202,25 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
       facebook_handle: this.fb.value,
     };
     //({ payload: user["user"] });
-    this.store.dispatch(UpdateProfile({ payload: payload }));
+    //this.store.dispatch(UpdateProfile({ payload: payload }));
+    this.store.dispatch(
+      AuthActions.upsertProfile({
+        profileId: this.profile$.id,
+        u_profile: <UserFetch>{
+          company_name: this.profForm.get("company_name").value,
+          website: this.profForm.get("website").value,
+          job_location: this.profForm.get("job_location").value,
+          status: this.profForm.get("status").value,
+          bio: this.profForm.get("bio").value,
+          areas_of_expertise: this.profForm.get("areas_of_expertise").value,
+          id: this.profForm.get("id").value,
+          twitter_handle: this.twitter.value,
+          youtube_handle: this.yt.value,
+          instagram_handle: this.ig.value,
+          facebook_handle: this.fb.value,
+        },
+      })
+    );
     //this.store.dispatch(updatedProfile());
   }
 
