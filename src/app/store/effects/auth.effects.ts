@@ -111,7 +111,9 @@ export class AuthEffects {
             // this.router.navigate(["/login"]);
             console.log("data", data);
 
-            return AuthActions.createProfileSuccess({ payload: data["data"] });
+            return AuthActions.createProfileSuccess({
+              payload: data["profiileCreate"],
+            });
           }),
           catchError((error) => of(new SetError(error)))
         )

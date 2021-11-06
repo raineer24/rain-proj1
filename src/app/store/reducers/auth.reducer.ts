@@ -40,7 +40,7 @@ export const authReducer = createReducer(
 
     let x = [u_profile, ...state.authUser.user_profile];
 
-    console.log("push", u_profile.push(state.authUser.user_profile[0]));
+    //console.log("push", u_profile.push(state.authUser.user_profile[0]));
     return adapter.updateOne(
       { id: profileId, changes: { user_profile: u_profile } },
       state
