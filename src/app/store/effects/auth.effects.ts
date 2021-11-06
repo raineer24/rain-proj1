@@ -13,6 +13,7 @@ import {
   tap,
   take,
   exhaustMap,
+  delay,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
@@ -105,15 +106,32 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.createProfile),
       map((action) => action.payload),
-      mergeMap((cProfile) =>
-        this.authService.createProfile(cProfile).pipe(
-          map((data) => {
-            // this.router.navigate(["/login"]);
-            console.log("data", data);
+      switchMap((cProfile) =>
+        // this.authService.createProfile(cProfile).pipe(
+        //   map((data) => {
+        //     // this.router.navigate(["/login"]);
+        //     console.log("data", data);
 
-            return AuthActions.createProfileSuccess({
-              payload: data["profiileCreate"],
-            });
+        //     return AuthActions.createProfileSuccess({
+        //       payload: data["profiileCreate"],
+        //     });
+        //   }),
+        //   tap((payload) => {
+        //     console.log("payload", payload);
+        //   }),
+        //   catchError((error) => of(new SetError(error)))
+        // )
+        this.authService.createProfile(cProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.createProfileSuccess({
+              payload: data["profileCreate"],
+            }),
+            AuthActions.getUser({ id: data["profileCreate"].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/");
+            }, 2000);
           }),
           catchError((error) => of(new SetError(error)))
         )
@@ -136,16 +154,16 @@ export class AuthEffects {
     )
   );
 
-  createProfileSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.createProfileSuccess),
-        tap(() => {
-          this.router.navigateByUrl("/");
-        })
-      ),
-    { dispatch: false }
-  );
+  // createProfileSuccess$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(AuthActions.createProfileSuccess),
+  //       tap(() => {
+  //         this.router.navigateByUrl("/");
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 
   loginSuccess = createEffect(
     () =>
