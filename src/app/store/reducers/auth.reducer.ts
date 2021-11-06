@@ -58,11 +58,16 @@ export const authReducer = createReducer(
   //   //   state
   //   // );
   // }),
-  on(AuthActions.createProfileSuccess, (state, { payload }) => ({
-    ...state,
-    authUser: payload,
-    loading: false,
-  })),
+  on(AuthActions.createProfile, (state, action) => {
+    return adapter.addOne(action.payload, state);
+  }),
+  on(AuthActions.createProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      authUser: action.payload,
+    };
+  }),
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
     authUser: payload,
