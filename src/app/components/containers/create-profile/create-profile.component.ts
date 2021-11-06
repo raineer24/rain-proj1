@@ -163,7 +163,9 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
   }
 
   private createUser() {
-    //this.store.dispatch(new AuthActions.createProfile(this.profForm.value));
+    this.store.dispatch(
+      AuthActions.createProfile({ payload: this.profForm.value })
+    );
   }
 
   // async save() {

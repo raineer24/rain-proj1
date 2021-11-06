@@ -37,6 +37,7 @@ export class AuthEffects {
       ofType(AuthActions.upsertProfile),
       //  map((action) => action.profileId),
       switchMap((payload) => {
+        // const pro
         return this.authService.updateProfile(payload.u_profile).pipe(
           take(1),
           map((user) => {
@@ -51,6 +52,20 @@ export class AuthEffects {
       })
     )
   );
+
+  upsertProfileSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.upsertProfileSuccess),
+        map((action) => {
+          console.log("success action", action);
+          this.router.navigate(["/user"]);
+          //    this.store.dispatch(getUser({ id: action.profileId }));
+        })
+      ),
+    { dispatch: false }
+  );
+
   getCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getUser),
@@ -86,6 +101,24 @@ export class AuthEffects {
     )
   );
 
+  createProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.createProfile),
+      map((action) => action.payload),
+      mergeMap((cProfile) =>
+        this.authService.createProfile(cProfile).pipe(
+          map((data) => {
+            // this.router.navigate(["/login"]);
+            console.log("data", data);
+
+            return AuthActions.createProfileSuccess({ payload: data["data"] });
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
@@ -99,6 +132,17 @@ export class AuthEffects {
         )
       )
     )
+  );
+
+  createProfileSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.createProfileSuccess),
+        tap(() => {
+          this.router.navigateByUrl("/");
+        })
+      ),
+    { dispatch: false }
   );
 
   loginSuccess = createEffect(

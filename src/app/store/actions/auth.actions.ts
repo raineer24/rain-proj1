@@ -40,6 +40,16 @@ export const getUser = createAction(
   }>()
 );
 
+export const createProfile = createAction(
+  "[User] Create Profile ",
+  props<{ payload: any }>()
+);
+
+export const createProfileSuccess = createAction(
+  "[User] Create Profile Success",
+  props<{ payload: any }>()
+);
+
 export const getUserSuccess = createAction(
   "[Auth] Get Current User Success",
   props<{ payload: any }>()

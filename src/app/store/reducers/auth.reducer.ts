@@ -36,7 +36,11 @@ export const authReducer = createReducer(
   on(AuthActions.upsertProfileSuccess, (state, { profileId, u_profile }) => {
     console.log("profileId", profileId);
     console.log("u profile", u_profile);
-    console.log("state", state);
+    console.log("state", state.authUser.user_profile[0]);
+
+    let x = [u_profile, ...state.authUser.user_profile];
+
+    console.log("push", u_profile.push(state.authUser.user_profile[0]));
     return adapter.updateOne(
       { id: profileId, changes: { user_profile: u_profile } },
       state
@@ -54,7 +58,11 @@ export const authReducer = createReducer(
   //   //   state
   //   // );
   // }),
-
+  on(AuthActions.createProfileSuccess, (state, { payload }) => ({
+    ...state,
+    authUser: payload,
+    loading: false,
+  })),
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
     authUser: payload,
