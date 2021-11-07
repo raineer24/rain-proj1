@@ -5,24 +5,69 @@ import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { createReducer, on } from "@ngrx/store";
 
 import * as AuthActions from "../actions/auth.actions";
-// export interface AuthState extends EntityState<UserDetailsModel> {
-//   authUser: UserDetailsModel;
-//   isLoading: boolean;
-//   isAuthenticated: boolean;
-// }
-export interface AuthState {
-  isAuthenticated: boolean | null;
-  authUser: UserDetailsModel | null;
+export interface AuthState extends EntityState<UserDetailsModel> {
+  authUser: UserDetailsModel;
+  //isLoading: boolean;
+  isAuthenticated: boolean;
 }
+// export interface AuthState {
+//   isAuthenticated: boolean | null;
+//   authUser: UserDetailsModel | null;
+// }
 
-export const initialState: AuthState = {
+export const adapter: EntityAdapter<UserDetailsModel> =
+  createEntityAdapter<UserDetailsModel>({
+    selectId: (profile: UserDetailsModel) => profile.id,
+  });
+
+export const initialState: AuthState = adapter.getInitialState({
   isAuthenticated: null,
   authUser: null,
-};
+});
+
+// export const initialState: AuthState = {
+//   isAuthenticated: null,
+//   authUser: null,
+// };
 
 export const authReducer = createReducer(
   initialState,
 
+  on(AuthActions.upsertProfileSuccess, (state, { profileId, u_profile }) => {
+    console.log("profileId", profileId);
+    console.log("u profile", u_profile);
+    console.log("state", state.authUser.user_profile[0]);
+
+    let x = [u_profile, ...state.authUser.user_profile];
+
+    //console.log("push", u_profile.push(state.authUser.user_profile[0]));
+    return adapter.updateOne(
+      { id: profileId, changes: { user_profile: u_profile } },
+      state
+    );
+  }),
+
+  // on(AuthActions.UpdateProfileSuccess, (state, action) => {
+  //   const scopeEntity = { ...state };
+  //   console.log("scope", scopeEntity);
+  //   console.log(action.payload);
+  //   console.log("entities", state.authUser.user_profile);
+  //   return adapter.updateOne(action.payload, state);
+  //   // return adapter.updateOne(
+  //   //   { id, changes: { user_profile: state.entities[id].user_profile } },
+  //   //   state
+  //   // );
+  // }),
+  on(AuthActions.createProfile, (state, action) => {
+    return adapter.addOne(action.payload, state);
+  }),
+  on(AuthActions.createProfileSuccess, (state, action) => {
+    return {
+      ...state,
+      loading: true,
+      authUser: action.payload,
+    };
+  }),
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
     authUser: payload,

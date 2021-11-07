@@ -6,5 +6,5 @@ export class UserDetailsModel {
   email: string;
   username: string;
   first_name: string;
-  user_profile: EntityState<UserFetch>;
+  user_profile: UserFetch[];
 }

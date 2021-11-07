@@ -12,6 +12,15 @@ import { AnyFn } from "@ngrx/store/src/selector";
 
 //export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
+export const upsertProfile = createAction(
+  "[Profile] Upsert profile ",
+  props<{ profileId: string; u_profile: UserFetch }>()
+);
+export const upsertProfileSuccess = createAction(
+  "[Profile] Upsert profile  success",
+  props<{ profileId: string; u_profile: UserFetch[] }>()
+);
+
 export const loginFailure = createAction(
   "[Auth/API] Login Failure", //
   props<{ error: IError }>()
@@ -29,6 +38,16 @@ export const getUser = createAction(
   props<{
     id: string;
   }>()
+);
+
+export const createProfile = createAction(
+  "[User] Create Profile ",
+  props<{ payload: any }>()
+);
+
+export const createProfileSuccess = createAction(
+  "[User] Create Profile Success",
+  props<{ payload: any }>()
 );
 
 export const getUserSuccess = createAction(

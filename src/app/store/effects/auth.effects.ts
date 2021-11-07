@@ -13,6 +13,7 @@ import {
   tap,
   take,
   exhaustMap,
+  delay,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
@@ -32,6 +33,40 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  upsertProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.upsertProfile),
+      //  map((action) => action.profileId),
+      switchMap((payload) => {
+        // const pro
+        return this.authService.updateProfile(payload.u_profile).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return AuthActions.upsertProfileSuccess({
+              profileId: payload.profileId,
+              u_profile: user["userp"],
+            });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
+  upsertProfileSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.upsertProfileSuccess),
+        map((action) => {
+          console.log("success action", action);
+          this.router.navigate(["/user"]);
+          //    this.store.dispatch(getUser({ id: action.profileId }));
+        })
+      ),
+    { dispatch: false }
+  );
+
   getCurrentUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getUser),
@@ -67,6 +102,43 @@ export class AuthEffects {
     )
   );
 
+  createProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.createProfile),
+      map((action) => action.payload),
+      switchMap((cProfile) =>
+        // this.authService.createProfile(cProfile).pipe(
+        //   map((data) => {
+        //     // this.router.navigate(["/login"]);
+        //     console.log("data", data);
+
+        //     return AuthActions.createProfileSuccess({
+        //       payload: data["profiileCreate"],
+        //     });
+        //   }),
+        //   tap((payload) => {
+        //     console.log("payload", payload);
+        //   }),
+        //   catchError((error) => of(new SetError(error)))
+        // )
+        this.authService.createProfile(cProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.createProfileSuccess({
+              payload: data["profileCreate"],
+            }),
+            AuthActions.getUser({ id: data["profileCreate"].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/");
+            }, 2000);
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(login),
@@ -81,6 +153,17 @@ export class AuthEffects {
       )
     )
   );
+
+  // createProfileSuccess$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(AuthActions.createProfileSuccess),
+  //       tap(() => {
+  //         this.router.navigateByUrl("/");
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 
   loginSuccess = createEffect(
     () =>

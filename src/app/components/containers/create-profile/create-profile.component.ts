@@ -4,7 +4,7 @@ import { Subscription, Observable, of, Subject } from "rxjs";
 import { MatIconRegistry } from "@angular/material/icon";
 //import { GetUserAction } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
-
+import { getUser } from "../../../store/actions/auth.actions";
 import {
   skipWhile,
   skip,
@@ -17,11 +17,10 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ofType } from "@ngrx/effects";
 import { AppState } from "../../../store/app.state";
-// import {
-//   selectAuthUserId,
-//   selectAuthUser,
-//   selectAuthUserProfile,
-// } from "../../../store/reducers/auth.reducer";
+import {
+  selectAuthUserId,
+  selectAuthUser,
+} from "../../../store/reducers/auth.reducer";
 import {
   FormBuilder,
   FormGroup,
@@ -94,45 +93,42 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
       twitter_handle: [""],
       id: this.route.snapshot.params["id"],
     });
-    // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
-    //   console.log("data", data);
-    //   this.dataId = data;
+    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
+      console.log("data", data);
+      this.dataId = data;
 
-    //   this.store.dispatch(new GetUserAction({ id: this.dataId }));
-    // });
+      this.store.dispatch(getUser({ id: this.dataId }));
+    });
 
-    // if (!this.isAddMode) {
-    //   this.actionsSubj
-    //     .pipe(
-    //       ofType(AuthActions.AuthActionsTypes.GET_USER_SUCCESS),
-    //       takeUntil(this.destroyed$)
-    //     )
-    //     .subscribe((data: any) => {
-    //       console.log("xdatas", data);
-    //       console.log("xdata", data["payload"]["user_profile"][0]);
-    //       this.profile$ = data["payload"]["user_profile"][0];
-    //       console.log("prof", this.profile$.job_location);
-    //       let skills = data["payload"]["user_skill"][0].skills[0];
+    if (!this.isAddMode) {
+      this.actionsSubj
+        .pipe(ofType(AuthActions.getUserSuccess), takeUntil(this.destroyed$))
+        .subscribe((data: any) => {
+          console.log("xdatas", data);
+          console.log("xdata", data["payload"]["user_profile"][0]);
+          this.profile$ = data["payload"]["user_profile"][0];
+          console.log("prof", this.profile$.job_location);
+          let skills = data["payload"]["user_skill"][0].skills[0];
 
-    //       if (data) {
-    //         this.profForm.patchValue({
-    //           company_name: this.profile$.company_name,
-    //           website: this.profile$.website,
-    //           job_location: this.profile$.job_location,
-    //           status: this.profile$.status,
-    //           bio: this.profile$.bio,
-    //           areas_of_expertise: skills,
-    //           youtube_handle: this.profile$.youtube_handle,
-    //           twitter_handle: this.profile$.twitter_handle,
-    //           instagram_handle: this.profile$.instagram_handle,
-    //           facebook_handle: this.profile$.facebook_handle,
-    //           id: this.profile$.id,
-    //         });
-    //       }
+          if (data) {
+            this.profForm.patchValue({
+              company_name: this.profile$.company_name,
+              website: this.profile$.website,
+              job_location: this.profile$.job_location,
+              status: this.profile$.status,
+              bio: this.profile$.bio,
+              areas_of_expertise: skills,
+              youtube_handle: this.profile$.youtube_handle,
+              twitter_handle: this.profile$.twitter_handle,
+              instagram_handle: this.profile$.instagram_handle,
+              facebook_handle: this.profile$.facebook_handle,
+              id: this.profile$.id,
+            });
+          }
 
-    //       /* hooray, success, show notification alert etc.. */
-    //     });
-    // }
+          /* hooray, success, show notification alert etc.. */
+        });
+    }
   }
   ngOnDestroy() {
     this.destroyed$.next();
@@ -167,11 +163,30 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
   }
 
   private createUser() {
-    //this.store.dispatch(new AuthActions.createProfile(this.profForm.value));
+    this.store.dispatch(
+      AuthActions.createProfile({ payload: this.profForm.value })
+    );
   }
 
+  // async save() {
+  //   if (this.productItemForm.valid) {
+  //     this.store.dispatch(
+  //       productActions.upsertProductItem({
+  //         productId: this.productId,
+  //         productItem: <ProductItem>{
+  //           itemId: this.item.value.id,
+  //           itemName: this.item.value.name,
+  //           unitCost: this.item.value.unitCost,
+  //           quantity: this.quantity.value,
+  //           uom: "piece",
+  //         },
+  //       })
+  //     );
+  //   }
+  // }
+
   private updateUser() {
-    const updatedProfile = {
+    const payload = {
       company_name: this.profForm.get("company_name").value,
       website: this.profForm.get("website").value,
       job_location: this.profForm.get("job_location").value,
@@ -188,8 +203,27 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
       instagram_handle: this.ig.value,
       facebook_handle: this.fb.value,
     };
-
-    //this.store.dispatch(new AuthActions.UpdateProfile(updatedProfile));
+    //({ payload: user["user"] });
+    //this.store.dispatch(UpdateProfile({ payload: payload }));
+    this.store.dispatch(
+      AuthActions.upsertProfile({
+        profileId: this.profile$.id,
+        u_profile: <UserFetch>{
+          company_name: this.profForm.get("company_name").value,
+          website: this.profForm.get("website").value,
+          job_location: this.profForm.get("job_location").value,
+          status: this.profForm.get("status").value,
+          bio: this.profForm.get("bio").value,
+          areas_of_expertise: this.profForm.get("areas_of_expertise").value,
+          id: this.profForm.get("id").value,
+          twitter_handle: this.twitter.value,
+          youtube_handle: this.yt.value,
+          instagram_handle: this.ig.value,
+          facebook_handle: this.fb.value,
+        },
+      })
+    );
+    //this.store.dispatch(updatedProfile());
   }
 
   setJob(value) {
