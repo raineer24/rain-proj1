@@ -1,4 +1,3 @@
-<app-add-exp></app-add-exp>
 <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
 <div *ngIf="appState$ | async as state">
   {{ state.auth.authUser.username | titlecase }}
@@ -15,10 +14,23 @@
       </mat-toolbar>
     </div>
   </ng-template>
+
+  <h2>Experience Credentials</h2>
+  <div>
+    <table>
+      <thead>
+        <th>Company</th>
+        <th>Title</th>
+        <th>Years</th>
+      </thead>
+      <ng-container *ngFor="let data of state.auth.authUser?.user_experience; let i = index">
+        <td>{{data.company_name}}</td>
+        <td>{{data.job_title }}</td>
+        <td> {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
+        }}</td>
+      </ng-container>
+
+    </table>
+
+  </div>
 </div>
-<h2>Experience Credentials</h2>
-<table>
-  <caption>
-    Experience Credentials
-  </caption>
-</table>
