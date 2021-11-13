@@ -27,6 +27,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "app-user",
   template: `
+    <app-add-exp></app-add-exp>
     <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
     <div *ngIf="appState$ | async as state">
       {{ state.auth.authUser.username | titlecase }}
