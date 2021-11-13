@@ -1,0 +1,24 @@
+<app-add-exp></app-add-exp>
+<button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
+<div *ngIf="appState$ | async as state">
+  {{ state.auth.authUser.username | titlecase }}
+  <ng-container class="col-sm-12" *ngIf="state.auth.authUser?.user_profile == 0; else profile">
+    <h4>You have not yet setup a profile, please add some info</h4>
+    <button [routerLink]="['/add']">CREATE PROFILE</button>
+  </ng-container>
+  <ng-template #profile>
+    <div *ngFor="let profile of state.auth.authUser?.user_profile">
+      <mat-toolbar class="nav">
+        <a mat-button routerLink="edit/{{ profile.users_id }}">Edit Profile</a>
+        <a mat-button>Add Experience</a>
+        <a mat-button>Add Education</a>
+      </mat-toolbar>
+    </div>
+  </ng-template>
+</div>
+<h2>Experience Credentials</h2>
+<table>
+  <caption>
+    Experience Credentials
+  </caption>
+</table>
