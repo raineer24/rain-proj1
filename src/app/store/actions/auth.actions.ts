@@ -40,6 +40,16 @@ export const getUser = createAction(
   }>()
 );
 
+export const deleteExpProfile = createAction(
+  "[User] Delete Experience Profile ",
+  props<{ payload: any }>()
+);
+
+export const deleteEduProfileSuccess = createAction(
+  "[User] Delete Education Profile Success",
+  props<{ payload: any }>()
+);
+
 export const createProfile = createAction(
   "[User] Create Profile ",
   props<{ payload: any }>()

@@ -107,20 +107,6 @@ export class AuthEffects {
       ofType(AuthActions.createProfile),
       map((action) => action.payload),
       switchMap((cProfile) =>
-        // this.authService.createProfile(cProfile).pipe(
-        //   map((data) => {
-        //     // this.router.navigate(["/login"]);
-        //     console.log("data", data);
-
-        //     return AuthActions.createProfileSuccess({
-        //       payload: data["profiileCreate"],
-        //     });
-        //   }),
-        //   tap((payload) => {
-        //     console.log("payload", payload);
-        //   }),
-        //   catchError((error) => of(new SetError(error)))
-        // )
         this.authService.createProfile(cProfile).pipe(
           mergeMap((data) => [
             AuthActions.createProfileSuccess({
