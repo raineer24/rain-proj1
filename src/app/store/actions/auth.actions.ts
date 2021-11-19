@@ -42,7 +42,7 @@ export const getUser = createAction(
 
 export const deleteExpProfile = createAction(
   "[User] Delete Experience Profile ",
-  props<{ payload: any }>()
+  props<{ id: number }>()
 );
 
 export const deleteExpProfileSuccess = createAction(

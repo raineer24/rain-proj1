@@ -81,13 +81,13 @@ export class UserComponent implements OnInit, OnDestroy {
     //   });
   }
 
-  deleteUser(id: any) {
+  deleteUser(id: number) {
     //alert("In Delete");
     // this.authenticationService.deleteExp(id).subscribe((data) => {
     //   console.log("delete data", data);
     // });
-
-    this.store.dispatch(deleteExpProfile(id));
+    console.log("id", id);
+    this.store.dispatch(deleteExpProfile({ id }));
   }
 
   ngOnDestroy() {

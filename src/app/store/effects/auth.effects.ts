@@ -63,7 +63,7 @@ export class AuthEffects {
       //  map((action) => action.profileId),
       switchMap((payload) => {
         // const pro
-        return this.authService.deleteExp(payload).pipe(
+        return this.authService.deleteExp(payload.id).pipe(
           take(1),
           map((user) => {
             console.log("user", user);
