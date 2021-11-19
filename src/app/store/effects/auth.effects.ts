@@ -33,6 +33,50 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  // @Effect()
+  // deleteExpProfile: Observable<any> = this.actions$.pipe(
+  //   ofType(UserActions.UserActionTypes.DELETE_EXP_PROFILE),
+  //   map((action: UserActions.deleteExpProfile) => action.payload),
+  //   switchMap((payload) => {
+  //     //  console.log("payload create EXPERIENCE: ", payload);
+  //     return this.authService.deleteExp(payload).pipe(
+  //       take(1),
+  //       map((user) => {
+  //         console.log("delete EXPERIENCCE EFFECT: ", user);
+
+  //         // let data = user.profileEduCreate;
+
+  //         // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+  //         // console.log("get profile Effect", user.body);
+
+  //         return new UserActions.deleteExpProfileSuccess(user);
+  //       }),
+  //       catchError((err) => of(new UserActions.deleteEduProfileFail(err)))
+  //     );
+  //   })
+  // );
+
+  deleteExpProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.deleteExpProfile),
+      //  map((action) => action.profileId),
+      switchMap((payload) => {
+        // const pro
+        return this.authService.deleteExp(payload).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return AuthActions.deleteExpProfileSuccess({
+              payload: user["user"],
+            });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
   upsertProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.upsertProfile),

@@ -45,6 +45,11 @@ export const deleteExpProfile = createAction(
   props<{ payload: any }>()
 );
 
+export const deleteExpProfileSuccess = createAction(
+  "[User] Delete Education Profile Success",
+  props<{ payload: any }>()
+);
+
 export const deleteEduProfileSuccess = createAction(
   "[User] Delete Education Profile Success",
   props<{ payload: any }>()
