@@ -51,8 +51,8 @@
         {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
         }}
       </div>
-      <!-- <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
-              class="fa fa-trash"></i></button></div> -->
+      <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
+            class="fa fa-trash"></i></button></div>
 
     </div>
   </div>

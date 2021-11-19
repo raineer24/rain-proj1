@@ -12,7 +12,7 @@ import { AppState } from "../../../store/app.state";
 import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserFetch } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
-import { getUser } from "../../../store/actions/auth.actions";
+import { getUser, deleteExpProfile } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import { ofType } from "@ngrx/effects";
 import {
@@ -79,6 +79,15 @@ export class UserComponent implements OnInit, OnDestroy {
     //     this.profile$ = data["payload"]["user_profile"][0];
 
     //   });
+  }
+
+  deleteUser(id: any) {
+    //alert("In Delete");
+    // this.authenticationService.deleteExp(id).subscribe((data) => {
+    //   console.log("delete data", data);
+    // });
+
+    this.store.dispatch(deleteExpProfile(id));
   }
 
   ngOnDestroy() {
