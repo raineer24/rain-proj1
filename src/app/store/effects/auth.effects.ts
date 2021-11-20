@@ -33,29 +33,38 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  // @Effect()
-  // deleteExpProfile: Observable<any> = this.actions$.pipe(
-  //   ofType(UserActions.UserActionTypes.DELETE_EXP_PROFILE),
-  //   map((action: UserActions.deleteExpProfile) => action.payload),
-  //   switchMap((payload) => {
-  //     //  console.log("payload create EXPERIENCE: ", payload);
-  //     return this.authService.deleteExp(payload).pipe(
-  //       take(1),
-  //       map((user) => {
-  //         console.log("delete EXPERIENCCE EFFECT: ", user);
+  deleteEduProfileSucces$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.deleteEduProfileSuccess),
+        map((action) => {
+          //    console.log("success action", action);
+          this.router.navigate(["/user"]);
+          //    this.store.dispatch(getUser({ id: action.profileId }));
+        })
+      ),
+    { dispatch: false }
+  );
 
-  //         // let data = user.profileEduCreate;
-
-  //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-
-  //         // console.log("get profile Effect", user.body);
-
-  //         return new UserActions.deleteExpProfileSuccess(user);
-  //       }),
-  //       catchError((err) => of(new UserActions.deleteEduProfileFail(err)))
-  //     );
-  //   })
-  // );
+  deleteEduProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.deleteEduProfile),
+      //  map((action) => action.profileId),
+      switchMap((payload) => {
+        // const pro
+        return this.authService.deleteEdu(payload.id).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return AuthActions.deleteEduProfileSuccess({
+              payload: user["userEdu"],
+            });
+          }),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
 
   deleteExpProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -75,6 +84,19 @@ export class AuthEffects {
         );
       })
     )
+  );
+
+  deleteExpProfileSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.deleteExpProfileSuccess),
+        map((action) => {
+          console.log("success action", action);
+          this.router.navigate(["/user"]);
+          //    this.store.dispatch(getUser({ id: action.profileId }));
+        })
+      ),
+    { dispatch: false }
   );
 
   upsertProfile$ = createEffect(() =>
