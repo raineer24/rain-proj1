@@ -46,12 +46,12 @@ export const deleteExpProfile = createAction(
 );
 
 export const deleteEduProfile = createAction(
-  "[User] Delete Experience Profile ",
+  "[User] Delete Education Profile ",
   props<{ id: number }>()
 );
 
 export const deleteExpProfileSuccess = createAction(
-  "[User] Delete Education Profile Success",
+  "[User] Delete Experience Profile Success",
   props<{ payload: any }>()
 );
 

@@ -19,6 +19,7 @@ import {
 } from "../../../store/actions/auth.actions";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import { ofType } from "@ngrx/effects";
+import { AuthService } from "src/app/core/services/auth.service";
 import {
   skipWhile,
   skip,
@@ -45,7 +46,8 @@ export class UserComponent implements OnInit, OnDestroy {
   user$: Observable<UserDetailsModel>;
   constructor(
     private store: Store<AppState>,
-    private actionsSubj: ActionsSubject
+    private actionsSubj: ActionsSubject,
+    private authenticationSerive: AuthService
   ) {}
   ngOnInit(): void {
     this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
@@ -86,8 +88,8 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   deleteEdu(id: number) {
-    //alert("In Delete");
-    // this.authenticationService.deleteExp(id).subscribe((data) => {
+    console.log("clicked", id);
+    // this.authenticationSerive.deleteEdu(id).subscribe((data) => {
     //   console.log("delete data", data);
     // });
 
