@@ -1,3 +1,16 @@
+.container {
+  display: grid;
+
+/*    grid-template-areas: 
+    "header header header header header"
+    "main main . . sidebar"
+    "footer footer footer footer footer"; */
+    grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  justify-items: start;
+  align-items: center;
+  justify-content: stretch;	
+}
 table {
   width: 100%;
 }
