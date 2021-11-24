@@ -33,18 +33,6 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  // deleteEduProfileSucces = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(AuthActions.deleteEduProfileSuccess),
-  //       tap(() => {
-  //         console.log("edu profile success");
-  //         this.router.navigate(["/user"]);
-  //       })
-  //     ),
-  //   { dispatch: false }
-  // );
-
   deleteEduProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.deleteEduProfile),
@@ -67,27 +55,6 @@ export class AuthEffects {
       )
     )
   );
-
-  // deleteEduProfile$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActions.deleteEduProfile),
-  //     //  map((action) => action.profileId),
-  //     mergeMap((payload) => {
-  //       console.log("payloaddelete edu", payload);
-  //       // const pro
-  //       return this.authService.deleteEdu(payload.id).pipe(
-  //         map((user) => {
-  //           console.log("user", user);
-
-  //           return AuthActions.deleteEduProfileSuccess({
-  //             payload: user["userEdu"],
-  //           });
-  //         }),
-  //         catchError((error) => of(new SetError(error)))
-  //       );
-  //     })
-  //   )
-  // );
 
   deleteExpProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -229,17 +196,6 @@ export class AuthEffects {
       )
     )
   );
-
-  // createProfileSuccess$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(AuthActions.createProfileSuccess),
-  //       tap(() => {
-  //         this.router.navigateByUrl("/");
-  //       })
-  //     ),
-  //   { dispatch: false }
-  // );
 
   loginSuccess = createEffect(
     () =>
