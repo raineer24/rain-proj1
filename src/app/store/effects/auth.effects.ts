@@ -33,30 +33,34 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  deleteEduProfileSucces = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.deleteEduProfileSuccess),
-        tap(() => {
-          this.router.navigateByUrl("/");
-        })
-      ),
-    { dispatch: false }
-  );
+  // deleteEduProfileSucces = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(AuthActions.deleteEduProfileSuccess),
+  //       tap(() => {
+  //         console.log("edu profile success");
+  //         this.router.navigate(["/user"]);
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
 
   deleteEduProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.deleteEduProfile),
       map((action) => action.id),
-      mergeMap((register) =>
-        this.authService.deleteEdu(register).pipe(
-          map((data) => {
-            //this.router.navigate(["/login"]);
-            console.log("data", data);
-
-            return AuthActions.deleteEduProfileSuccess({
+      switchMap((dProfile) =>
+        this.authService.deleteEdu(dProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.deleteEduProfileSuccess({
               payload: data["userEdu"],
-            });
+            }),
+            AuthActions.getUser({ id: data["userEdu"][0].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
           }),
           catchError((error) => of(new SetError(error)))
         )
