@@ -59,36 +59,46 @@ export class AuthEffects {
   deleteExpProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.deleteExpProfile),
-      //  map((action) => action.profileId),
-      switchMap((payload) => {
-        // const pro
-        return this.authService.deleteExp(payload.id).pipe(
-          take(1),
-          map((user) => {
-            console.log("user", user);
-
-            return AuthActions.deleteExpProfileSuccess({
-              payload: user["user"],
-            });
+      map((action) => action.id),
+      switchMap((dExpProfile) =>
+        this.authService.deleteExp(dExpProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.deleteExpProfileSuccess({
+              payload: data["userExp"],
+            }),
+            AuthActions.getUser({ id: data["userExp"][0].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
           }),
           catchError((error) => of(new SetError(error)))
-        );
-      })
+        )
+      )
     )
   );
 
-  deleteExpProfileSuccess = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.deleteExpProfileSuccess),
-        map((action) => {
-          console.log("success action", action);
-          this.router.navigate(["/user"]);
-          //    this.store.dispatch(getUser({ id: action.profileId }));
-        })
-      ),
-    { dispatch: false }
-  );
+  // deleteExpProfile$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.deleteExpProfile),
+  //     //  map((action) => action.profileId),
+  //     mergeMap((payload) => {
+  //       console.log("payloaddelete edu", payload);
+  //       // const pro
+  //       return this.authService.deleteExp(payload.id).pipe(
+  //         map((user) => {
+  //           console.log("user", user);
+
+  //           return AuthActions.deleteExpProfileSuccess({
+  //             payload: user["userExp"],
+  //           });
+  //         }),
+  //         catchError((error) => of(new SetError(error)))
+  //       );
+  //     })
+  //   )
+  // );
 
   upsertProfile$ = createEffect(() =>
     this.actions$.pipe(
