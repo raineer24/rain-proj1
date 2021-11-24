@@ -33,6 +33,73 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
+  deleteEduProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.deleteEduProfile),
+      map((action) => action.id),
+      switchMap((dProfile) =>
+        this.authService.deleteEdu(dProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.deleteEduProfileSuccess({
+              payload: data["userEdu"],
+            }),
+            AuthActions.getUser({ id: data["userEdu"][0].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
+  deleteExpProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.deleteExpProfile),
+      map((action) => action.id),
+      switchMap((dExpProfile) =>
+        this.authService.deleteExp(dExpProfile).pipe(
+          mergeMap((data) => [
+            AuthActions.deleteExpProfileSuccess({
+              payload: data["userExp"],
+            }),
+            AuthActions.getUser({ id: data["userExp"][0].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
+  // deleteExpProfile$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.deleteExpProfile),
+  //     //  map((action) => action.profileId),
+  //     mergeMap((payload) => {
+  //       console.log("payloaddelete edu", payload);
+  //       // const pro
+  //       return this.authService.deleteExp(payload.id).pipe(
+  //         map((user) => {
+  //           console.log("user", user);
+
+  //           return AuthActions.deleteExpProfileSuccess({
+  //             payload: user["userExp"],
+  //           });
+  //         }),
+  //         catchError((error) => of(new SetError(error)))
+  //       );
+  //     })
+  //   )
+  // );
+
   upsertProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.upsertProfile),
@@ -107,20 +174,6 @@ export class AuthEffects {
       ofType(AuthActions.createProfile),
       map((action) => action.payload),
       switchMap((cProfile) =>
-        // this.authService.createProfile(cProfile).pipe(
-        //   map((data) => {
-        //     // this.router.navigate(["/login"]);
-        //     console.log("data", data);
-
-        //     return AuthActions.createProfileSuccess({
-        //       payload: data["profiileCreate"],
-        //     });
-        //   }),
-        //   tap((payload) => {
-        //     console.log("payload", payload);
-        //   }),
-        //   catchError((error) => of(new SetError(error)))
-        // )
         this.authService.createProfile(cProfile).pipe(
           mergeMap((data) => [
             AuthActions.createProfileSuccess({
@@ -153,17 +206,6 @@ export class AuthEffects {
       )
     )
   );
-
-  // createProfileSuccess$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(AuthActions.createProfileSuccess),
-  //       tap(() => {
-  //         this.router.navigateByUrl("/");
-  //       })
-  //     ),
-  //   { dispatch: false }
-  // );
 
   loginSuccess = createEffect(
     () =>

@@ -19,6 +19,7 @@ import { AppEffects } from "./store/app.effects";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import * as fromApp from "./store/app.reducers";
 import { JwtInterceptor } from "./core/guards/jwt.interceptor";
+import { AddExperienceComponent } from "./components/containers/add-exp/add-exp.component";
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { RegisterFormComponent } from "./components/presentational/auth/register-form/register-form.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -34,6 +35,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     UserComponent,
     LoginFormComponent,
     RegisterPageComponent,
+    AddExperienceComponent,
     RegisterFormComponent,
     CreateProfileComponent,
     AppDropdownComponent,

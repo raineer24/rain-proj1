@@ -35,6 +35,27 @@ export class AuthService {
     });
   }
 
+  public deleteEdu(id: number): Observable<any> {
+    //DELETE /api/v2/users/profile/education/:edu_id
+    // localhost:3000/api/v2/users/profile/education
+    const url = `${this.baseUrl}/api/v2/users/profile/education/${id}`;
+    let userdata = JSON.parse(localStorage.getItem("currentUser"));
+    let token = userdata.token;
+    return this.http.delete(url, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
+  }
+
+  public deleteExp(id: number): Observable<any> {
+    //DELETE /api/v2/users/profile/experience/:exp_id
+    const url = `${this.baseUrl}/api/v2/users/profile/experience/${id}`;
+    let userdata = JSON.parse(localStorage.getItem("currentUser"));
+    let token = userdata.token;
+    return this.http.delete(url, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
+  }
+
   login(credentials: UserCredentialsModel): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
