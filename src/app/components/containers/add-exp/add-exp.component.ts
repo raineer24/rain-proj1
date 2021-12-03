@@ -14,20 +14,22 @@ import {
   FormControl,
   FormArray,
 } from "@angular/forms";
-// import {
-//   MAT_MOMENT_DATE_FORMATS,
-//   MomentDateAdapter,
-// } from "@angular/material-moment-adapter";
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+} from "@angular/material-moment-adapter";
 import {
   DateAdapter,
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from "@angular/material/core";
-//import * as _moment from "moment";
+import * as _moment from "moment";
 // tslint:disable-next-line:no-duplicate-imports
 import { Router, ActivatedRoute } from "@angular/router";
-//import { default as _rollupMoment } from "moment";
+import { default as _rollupMoment } from "moment";
 import { DatePipe } from "@angular/common";
+
+const moment = _rollupMoment || _moment;
 
 @Component({
   selector: "app-add-exp",

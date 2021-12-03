@@ -47,6 +47,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatDividerModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatDatepickerModule,
   ],
   exports: [
     MatToolbarModule,
@@ -65,6 +66,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatDividerModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatDatepickerModule,
   ],
 })
 export class MaterialModule {}
