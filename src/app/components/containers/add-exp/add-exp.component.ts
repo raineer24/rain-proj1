@@ -37,7 +37,18 @@ const moment = _rollupMoment || _moment;
   styleUrls: ["./add-exp.component.scss"],
 })
 export class AddExperienceComponent implements OnInit {
-  constructor() {}
+  formGroup: FormGroup;
+  constructor(private formBuilder: FormBuilder) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.formGroup = this.formBuilder.group({
+      job_title: [null, Validators.required],
+      company_name: [null, Validators.required],
+      job_location: [null, Validators.required],
+      start_date: [null, Validators.required],
+      end_date: [null, Validators.required],
+      description: [null, Validators.required],
+      current: [false, []],
+    });
+  }
 }
