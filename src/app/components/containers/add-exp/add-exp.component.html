@@ -32,5 +32,12 @@
       <textarea matInput formControlName="description"></textarea>
 
     </mat-form-field>
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!formGroup.valid">Submit
+        Form</button>
+      <button mat-raised-button color="primary" class="button" [routerLink]="['/']">Go back</button>
+    </div>
+    <pre>{{ formGroup.value | json }}</pre>
+
   </form>
 </div>
