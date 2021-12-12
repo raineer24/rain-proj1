@@ -61,22 +61,18 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.createExpProfile),
       map((action) => action.id),
-      switchMap((cr8ExProfile) =>
-        this.authService.createProfile(cr8ExProfile).pipe(
-          mergeMap((data) => [
-            AuthActions.deleteEduProfileSuccess({
-              payload: data["userEdu"],
-            }),
-            AuthActions.getUser({ id: data["userEdu"][0].users_id }),
-          ]),
-          tap(() => {
-            setTimeout(() => {
-              this.router.navigateByUrl("/user");
-            }, 2000);
+      switchMap((payload) => {
+        return this.authService.createExp(payload).pipe(
+          take(1),
+          map((user) => {
+            console.log("user", user);
+            return AuthActions.createExpProfileSuccess({
+              payload: user["user"],
+            });
           }),
           catchError((error) => of(new SetError(error)))
-        )
-      )
+        );
+      })
     )
   );
 

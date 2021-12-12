@@ -35,6 +35,25 @@ export class AuthService {
     });
   }
 
+  public createExp(data): Observable<any> {
+    // localhost:3000/api/v2/users/profile/experience
+    const url = `${this.baseUrl}/api/v2/users/profile/experience`;
+    let userdata = JSON.parse(localStorage.getItem("currentUser"));
+    console.log("user token", userdata.token);
+    let token = userdata.token;
+    return this.http
+      .post(url, data, {
+        headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+      })
+      .pipe(
+        tap((data) => {
+          console.log("create exprience :", data);
+          console.log("clicked");
+          //   this.router.navigate(["/admin"]);
+        })
+      );
+  }
+
   public deleteEdu(id: number): Observable<any> {
     //DELETE /api/v2/users/profile/education/:edu_id
     // localhost:3000/api/v2/users/profile/education
