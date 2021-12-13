@@ -43,7 +43,7 @@ export const getUser = createAction(
 export const createExpProfile = createAction(
   "[User] Create Experience Profile ",
   props<{
-    id: string;
+    payload: any;
   }>()
 );
 

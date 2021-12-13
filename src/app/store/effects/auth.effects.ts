@@ -60,7 +60,7 @@ export class AuthEffects {
   createExperience$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.createExpProfile),
-      map((action) => action.id),
+      map((action) => action.payload),
       switchMap((payload) => {
         return this.authService.createExp(payload).pipe(
           take(1),
