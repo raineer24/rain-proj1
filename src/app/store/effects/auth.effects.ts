@@ -79,7 +79,7 @@ export class AuthEffects {
   deleteEduProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.deleteEduProfile),
-      map((action) => action.id),
+      map((action) => action.users_id),
       switchMap((dProfile) =>
         this.authService.deleteEdu(dProfile).pipe(
           mergeMap((data) => [
