@@ -59,7 +59,7 @@ export const deleteExpProfile = createAction(
 
 export const deleteEduProfile = createAction(
   "[User] Delete Education Profile ",
-  props<{ users_id: number }>()
+  props<{ id: number }>()
 );
 
 export const deleteExpProfileSuccess = createAction(

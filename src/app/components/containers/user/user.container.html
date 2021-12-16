@@ -9,7 +9,7 @@
     <div *ngFor="let profile of state.auth.authUser?.user_profile">
       <mat-toolbar class="nav">
         <a mat-button routerLink="edit/{{ profile.users_id }}">Edit Profile</a>
-        <a mat-button ngIf="user?.user_experience == 0" routerLink=" add-exp">Add Experience</a>
+        <a mat-button *ngIf="profile?.user_experience == 0" routerLink="add-exp">Add Experience</a>
         <a mat-button>Add Education</a>
       </mat-toolbar>
     </div>
