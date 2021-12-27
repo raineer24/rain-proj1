@@ -61,20 +61,44 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.createExpProfile),
       map((action) => action.payload),
-      switchMap((payload) => {
-        return this.authService.createExp(payload).pipe(
+      switchMap((payload) =>
+        this.authService.createExp(payload).pipe(
           take(1),
-          map((user) => {
-            console.log("user", user);
-            return AuthActions.createExpProfileSuccess({
-              payload: user["user"],
-            });
+          mergeMap((data) => [
+            AuthActions.createExpProfileSuccess({
+              payload: data["profileExpCreate"],
+            }),
+            AuthActions.getUser({ id: data["profileExpCreate"].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
           }),
           catchError((error) => of(new SetError(error)))
-        );
-      })
+        )
+      )
     )
   );
+
+  // createExperience$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.createExpProfile),
+  //     map((action) => action.payload),
+  //     switchMap((payload) => {
+  //       return this.authService.createExp(payload).pipe(
+  //         take(1),
+  //         map((user) => {
+  //           console.log("user", user);
+  //           return AuthActions.createExpProfileSuccess({
+  //             payload: user["user"],
+  //           });
+  //         }),
+  //         catchError((error) => of(new SetError(error)))
+  //       );
+  //     })
+  //   )
+  // );
 
   // deleteEduProfile$ = createEffect(() =>
   //   this.actions$.pipe(
