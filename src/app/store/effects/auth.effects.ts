@@ -76,6 +76,31 @@ export class AuthEffects {
     )
   );
 
+  // deleteEduProfile$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(AuthActions.deleteEduProfile),
+  //     map((action) => action.id),
+  //     switchMap((payload) => {
+  //       console.log("payload create EXPERIENCE: ", payload);
+  //       return this.authService.deleteEdu(payload).pipe(
+  //         take(1),
+  //         map((user) => {
+  //           console.log("delete edu profile: ", user);
+
+  //           // let data = user.profileExpCreate;
+
+  //           // store user details and jwt token in local storage to keep user logged in between page refreshes
+
+  //           // console.log("get profile Effect", user.body);
+
+  //           // return new UserActions.createExpProfileeSuccess(data);
+  //         }),
+  //         catchError((err) => of(new err()))
+  //       );
+  //     })
+  //   )
+  // );
+
   deleteEduProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.deleteEduProfile),
