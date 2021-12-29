@@ -9,7 +9,7 @@
     <div *ngFor="let profile of state.auth.authUser?.user_profile">
       <mat-toolbar class="nav">
         <a mat-button routerLink="edit/{{ profile.users_id }}">Edit Profile</a>
-        <a mat-button>Add Experience</a>
+        <a mat-button routerLink="add-exp">Add Experience</a>
         <a mat-button>Add Education</a>
       </mat-toolbar>
     </div>
@@ -34,7 +34,8 @@
         }}
           </div>
           <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
-                class="fa fa-trash"></i></button></div>
+                class="fa fa-trash"></i></button>
+          </div>
 
         </div>
       </div>

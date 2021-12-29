@@ -16,8 +16,9 @@
     ],
     "lib": [
       "es2018",
-      "dom"
-    ]
+      "dom",
+      
+    ],  "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
