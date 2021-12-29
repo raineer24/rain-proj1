@@ -61,6 +61,18 @@ export const authReducer = createReducer(
   on(AuthActions.createProfile, (state, action) => {
     return adapter.addOne(action.payload, state);
   }),
+  on(AuthActions.createEduProfile, (state, action) => {
+    return adapter.addOne(action.payload, state);
+  }),
+  on(AuthActions.createExpProfile, (state, action) => {
+    return adapter.addOne(action.payload, state);
+  }),
+  on(AuthActions.deleteExpProfileSuccess, (state, action) => {
+    return adapter.removeOne(action.payload, state);
+  }),
+  on(AuthActions.deleteEduProfileSuccess, (state, action) => {
+    return adapter.removeOne(action.payload, state);
+  }),
   on(AuthActions.createProfileSuccess, (state, action) => {
     return {
       ...state,

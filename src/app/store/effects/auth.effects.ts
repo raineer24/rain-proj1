@@ -57,6 +57,30 @@ export class AuthEffects {
   //   })
   // );
 
+  createEducation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.createEduProfile),
+      map((action) => action.payload),
+      switchMap((payload) =>
+        this.authService.createEdu(payload).pipe(
+          take(1),
+          mergeMap((data) => [
+            AuthActions.createEduProfileSuccess({
+              payload: data["profileEduCreate"],
+            }),
+            AuthActions.getUser({ id: data["profileEduCreate"].users_id }),
+          ]),
+          tap(() => {
+            setTimeout(() => {
+              this.router.navigateByUrl("/user");
+            }, 2000);
+          }),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
+    )
+  );
+
   createExperience$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.createExpProfile),
