@@ -35,6 +35,17 @@ export class AuthService {
     });
   }
 
+  public createEdu(data) {
+    // localhost:3000/api/v2/users/profile/education
+    const url = `${this.baseUrl}/api/v2/users/profile/education`;
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    // let userdata = JSON.parse(localStorage.getItem("currentUser"));
+    // let token = userdata.token;
+    return this.http.post(url, data, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
+  }
+
   public createExp(data): Observable<any> {
     // localhost:3000/api/v2/users/profile/experience
     const url = `${this.baseUrl}/api/v2/users/profile/experience`;
