@@ -24,6 +24,8 @@ import * as _moment from "moment";
 import { Router, ActivatedRoute } from "@angular/router";
 import { default as _rollupMoment } from "moment";
 import { DatePipe } from "@angular/common";
+import * as AuthActions from "../../../store/actions/auth.actions";
+import { AppState } from "../../../store/app.state";
 @Component({
   selector: "app-add-edu",
   templateUrl: "./add-edu.component.html",
@@ -44,7 +46,11 @@ import { DatePipe } from "@angular/common";
 export class AddEducationComponent implements OnInit {
   formGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private datePipe: DatePipe) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -57,8 +63,15 @@ export class AddEducationComponent implements OnInit {
       current: [false, []],
     });
   }
+  get date() {
+    return this.formGroup.get("date");
+  }
 
-  onSubmit() {}
+  onSubmit() {
+    this.store.dispatch(
+      AuthActions.createEduProfile({ payload: this.formGroup.value })
+    );
+  }
 
   toggleCtrState() {
     const ctrl = this.formGroup.get("end_date");
