@@ -6,6 +6,7 @@ import { UserComponent } from "./components/containers/user/user.container";
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
 import { AddExperienceComponent } from "./components/containers/add-exp/add-exp.component";
+import { AddEducationComponent } from "./components/containers/add-edu/add-edu.component";
 import { Router, ActivatedRoute } from "@angular/router";
 const routes: Routes = [
   { path: "login", component: AuthPageComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: "add", component: CreateProfileComponent },
   { path: "user/edit/:id", component: CreateProfileComponent },
   { path: "user/add-exp", component: AddExperienceComponent },
+  { path: "user/add-edu", component: AddEducationComponent },
   {
     path: "user",
     component: UserComponent,
