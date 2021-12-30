@@ -1,6 +1,11 @@
-import { UserDetailsModel, UserFetch } from "../../core/models";
+import {
+  UserDetailsModel,
+  UserFetch,
+  UserCredentialsModel,
+} from "../../core/models";
 import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
+import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
 import { createReducer, on } from "@ngrx/store";
 
@@ -9,6 +14,7 @@ export interface AuthState extends EntityState<UserDetailsModel> {
   authUser: UserDetailsModel;
   //isLoading: boolean;
   isAuthenticated: boolean;
+  users: UserCredentialsModel[];
 }
 // export interface AuthState {
 //   isAuthenticated: boolean | null;
@@ -23,6 +29,7 @@ export const adapter: EntityAdapter<UserDetailsModel> =
 export const initialState: AuthState = adapter.getInitialState({
   isAuthenticated: null,
   authUser: null,
+  users: [],
 });
 
 // export const initialState: AuthState = {
@@ -112,6 +119,8 @@ export const authReducer = createReducer(
 );
 
 const selectAuthState = (state: AppState) => state.auth;
+
+export const getUsersState = createFeatureSelector<UsersState>("users");
 
 export const selectAuthUser = createSelector(
   selectAuthState,

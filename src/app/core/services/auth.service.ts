@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, BehaviorSubject } from "rxjs";
-import { UserDetailsModel, UserCredentialsModel, UserFetch } from "../models";
+import {
+  UserDetailsModel,
+  UserCredentialsModel,
+  UserFetch,
+  LoginUserQuery,
+} from "../models";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 @Injectable({
@@ -87,7 +92,7 @@ export class AuthService {
     });
   }
 
-  login(credentials: UserCredentialsModel): Observable<any> {
+  login(credentials: LoginUserQuery): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
     return this.http
