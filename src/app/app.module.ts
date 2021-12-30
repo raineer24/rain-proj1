@@ -23,6 +23,8 @@ import { AddExperienceComponent } from "./components/containers/add-exp/add-exp.
 import { AddEducationComponent } from "./components/containers/add-edu/add-edu.component";
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { RegisterFormComponent } from "./components/presentational/auth/register-form/register-form.component";
+import { UsersListComponent } from "./components/presentational/users-list/users-list.component";
+import { UsersListContainerComponent } from "./components/containers/users-list-container/users-list-container.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
 const metaReducers: Array<MetaReducer<any, any>> = [
@@ -41,6 +43,8 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     RegisterFormComponent,
     CreateProfileComponent,
     AppDropdownComponent,
+    UsersListComponent,
+    UsersListContainerComponent,
   ],
   imports: [
     FlexLayoutModule,
