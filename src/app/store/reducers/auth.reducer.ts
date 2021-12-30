@@ -120,8 +120,6 @@ export const authReducer = createReducer(
 
 const selectAuthState = (state: AppState) => state.auth;
 
-export const getUsersState = createFeatureSelector<UsersState>("users");
-
 export const selectAuthUser = createSelector(
   selectAuthState,
   (state: AuthState) => state.authUser
