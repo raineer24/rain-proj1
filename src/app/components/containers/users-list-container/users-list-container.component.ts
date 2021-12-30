@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ` <app-users-list> </app-users-list> `,
+  template: `<app-users-list></app-users-list> `,
 })
 export class UsersListContainerComponent implements OnInit {
   //users$: Observable<UsersListItemDto[]>;
