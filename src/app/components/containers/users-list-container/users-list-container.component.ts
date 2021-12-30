@@ -1,19 +1,41 @@
 import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
-
-import { Store } from "@ngrx/store";
+import { AppState } from "../../../store/app.state";
+import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { getUsers } from "../../../store/reducers/auth.reducer";
+import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
+import {
+  skipWhile,
+  skip,
+  take,
+  filter,
+  first,
+  takeUntil,
+} from "rxjs/operators";
+import {
+  getUser,
+  deleteExpProfile,
+  deleteEduProfile,
+  loadUsers,
+} from "../../../store/actions/auth.actions";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-users-list></app-users-list> `,
+  template: `<app-users-list [users]="users$ | async"> </app-users-list> `,
 })
 export class UsersListContainerComponent implements OnInit {
-  //users$: Observable<UsersListItemDto[]>;
+  users$: Observable<UserCredentialsModel[]>;
 
-  //constructor(private store: Store<fromStore.UsersState>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    // this.users$ = this.store.select(fromStore.getUsers);
+    this.store.dispatch(loadUsers());
+    this.users$ = this.store.select(getUsers);
+    console.log("this users", this.users$);
+
+    this.store.pipe(select(getUsers), take(1)).subscribe((data) => {
+      console.log("data", data);
+    });
   }
 
   onUserSelected(userId: string) {
