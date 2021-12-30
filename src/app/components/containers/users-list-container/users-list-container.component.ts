@@ -21,7 +21,7 @@ import {
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-users-list [users]="users$ | async"> </app-users-list> `,
+  template: `<app-users-list [users]="users$"> </app-users-list> `,
 })
 export class UsersListContainerComponent implements OnInit {
   users$: Observable<UserCredentialsModel[]>;
@@ -29,12 +29,13 @@ export class UsersListContainerComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(loadUsers());
-    this.users$ = this.store.select(getUsers);
-    console.log("this users", this.users$);
+    //this.store.dispatch(loadUsers());
+    //this.users$ = this.store.select(getUsers);
+    //console.log("this users", this.users$);
 
     this.store.pipe(select(getUsers), take(1)).subscribe((data) => {
-      console.log("data", data);
+      console.log("data", data["user"]);
+      this.users$ = data["user"];
     });
   }
 
