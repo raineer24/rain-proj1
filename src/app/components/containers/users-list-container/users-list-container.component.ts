@@ -29,7 +29,7 @@ export class UsersListContainerComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    //this.store.dispatch(loadUsers());
+    this.store.dispatch(loadUsers());
     //this.users$ = this.store.select(getUsers);
     //console.log("this users", this.users$);
 

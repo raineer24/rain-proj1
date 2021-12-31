@@ -27,11 +27,7 @@ import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
       >
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           test
-          <table
-            mat-table
-            [dataSource]="dataSource"
-            [hidden]="dataSource.data.length == 0"
-          >
+          <table mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="username">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>
                 Username
