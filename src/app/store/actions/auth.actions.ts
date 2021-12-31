@@ -12,6 +12,26 @@ import { AnyFn } from "@ngrx/store/src/selector";
 
 //export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 
+export const loadUsers = createAction("[Users Management] Load Users", () => ({
+  showLoader: true,
+}));
+
+export const loadUsersSuccess = createAction(
+  "[Users Management] Load Users Success",
+  (users: UserCredentialsModel[]) => ({
+    users,
+    triggerAction: loadUsers.type,
+  })
+);
+
+export const loadUsersFail = createAction(
+  "[Users Management] Load Users Fail",
+  (error: any) => ({
+    error,
+    triggerAction: loadUsers.type,
+  })
+);
+
 export const upsertProfile = createAction(
   "[Profile] Upsert profile ",
   props<{ profileId: string; u_profile: UserFetch }>()

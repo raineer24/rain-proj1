@@ -57,6 +57,18 @@ export class AuthEffects {
   //   })
   // );
 
+  loadUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loadUsers),
+      exhaustMap(() => {
+        return this.authService.getDevelopers().pipe(
+          map((users) => AuthActions.loadUsersSuccess(users)),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
   createEducation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.createEduProfile),

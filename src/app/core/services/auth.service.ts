@@ -1,7 +1,16 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, BehaviorSubject } from "rxjs";
-import { UserDetailsModel, UserCredentialsModel, UserFetch } from "../models";
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from "@angular/common/http";
+import { Observable, BehaviorSubject, throwError } from "rxjs";
+import {
+  UserDetailsModel,
+  UserCredentialsModel,
+  UserFetch,
+  LoginUserQuery,
+} from "../models";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError, first, switchMap } from "rxjs/operators";
 @Injectable({
@@ -25,6 +34,36 @@ export class AuthService {
 
   static clearToken(): void {
     localStorage.removeItem("currentUser");
+  }
+
+  /**
+   * Get customers list
+   */
+  getDevelopers(): Observable<any> {
+    return this.http
+      .get<UserCredentialsModel[]>(`${this.baseUrl}/api/v2/users`)
+      .pipe(
+        tap((developers) => {
+          return developers;
+        }),
+        catchError(this.errorMgmt)
+      );
+  }
+
+  // error handling
+  errorMgmt(error: HttpErrorResponse) {
+    let errorMessage = "";
+    console.log("error", error);
+
+    if (error.error instanceof ErrorEvent) {
+      // get client-side error
+      errorMessage = error.error.message;
+    } else {
+      // get server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
   }
 
   public createProfile(data): Observable<any> {
@@ -87,7 +126,7 @@ export class AuthService {
     });
   }
 
-  login(credentials: UserCredentialsModel): Observable<any> {
+  login(credentials: LoginUserQuery): Observable<any> {
     console.log("clicked service");
     const url = `${this.baseUrl}/api/v2/users/login`;
     return this.http
