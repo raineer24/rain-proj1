@@ -12,7 +12,15 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
+import { AppState } from "../../../store/app.state";
+import { Store, select } from "@ngrx/store";
 //import { UsersListItemDto } from "src/app/models/models";
+import {
+  getUser,
+  deleteExpProfile,
+  deleteEduProfile,
+  loadUsers,
+} from "../../../store/actions/auth.actions";
 
 @Component({
   selector: "app-users-list",
@@ -39,6 +47,17 @@ import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
               <td mat-cell *matCellDef="let row">{{ row.email }}</td>
             </ng-container>
 
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+              <td
+                mat-cell
+                *matCellDef="let row"
+                [routerLink]="['/dev/', row.id]"
+              >
+                View PRofile
+              </td>
+            </ng-container>
+
             <ng-container matColumnDef="image_url">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let element">
@@ -57,11 +76,13 @@ import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
 })
 export class UsersListComponent implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<UserCredentialsModel>();
-  displayedColumns = ["username", "email", "image_url"];
+  displayedColumns = ["username", "email", "image_url", "id"];
+  id: string;
   @Input() users: UserCredentialsModel[];
   // @Input() users: UsersListItemDto[];
   @Output() userSelected = new EventEmitter<string>();
 
+  constructor(private store: Store<AppState>) {}
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -78,6 +99,15 @@ export class UsersListComponent implements OnInit, OnChanges {
     this.dataSource.filterPredicate = (data, filter) => {
       return data.email.indexOf(filter) != -1;
     };
+  }
+
+  onUserSelected(id: string) {
+    console.log("click");
+
+    this.store.dispatch(getUser({ id: this.dataSource.data["id"] }));
+    console.log("dataSOURUCE", this.users);
+    // const path = `/workspace/users/${userId}`;
+    //  this.store.dispatch(fromRouter.go({ path: [path] }));
   }
 
   ngOnChanges() {}

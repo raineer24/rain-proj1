@@ -4,6 +4,9 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { getUsers } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
+import { Location } from "@angular/common";
+import { Router } from "@angular/router";
+
 import {
   skipWhile,
   skip,
@@ -25,8 +28,13 @@ import {
 })
 export class UsersListContainerComponent implements OnInit {
   users$: Observable<UserCredentialsModel[]>;
+  id: string;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    location: Location,
+    router: Router
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(loadUsers());
@@ -38,9 +46,11 @@ export class UsersListContainerComponent implements OnInit {
       this.users$ = data["user"];
     });
   }
+  // onUserSelected(id: string) {
+  //   console.log("click");
+  //   const path = `dev/${id}`;
+  //   console.log("path", location.pathname[path]);
 
-  onUserSelected(userId: string) {
-    // const path = `/workspace/users/${userId}`;
-    //  this.store.dispatch(fromRouter.go({ path: [path] }));
-  }
+  //   this.store.dispatch(getUser({ id: this.id }));
+  // }
 }
