@@ -53,6 +53,7 @@ import {
                 mat-cell
                 *matCellDef="let row"
                 [routerLink]="['/dev/', row.id]"
+                (click)="onUserSelected(row.id)"
               >
                 View PRofile
               </td>
@@ -104,8 +105,8 @@ export class UsersListComponent implements OnInit, OnChanges {
   onUserSelected(id: string) {
     console.log("click");
 
-    this.store.dispatch(getUser({ id: this.dataSource.data["id"] }));
-    console.log("dataSOURUCE", this.users);
+    this.store.dispatch(getUser({ id }));
+    //console.log("dataSOURUCE", this.users);
     // const path = `/workspace/users/${userId}`;
     //  this.store.dispatch(fromRouter.go({ path: [path] }));
   }
