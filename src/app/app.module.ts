@@ -8,7 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 import { UserComponent } from "./components/containers/user/user.container";
 import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
 import { AppDropdownComponent } from "./components/containers/create-profile/app-dropdown/app-dropdown.component";
-import { StoreModule, MetaReducer } from "@ngrx/store";
+import { StoreModule, MetaReducer, META_REDUCERS } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
 import { EffectsModule } from "@ngrx/effects";
@@ -29,6 +29,9 @@ import { UsersListContainerComponent } from "./components/containers/users-list-
 import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
+
+import { NGXLogger } from "ngx-logger";
+import { loggerFactory } from "./store/app.state";
 const metaReducers: Array<MetaReducer<any, any>> = [
   fromApp.localStorageSyncReducer,
 ];
@@ -69,6 +72,14 @@ const metaReducers: Array<MetaReducer<any, any>> = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+    /*
+      provide: META_REDUCERS,
+      deps: [NGXLogger],
+      useFactory: loggerFactory,
+      multi: true
+    },
+    */
   ],
   bootstrap: [AppComponent],
   exports: [],
