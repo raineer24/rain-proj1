@@ -30,8 +30,6 @@ import { UserDetailContainerComponent } from "./components/containers/user-detai
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
 
-import { NGXLogger } from "ngx-logger";
-import { loggerFactory } from "./store/app.state";
 const metaReducers: Array<MetaReducer<any, any>> = [
   fromApp.localStorageSyncReducer,
 ];

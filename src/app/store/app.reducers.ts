@@ -7,6 +7,7 @@ import {
 import { authReducer } from "./reducers/auth.reducer";
 import { httpErrorsReducer } from "./reducers/http-errors.reducer";
 import { localStorageSync } from "ngrx-store-localstorage";
+import { userReducer } from "./reducers/user.reducer";
 export const AppReducers: ActionReducerMap<AppState, any> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,

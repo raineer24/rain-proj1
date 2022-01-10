@@ -15,7 +15,6 @@ export interface AuthState extends EntityState<UserDetailsModel> {
   //isLoading: boolean;
   isAuthenticated: boolean;
   users: UserCredentialsModel[];
-  user: UserDetailsModel;
 }
 // export interface AuthState {
 //   isAuthenticated: boolean | null;
@@ -31,7 +30,6 @@ export const initialState: AuthState = adapter.getInitialState({
   isAuthenticated: null,
   authUser: null,
   users: [],
-  user: null,
 });
 
 // export const initialState: AuthState = {
@@ -96,11 +94,7 @@ export const authReducer = createReducer(
       authUser: action.payload,
     };
   }),
-  on(AuthActions.getUserSuccess, (state, { payload }) => ({
-    ...state,
-    user: payload,
-    loading: false,
-  })),
+
   on(AuthActions.login, (state, action) => {
     return {
       ...state,
@@ -138,8 +132,6 @@ export const getUsers = createSelector(
   selectAuthState,
   (state: AuthState) => state.users
 );
-
-export const getUser = (state: AuthState) => state.user;
 
 export const selectAuthUserId = createSelector(
   selectAuthState,

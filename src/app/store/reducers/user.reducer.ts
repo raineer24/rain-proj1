@@ -34,7 +34,7 @@ export const initialState: UserState = {
   user: null,
 };
 
-export const cartReducer = createReducer(
+export const userReducer = createReducer(
   initialState,
   on(loadUserSuccess, (state, { viewModel }) => {
     const user = viewModel;
