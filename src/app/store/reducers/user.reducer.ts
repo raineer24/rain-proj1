@@ -30,9 +30,39 @@ export interface UserState {
   user: UserDetailsModel;
 }
 
+// export interface UserState {
+//   user: {
+//     id: 0;
+//     appUserId: "";
+//     currentTab: 0;
+//     alphaColor: "#FF6872;";
+//     status: "";
+//     username: "";
+//     name: "";
+//     surname: "";
+//     profileImageUrl: "";
+//     followingState: 2;
+//     currentUserFollowedState: 2;
+//     followerCount: 0;
+//     followingCount: 0;
+//     interestCount: 0;
+//     totalReputation: 0;
+//     collectionCount: 0;
+//   };
+// }
+
+//  id: string;
+//   email: string;
+//   username: string;
+//   first_name: string;
+//   user_profile: UserFetch[];
 export const initialState: UserState = {
   user: null,
 };
+
+// export const initialState: UserState = {
+//   user: null,
+// };
 
 export const userReducer = createReducer(
   initialState,
