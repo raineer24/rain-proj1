@@ -66,14 +66,9 @@ export const userReducer = createReducer(
 
 export const getProfileState = createFeatureSelector<UserState>("profile");
 
-export const getUserInfoState = createSelector(
+export const getUsers = createSelector(
   getProfileState,
-  (state) => state["userInfo"]
-);
-
-export const getUserId = createSelector(
-  getUserInfoState,
-  (state) => state["userInfo"].appUserId
+  (state) => state["users"]
 );
 
 // export const getUsers = createSelector(

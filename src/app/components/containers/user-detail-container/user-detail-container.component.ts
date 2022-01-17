@@ -7,12 +7,9 @@ import {
 
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { logout } from "../../../store/actions/auth.actions";
-import { AppState } from "../../../store/app.state";
+import { AppState } from "../../../store/app.reducers";
 
-import {
-  selectAuthUserId,
-  selectAuthUser,
-} from "../../../store/reducers/auth.reducer";
+import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { Router, ActivatedRoute } from "@angular/router";
 import { getUser } from "../../../store/actions/auth.actions";
 import { ofType } from "@ngrx/effects";

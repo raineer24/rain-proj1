@@ -16,11 +16,8 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ofType } from "@ngrx/effects";
-import { AppState } from "../../../store/app.state";
-import {
-  selectAuthUserId,
-  selectAuthUser,
-} from "../../../store/reducers/auth.reducer";
+import { AppState } from "../../../store/app.reducers";
+import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import {
   FormBuilder,
   FormGroup,
