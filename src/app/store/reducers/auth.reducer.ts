@@ -16,7 +16,7 @@ export interface AuthState extends EntityState<UserDetailsModel> {
   isAuthenticated: boolean;
   users: UserCredentialsModel[];
 }
-// export interface AuthState {
+// export interface AuthState {import { createAction, createReducer, on, Action } from "@ngrx/store";
 //   isAuthenticated: boolean | null;
 //   authUser: UserDetailsModel | null;
 // }
@@ -121,18 +121,18 @@ export const authReducer = createReducer(
   }))
 );
 
-export const getUserState = createFeatureSelector<AuthState>("profile");
+export const getUserState = createFeatureSelector<AuthState>("auth");
 
 //const selectAuthState = (state: AuthState) => state;
 
 export const getAuthInfoState = createSelector(
   getUserState,
-  (state) => state["authUser"]
+  (state) => state.authUser
 );
 
 export const selectAuthUserId = createSelector(
   getAuthInfoState,
-  (state) => state["authUser"].id
+  (state) => state.id
 );
 
 // export const selectAuthUser = createSelector(
