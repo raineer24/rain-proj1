@@ -8,7 +8,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { Observable, Subject } from "rxjs";
 import { logout } from "../../../store/actions/auth.actions";
-import { AppState } from "../../../store/app.state";
+import { AppState } from "../../../store/app.reducers";
 import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { UserDetailsModel, UserFetch } from "../../../core/models";
 import * as fromApp from "../../../store/app.state";
@@ -101,7 +101,7 @@ export class UserComponent implements OnInit, OnDestroy {
     // this.authenticationService.deleteExp(id).subscribe((data) => {
     //   console.log("delete data", data);
     // });
-    console.log("id", id);
+    // console.log("id", id);
     this.store.dispatch(deleteExpProfile({ id }));
   }
 

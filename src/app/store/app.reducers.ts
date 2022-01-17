@@ -23,6 +23,8 @@ export const AppReducers: ActionReducerMap<AppState, any> = {
   user: userReducer,
 };
 
+export const getProfileState = createFeatureSelector<AppState>("profile");
+
 // meta reducer, used to sync store to storage @ ngrx-store-localstorage.
 // (https://github.com/btroncone/ngrx-store-localstorage)
 export function localStorageSyncReducer(

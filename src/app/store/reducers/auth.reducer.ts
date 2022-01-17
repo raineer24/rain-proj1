@@ -121,19 +121,31 @@ export const authReducer = createReducer(
   }))
 );
 
-const selectAuthState = (state: AppState) => state.auth;
+export const getUserState = createFeatureSelector<AuthState>("profile");
 
-export const selectAuthUser = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.authUser
-);
+//const selectAuthState = (state: AuthState) => state;
 
-export const getUsers = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.users
+export const getAuthInfoState = createSelector(
+  getUserState,
+  (state) => state["authUser"]
 );
 
 export const selectAuthUserId = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.authUser.id
+  getAuthInfoState,
+  (state) => state["authUser"].id
 );
+
+// export const selectAuthUser = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.authUser
+// );
+
+// export const getUsers = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.users
+// );
+
+// export const selectAuthUserId = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.authUser.id
+// );

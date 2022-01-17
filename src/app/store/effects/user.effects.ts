@@ -32,4 +32,24 @@ import {
 import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
-export class UserEffects {}
+export class UserEffects {
+  loadUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.loadUsers),
+      exhaustMap(() => {
+        return this.authService.getDevelopers().pipe(
+          map((users) => AuthActions.loadUsersSuccess(users)),
+          catchError((error) => of(new SetError(error)))
+        );
+      })
+    )
+  );
+
+  constructor(
+    private readonly actions$: Actions,
+    private authService: AuthService,
+    // private actions$: Actions,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
+}
