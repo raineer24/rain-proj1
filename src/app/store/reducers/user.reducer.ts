@@ -1,4 +1,12 @@
-import { createAction, createReducer, on, Action } from "@ngrx/store";
+import {
+  ActionReducerMap,
+  ActionReducer,
+  createFeatureSelector,
+  createSelector,
+  createAction,
+  createReducer,
+  on,
+} from "@ngrx/store";
 import { UserDetailsModel } from "../../core/models";
 
 //Action
@@ -56,7 +64,22 @@ export const userReducer = createReducer(
   })
 );
 
+export const getProfileState = createFeatureSelector<UserState>("profile");
+
+export const getUserInfoState = createSelector(
+  getProfileState,
+  (state) => state["userInfo"]
+);
+
+export const getUserId = createSelector(
+  getUserInfoState,
+  (state) => state["userInfo"].appUserId
+);
+
 // export const getUsers = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.users
+// );// export const getUsers = createSelector(
 //   selectAuthState,
 //   (state: AuthState) => state.users
 // );

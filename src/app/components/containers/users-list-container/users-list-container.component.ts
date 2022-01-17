@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
-import { AppState } from "../../../store/app.state";
+import { AppState } from "../../../store/app.reducers";
 import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { getUsers } from "../../../store/reducers/auth.reducer";
+import { getUsers } from "../../../store/reducers/user.reducer";
 import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";

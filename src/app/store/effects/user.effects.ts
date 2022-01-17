@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
-import * as AuthActions from "../../store/actions/auth.actions";
+// import * as AuthActions from "../../store/actions/auth.actions";
+import * as UserActions from "../../store/actions/user.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
-import { AppState } from "../../store/app.state";
+import { AppState } from "../../store/app.reducers";
 
 import {
   catchError,
@@ -35,10 +36,10 @@ import { SetError } from "../actions/http-errors.actions";
 export class UserEffects {
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AuthActions.loadUsers),
+      ofType(UserActions.loadUsers),
       exhaustMap(() => {
         return this.authService.getDevelopers().pipe(
-          map((users) => AuthActions.loadUsersSuccess(users)),
+          map((users) => UserActions.loadUsersSuccess(users)),
           catchError((error) => of(new SetError(error)))
         );
       })
