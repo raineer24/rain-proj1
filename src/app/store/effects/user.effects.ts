@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 // import * as AuthActions from "../../store/actions/auth.actions";
 import * as UserActions from "../../store/actions/user.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
-import { AppState } from "../../store/app.reducers";
+import { UserState } from "../../store/reducers/user.reducer";
 
 import {
   catchError,
@@ -51,6 +51,6 @@ export class UserEffects {
     private authService: AuthService,
     // private actions$: Actions,
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<UserState>
   ) {}
 }

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit } from "@angular/core";
-import { AppState } from "../../../store/app.reducers";
+import { UserState } from "../../../store/reducers/user.reducer";
 import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { getUsers } from "../../../store/reducers/user.reducer";
@@ -15,12 +15,7 @@ import {
   first,
   takeUntil,
 } from "rxjs/operators";
-import {
-  getUser,
-  deleteExpProfile,
-  deleteEduProfile,
-  loadUsers,
-} from "../../../store/actions/auth.actions";
+import { getUser, loadUsers } from "../../../store/actions/user.actions";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,7 +26,7 @@ export class UsersListContainerComponent implements OnInit {
   id: string;
 
   constructor(
-    private store: Store<AppState>,
+    private store: Store<UserState>,
     location: Location,
     router: Router
   ) {}
@@ -42,7 +37,8 @@ export class UsersListContainerComponent implements OnInit {
     //console.log("this users", this.users$);
 
     this.store.pipe(select(getUsers), take(1)).subscribe((data) => {
-      console.log("data", data["user"]);
+      //   console.log("data", data["user"]);
+      console.log("data", data);
       this.users$ = data["user"];
     });
   }

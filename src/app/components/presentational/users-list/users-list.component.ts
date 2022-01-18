@@ -15,12 +15,7 @@ import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
 import { AppState } from "../../../store/app.reducers";
 import { Store, select } from "@ngrx/store";
 //import { UsersListItemDto } from "src/app/models/models";
-import {
-  getUser,
-  deleteExpProfile,
-  deleteEduProfile,
-  loadUsers,
-} from "../../../store/actions/auth.actions";
+import { getUser, loadUsers } from "../../../store/actions/user.actions";
 
 @Component({
   selector: "app-users-list",

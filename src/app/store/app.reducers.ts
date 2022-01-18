@@ -2,6 +2,7 @@ import {
   ActionReducerMap,
   ActionReducer,
   createFeatureSelector,
+  createSelector,
 } from "@ngrx/store";
 import { authReducer } from "./reducers/auth.reducer";
 import { httpErrorsReducer } from "./reducers/http-errors.reducer";
@@ -13,17 +14,22 @@ import { HttpErrorsState } from "./reducers/http-errors.reducer";
 
 export interface AppState {
   auth: AuthState;
-  user: UserState;
+  users: UserState;
   httpErrors: HttpErrorsState;
 }
 
 export const AppReducers: ActionReducerMap<AppState, any> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,
-  user: userReducer,
+  users: userReducer,
 };
 
 export const getProfileState = createFeatureSelector<AppState>("profile");
+
+export const getAuthInfoState = createSelector(
+  getProfileState,
+  (state) => state.auth
+);
 
 // meta reducer, used to sync store to storage @ ngrx-store-localstorage.
 // (https://github.com/btroncone/ngrx-store-localstorage)
