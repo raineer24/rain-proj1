@@ -6,6 +6,7 @@ import {
   createAction,
   createReducer,
   on,
+  Action,
 } from "@ngrx/store";
 import { UserDetailsModel, UserCredentialsModel } from "../../core/models";
 import * as UserActions from "../actions/user.actions";
@@ -84,6 +85,7 @@ export const userReducer = createReducer(
     };
   }),
   on(UserActions.loadUsersSuccess, (state, { users }) => {
+    console.log("users", users);
     return {
       ...state,
       users,
@@ -92,9 +94,16 @@ export const userReducer = createReducer(
   })
 );
 
+export function user_reducer(state: UserState | undefined, action: Action) {
+  console.log("userReducer", state);
+  return userReducer(state, action);
+}
+
 export const getProfileState = createFeatureSelector<UserState>("users");
 
-export const getUsers = createSelector(getProfileState, (state) => state.users);
+export const getUsers = createSelector(getProfileState, (state) => {
+  console.log("state", state);
+});
 
 // export const getUsers = createSelector(
 //   selectAuthState,

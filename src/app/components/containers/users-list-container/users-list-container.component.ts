@@ -15,7 +15,11 @@ import {
   first,
   takeUntil,
 } from "rxjs/operators";
-import { getUser, loadUsers } from "../../../store/actions/user.actions";
+import {
+  getUser,
+  loadUsers,
+  LoadUsers,
+} from "../../../store/actions/user.actions";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +36,7 @@ export class UsersListContainerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // this.store.dispatch(new LoadUsers());
     this.store.dispatch(loadUsers());
     //this.users$ = this.store.select(getUsers);
     //console.log("this users", this.users$);

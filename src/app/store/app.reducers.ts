@@ -24,6 +24,16 @@ export const AppReducers: ActionReducerMap<AppState, any> = {
   users: userReducer,
 };
 
+export function logger(
+  reducer: ActionReducer<AppState>
+): ActionReducer<AppState> {
+  return function (state: AppState, action: any): AppState {
+    console.log("state", state);
+    console.log("action", action);
+    return reducer(state, action);
+  };
+}
+
 export const getProfileState = createFeatureSelector<AppState>("profile");
 
 export const getAuthInfoState = createSelector(
