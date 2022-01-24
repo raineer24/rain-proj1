@@ -29,10 +29,10 @@ import { UsersListContainerComponent } from "./components/containers/users-list-
 import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
-
-const metaReducers: Array<MetaReducer<any, any>> = [
-  fromApp.localStorageSyncReducer,
-];
+import { metaReducers } from "./store/app.reducers";
+// const metaReducers: Array<MetaReducer<any, any>> = [
+//   fromApp.localStorageSyncReducer,
+// ];
 
 @NgModule({
   declarations: [

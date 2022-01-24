@@ -102,7 +102,7 @@ export function user_reducer(state: UserState | undefined, action: Action) {
 export const getProfileState = createFeatureSelector<UserState>("users");
 
 export const getUsers = createSelector(getProfileState, (state) => {
-  console.log("state", state);
+  console.log("State: ", state);
 });
 
 // export const getUsers = createSelector(

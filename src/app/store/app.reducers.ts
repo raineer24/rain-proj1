@@ -3,13 +3,16 @@ import {
   ActionReducer,
   createFeatureSelector,
   createSelector,
+  MetaReducer,
 } from "@ngrx/store";
+import { storeFreeze } from "ngrx-store-freeze";
 import { authReducer } from "./reducers/auth.reducer";
 import { httpErrorsReducer } from "./reducers/http-errors.reducer";
 import { localStorageSync } from "ngrx-store-localstorage";
 import { userReducer } from "./reducers/user.reducer";
 import { AuthState } from "./reducers/auth.reducer";
 import { UserState } from "./reducers/user.reducer";
+import { environment } from "../../environments/environment";
 import { HttpErrorsState } from "./reducers/http-errors.reducer";
 
 export interface AppState {
@@ -52,3 +55,26 @@ export function localStorageSyncReducer(
     storage: sessionStorage,
   })(reducer);
 }
+
+export function stateSetter(reducer: ActionReducer<any>): ActionReducer<any> {
+  return function (state: any, action: any) {
+    if (action.type === "SET_ROOT_STATE") {
+      return action.payload;
+    }
+    return reducer(state, action);
+  };
+}
+
+export const metaReducers: MetaReducer<AppState>[] = !environment.production
+  ? [logger, storeFreeze, stateSetter]
+  : [stateSetter];
+
+// const metaReducersDev = [
+//   storeFreeze,
+//   localStorageSyncReducer,
+//   stateSetter,
+//   logger,
+//   AppReducers,
+// ];
+
+//export const metaReducers = metaReducersDev;
