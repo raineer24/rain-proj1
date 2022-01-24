@@ -8,8 +8,13 @@ import {
   on,
 } from "@ngrx/store";
 import { UserDetailsModel, UserCredentialsModel } from "../../core/models";
-
+import * as UserActions from "../actions/user.actions";
 //Action
+
+// export const loadUsers = createAction("[Users Management] Load Users", () => ({
+//   showLoader: true,
+// }));
+
 export const loadUser = createAction(
   "[Users Management] Load User",
   (userId: string) => ({
@@ -34,21 +39,21 @@ export const loadUserFail = createAction(
   })
 );
 
-export const loadUsersSuccess = createAction(
-  "[Users Management] Load Users Success",
-  (users: UserCredentialsModel[]) => ({
-    users,
-    triggerAction: loadUsers.type,
-  })
-);
+// export const loadUsersSuccess = createAction(
+//   "[Users Management] Load Users Success",
+//   (users: UserCredentialsModel[]) => ({
+//     users,
+//     triggerAction: loadUsers.type,
+//   })
+// );
 
-export const loadUsersFail = createAction(
-  "[Users Management] Load Users Fail",
-  (error: any) => ({
-    error,
-    triggerAction: loadUsers.type,
-  })
-);
+// export const loadUsersFail = createAction(
+//   "[Users Management] Load Users Fail",
+//   (error: any) => ({
+//     error,
+//     triggerAction: loadUsers.type,
+//   })
+// );
 
 export interface UserState {
   users: UserCredentialsModel[];
@@ -78,7 +83,7 @@ export const userReducer = createReducer(
       user,
     };
   }),
-  on(loadUsersSuccess, (state, { users }) => {
+  on(UserActions.loadUsersSuccess, (state, { users }) => {
     return {
       ...state,
       users,
@@ -87,7 +92,7 @@ export const userReducer = createReducer(
   })
 );
 
-export const getProfileState = createFeatureSelector<UserState>("user");
+export const getProfileState = createFeatureSelector<UserState>("users");
 
 export const getUsers = createSelector(getProfileState, (state) => state.users);
 

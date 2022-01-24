@@ -65,13 +65,7 @@ export const authReducer = createReducer(
   //   //   state
   //   // );
   // }),
-  on(AuthActions.loadUsersSuccess, (state, { users }) => {
-    return {
-      ...state,
-      users,
-      loaded: true,
-    };
-  }),
+
   on(AuthActions.createProfile, (state, action) => {
     return adapter.addOne(action.payload, state);
   }),
