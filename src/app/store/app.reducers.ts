@@ -37,12 +37,12 @@ export function logger(
   };
 }
 
-export const getProfileState = createFeatureSelector<AppState>("profile");
+// export const getProfileState = createFeatureSelector<AppState>("profile");
 
-export const getAuthInfoState = createSelector(
-  getProfileState,
-  (state) => state.auth
-);
+// export const getAuthInfoState = createSelector(
+//   getProfileState,
+//   (state) => state.auth
+// );
 
 // meta reducer, used to sync store to storage @ ngrx-store-localstorage.
 // (https://github.com/btroncone/ngrx-store-localstorage)
@@ -78,3 +78,8 @@ export const metaReducers: MetaReducer<AppState>[] = !environment.production
 // ];
 
 //export const metaReducers = metaReducersDev;
+
+export const getUserState = createFeatureSelector<UserState>("users");
+export const getUsersInfo = createSelector(getUserState, (state) => {
+  console.log("userstateinfo", state);
+});
