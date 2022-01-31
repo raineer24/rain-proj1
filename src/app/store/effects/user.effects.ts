@@ -3,7 +3,8 @@ import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 // import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
-import { UserState } from "../../store/reducers/user.reducer";
+// import { UserState } from "../../store/reducers/user.reducer";
+import { AppState } from "../../store/app.reducers";
 import * as userActions from "../actions/user.actions";
 
 import {
@@ -40,7 +41,7 @@ export class UserEffects {
     private authService: AuthService,
     // private actions$: Actions,
     private router: Router,
-    private store: Store<UserState>
+    private store: Store<AppState>
   ) {}
 
   // loadUsers$: Observable<any> = this.actions$.pipe(

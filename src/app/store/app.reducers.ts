@@ -11,7 +11,7 @@ import { httpErrorsReducer } from "./reducers/http-errors.reducer";
 import { localStorageSync } from "ngrx-store-localstorage";
 import { userReducer } from "./reducers/user.reducer";
 import { AuthState } from "./reducers/auth.reducer";
-import { UserState } from "./reducers/user.reducer";
+import { UserState, UserModuleState } from "./reducers/user.reducer";
 import { environment } from "../../environments/environment";
 import { HttpErrorsState } from "./reducers/http-errors.reducer";
 
@@ -21,21 +21,11 @@ export interface AppState {
   httpErrors: HttpErrorsState;
 }
 
-export const AppReducers: ActionReducerMap<AppState, any> = {
+export const AppReducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,
   users: userReducer,
 };
-
-export function logger(
-  reducer: ActionReducer<AppState>
-): ActionReducer<AppState> {
-  return function (state: AppState, action: any): AppState {
-    console.log("state", state);
-    console.log("action", action);
-    return reducer(state, action);
-  };
-}
 
 // export const getProfileState = createFeatureSelector<AppState>("profile");
 
@@ -56,18 +46,13 @@ export function localStorageSyncReducer(
   })(reducer);
 }
 
-export function stateSetter(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function (state: any, action: any) {
-    if (action.type === "SET_ROOT_STATE") {
-      return action.payload;
-    }
-    return reducer(state, action);
-  };
-}
+// export const metaReducers: MetaReducer<AppState>[] = !environment.production
+//   ? [logger, storeFreeze, stateSetter]
+//   : [stateSetter];
 
-export const metaReducers: MetaReducer<AppState>[] = !environment.production
-  ? [logger, storeFreeze, stateSetter]
-  : [stateSetter];
+export const metaReducers: Array<MetaReducer<any, any>> = [
+  localStorageSyncReducer,
+];
 
 // const metaReducersDev = [
 //   storeFreeze,
@@ -81,5 +66,5 @@ export const metaReducers: MetaReducer<AppState>[] = !environment.production
 
 export const getUserState = createFeatureSelector<UserState>("users");
 export const getUsersInfo = createSelector(getUserState, (state) => {
-  console.log("userstateinfo", state);
+  console.log("userstateinfo: ", state.users);
 });

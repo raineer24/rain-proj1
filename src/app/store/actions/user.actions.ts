@@ -58,7 +58,7 @@ export const getUserSuccess = createAction(
   props<{ payload: any }>()
 );
 
-export const loadUsers = createAction("[Users Management] Load Users");
+export const loadUsers = createAction("[Users] Load Users");
 
 export const loadUsersSuccess = createAction(
   "[Users] load Users Success",
