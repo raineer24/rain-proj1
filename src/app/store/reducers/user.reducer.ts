@@ -9,7 +9,8 @@ import {
   Action,
 } from "@ngrx/store";
 import { UserDetailsModel, UserCredentialsModel } from "../../core/models";
-import * as UserActions from "../actions/user.actions";
+//import * as UserActions from "../actions/user.actions";
+import { UserActions, UserActionTypes } from "../actions/user.actions";
 
 // export const loadUsersSuccess = createAction(
 //   "[Users Management] Load Users Success",
@@ -49,39 +50,36 @@ export const initialState: UserState = {
 //   user: null,
 // };
 
-export const userReducer = createReducer(
-  initialState,
+export function userReducers(
+  state: UserState = initialState,
+  action: UserActions
+): UserState {
+  switch (action.type) {
+    case UserActionTypes.GetUsersSuccess: {
+      return {
+        ...state,
+        users: action.payload,
+      };
+    }
 
-  on(UserActions.loadUsersSuccess, (state, { users }) => {
-    return {
-      ...state,
-      users,
-    };
-  })
-
-  // on(UserActions.loadUsersSuccess, (state, { users }) => {
-  //   console.log("users", users);
-  //   console.log("users state; ", state);
-  //   return {
-  //     ...state,
-  //     users,
-  //     loaded: true,
-  //   };
-  // })
-);
-
-export function user_reducer(state: UserState | undefined, action: Action) {
-  console.log("userReducer", state);
-  return userReducer(state, action);
+    default: {
+      return state;
+    }
+  }
 }
 
-export const getProfileState = createFeatureSelector<UserState>("users");
+// export function user_reducer(state: UserState | undefined, action: Action) {
+//   console.log("userReducer", state);
+//   return userReducer(state, action);
+// }
 
-export const getUsers = createSelector(getProfileState, (state) => {
-  console.log("State get users: ", state);
-  console.log("State get [users]: ", state.users);
-  state.users;
-});
+// export const getProfileState = createFeatureSelector<UserState>("users");
+
+// export const getUsers = createSelector(getProfileState, (state) => {
+//   console.log("State get users: ", state);
+//   console.log("State get [users]: ", state.users);
+//   state.users;
+// });
 
 // export const getUsers = createSelector(
 //   selectAuthState,

@@ -24,3 +24,15 @@ export class GetUsersSuccess implements Action {
 }
 
 export type UserActions = GetUsers | GetUsersSuccess;
+
+export const getUser = createAction(
+  "GET USER",
+  props<{
+    id: string;
+  }>()
+);
+
+export const getUserSuccess = createAction(
+  "[Auth] Get Current User Success",
+  props<{ payload: any }>()
+);

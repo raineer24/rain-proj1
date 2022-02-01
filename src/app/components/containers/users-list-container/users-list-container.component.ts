@@ -19,12 +19,8 @@ import {
   first,
   takeUntil,
 } from "rxjs/operators";
-import {
-  getUser,
-  loadUsers,
-  LoadUsers,
-} from "../../../store/actions/user.actions";
-import { getUsers } from "src/app/store/reducers/user.reducer";
+import { GetUsers } from "../../../store/actions/user.actions";
+//import { getUsers } from "src/app/store/reducers/user.reducer";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +35,7 @@ export class UsersListContainerComponent implements OnInit {
     location: Location,
     router: Router
   ) {
-    this.store.dispatch(loadUsers());
+    this.store.dispatch(new GetUsers());
     // this.store.pipe(select(getUsersInfo), take(1)).subscribe((data) => {
     //   //   console.log("data", data["user"]);
     //   console.log("data", data);

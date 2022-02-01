@@ -9,7 +9,7 @@ import { storeFreeze } from "ngrx-store-freeze";
 import { authReducer } from "./reducers/auth.reducer";
 import { httpErrorsReducer } from "./reducers/http-errors.reducer";
 import { localStorageSync } from "ngrx-store-localstorage";
-import { userReducer } from "./reducers/user.reducer";
+import { userReducers } from "./reducers/user.reducer";
 import { AuthState } from "./reducers/auth.reducer";
 import { UserState, UserModuleState } from "./reducers/user.reducer";
 import { environment } from "../../environments/environment";
@@ -24,7 +24,7 @@ export interface AppState {
 export const AppReducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,
-  users: userReducer,
+  users: userReducers,
 };
 
 // export const getProfileState = createFeatureSelector<AppState>("profile");
