@@ -24,10 +24,7 @@ import { GetUsers } from "../../../store/actions/user.actions";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-users-list [users]="users$"> </app-users-list>
-    <div class="users__table-row" *ngFor="let user of users$ | async">
-      {{ user.username }}
-    </div>`,
+  template: `<app-users-list [users]="users$"> </app-users-list> `,
 })
 export class UsersListContainerComponent implements OnInit {
   //  users$: Observable<UserCredentialsModel[]>;
@@ -42,11 +39,11 @@ export class UsersListContainerComponent implements OnInit {
     router: Router
   ) {
     this.store.dispatch(new GetUsers());
-    this.store.pipe(select(selectUserList), take(1)).subscribe((data) => {
-      //   console.log("data", data["user"]);
-      console.log("data", data);
-      this.users$ = data["user"];
-    });
+    // this.store.pipe(select(selectUserList), take(1)).subscribe((data) => {
+    //   //   console.log("data", data["user"]);
+    //   console.log("data", data);
+    //   this.users$ = data["user"];
+    // });
   }
 
   ngOnInit() {

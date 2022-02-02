@@ -74,7 +74,8 @@ export class UsersListComponent implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<UserCredentialsModel>();
   displayedColumns = ["username", "email", "image_url", "id"];
   id: string;
-  @Input() users: UserCredentialsModel[];
+  //@Input() users: UserCredentialsModel[];
+  @Input() users;
   // @Input() users: UsersListItemDto[];
   @Output() userSelected = new EventEmitter<string>();
 
@@ -84,8 +85,12 @@ export class UsersListComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log("thisusers", this.users);
-    this.dataSource.data = this.users;
-    console.log("dta", this.dataSource);
+    this.users.subscribe((data) => {
+      console.log("DATA", data);
+      this.dataSource.data = data;
+    });
+
+    // console.log("dta", this.dataSource);
 
     // this.dataSource.filterPredicate = (data: any, filter) => {
     //   const dataStr = JSON.stringify(data).toLowerCase();
