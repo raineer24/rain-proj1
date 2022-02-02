@@ -11,7 +11,7 @@ import { AppState } from "../../../store/app.reducers";
 
 import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { Router, ActivatedRoute } from "@angular/router";
-import { getUser } from "../../../store/actions/auth.actions";
+import { getUser } from "../../../store/actions/user.actions";
 import { ofType } from "@ngrx/effects";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import {
