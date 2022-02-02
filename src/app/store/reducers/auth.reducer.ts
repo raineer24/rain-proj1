@@ -3,7 +3,7 @@ import {
   UserFetch,
   UserCredentialsModel,
 } from "../../core/models";
-import { AppState } from "../app.state";
+//import { AppState } from "../app.state";
 import { createSelector } from "@ngrx/store";
 import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
 import { EntityState, EntityAdapter, createEntityAdapter } from "@ngrx/entity";
@@ -16,7 +16,7 @@ export interface AuthState extends EntityState<UserDetailsModel> {
   isAuthenticated: boolean;
   users: UserCredentialsModel[];
 }
-// export interface AuthState {
+// export interface AuthState {import { createAction, createReducer, on, Action } from "@ngrx/store";
 //   isAuthenticated: boolean | null;
 //   authUser: UserDetailsModel | null;
 // }
@@ -65,13 +65,7 @@ export const authReducer = createReducer(
   //   //   state
   //   // );
   // }),
-  on(AuthActions.loadUsersSuccess, (state, { users }) => {
-    return {
-      ...state,
-      users,
-      loaded: true,
-    };
-  }),
+
   on(AuthActions.createProfile, (state, action) => {
     return adapter.addOne(action.payload, state);
   }),
@@ -94,11 +88,7 @@ export const authReducer = createReducer(
       authUser: action.payload,
     };
   }),
-  on(AuthActions.getUserSuccess, (state, { payload }) => ({
-    ...state,
-    authUser: payload,
-    loading: false,
-  })),
+
   on(AuthActions.login, (state, action) => {
     return {
       ...state,
@@ -125,19 +115,31 @@ export const authReducer = createReducer(
   }))
 );
 
-const selectAuthState = (state: AppState) => state.auth;
+export const getUserState = createFeatureSelector<AuthState>("auth");
 
-export const selectAuthUser = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.authUser
-);
+//const selectAuthState = (state: AuthState) => state;
 
-export const getUsers = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.users
+export const getAuthInfoState = createSelector(
+  getUserState,
+  (state) => state.authUser
 );
 
 export const selectAuthUserId = createSelector(
-  selectAuthState,
-  (state: AuthState) => state.authUser.id
+  getAuthInfoState,
+  (state) => state.id
 );
+
+// export const selectAuthUser = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.authUser
+// );
+
+// export const getUsers = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.users
+// );
+
+// export const selectAuthUserId = createSelector(
+//   selectAuthState,
+//   (state: AuthState) => state.authUser.id
+// );

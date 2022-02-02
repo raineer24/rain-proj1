@@ -3,7 +3,7 @@ import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
-import { AppState } from "../../store/app.state";
+import { AppState } from "../../store/app.reducers";
 
 import {
   catchError,
@@ -56,18 +56,6 @@ export class AuthEffects {
   //     );
   //   })
   // );
-
-  loadUsers$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.loadUsers),
-      exhaustMap(() => {
-        return this.authService.getDevelopers().pipe(
-          map((users) => AuthActions.loadUsersSuccess(users)),
-          catchError((error) => of(new SetError(error)))
-        );
-      })
-    )
-  );
 
   createEducation$ = createEffect(() =>
     this.actions$.pipe(

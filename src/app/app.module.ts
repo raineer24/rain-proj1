@@ -8,7 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 import { UserComponent } from "./components/containers/user/user.container";
 import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
 import { AppDropdownComponent } from "./components/containers/create-profile/app-dropdown/app-dropdown.component";
-import { StoreModule, MetaReducer } from "@ngrx/store";
+import { StoreModule, MetaReducer, META_REDUCERS } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../environments/environment";
 import { EffectsModule } from "@ngrx/effects";
@@ -24,12 +24,15 @@ import { AddEducationComponent } from "./components/containers/add-edu/add-edu.c
 import { RegisterPageComponent } from "./components/containers/auth/register-page/register-page.component";
 import { RegisterFormComponent } from "./components/presentational/auth/register-form/register-form.component";
 import { UsersListComponent } from "./components/presentational/users-list/users-list.component";
+import { UserDetailComponent } from "./components/presentational/user-detail/user-detail.component";
 import { UsersListContainerComponent } from "./components/containers/users-list-container/users-list-container.component";
+import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
-const metaReducers: Array<MetaReducer<any, any>> = [
-  fromApp.localStorageSyncReducer,
-];
+import { AppReducers, metaReducers } from "./store/app.reducers";
+// const metaReducers: Array<MetaReducer<any, any>> = [
+//   fromApp.localStorageSyncReducer,
+// ];
 
 @NgModule({
   declarations: [
@@ -45,6 +48,8 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     AppDropdownComponent,
     UsersListComponent,
     UsersListContainerComponent,
+    UserDetailComponent,
+    UserDetailContainerComponent,
   ],
   imports: [
     FlexLayoutModule,
@@ -56,7 +61,7 @@ const metaReducers: Array<MetaReducer<any, any>> = [
     SharedModule,
     MaterialModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot(fromApp.AppReducers, { metaReducers }),
+    StoreModule.forRoot(AppReducers, { metaReducers }),
     EffectsModule.forRoot(AppEffects),
     StoreDevtoolsModule.instrument({
       maxAge: 42,
@@ -65,6 +70,14 @@ const metaReducers: Array<MetaReducer<any, any>> = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+
+    /*
+      provide: META_REDUCERS,
+      deps: [NGXLogger],
+      useFactory: loggerFactory,
+      multi: true
+    },
+    */
   ],
   bootstrap: [AppComponent],
   exports: [],

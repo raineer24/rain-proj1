@@ -8,12 +8,15 @@ import { RegisterPageComponent } from "./components/containers/auth/register-pag
 import { CreateProfileComponent } from "./components/containers/create-profile/create-profile.component";
 import { AddExperienceComponent } from "./components/containers/add-exp/add-exp.component";
 import { AddEducationComponent } from "./components/containers/add-edu/add-edu.component";
+import { UserDetailComponent } from "./components/presentational/user-detail/user-detail.component";
+import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { Router, ActivatedRoute } from "@angular/router";
 const routes: Routes = [
   { path: "login", component: AuthPageComponent },
   { path: "register", component: RegisterPageComponent },
   { path: "add", component: CreateProfileComponent },
   { path: "dev", component: UsersListContainerComponent },
+  { path: "dev/:id", component: UserDetailContainerComponent },
   { path: "user/edit/:id", component: CreateProfileComponent },
   { path: "user/add-exp", component: AddExperienceComponent },
   { path: "user/add-edu", component: AddEducationComponent },

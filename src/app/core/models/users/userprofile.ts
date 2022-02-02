@@ -15,6 +15,7 @@ export interface UserFetch {
   user_profile?: Array<any>;
   user_skill?: Array<any>;
   users_id: string;
+  first_name?: string;
 }
 
 export interface LoginUserDto {
