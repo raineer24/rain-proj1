@@ -5,8 +5,8 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 // import { getUsers } from "../../../store/reducers/user.reducer";
 //import { getUsersInfo } from "../../../store/app.reducers";
-
-import { getUsersInfo } from "../../../store/app.reducers";
+import { selectUserList } from "../../../store/app.reducers";
+//import { getUsersInfo } from "../../../store/app.reducers";
 import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
@@ -24,11 +24,17 @@ import { GetUsers } from "../../../store/actions/user.actions";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-users-list [users]="users$"> </app-users-list> `,
+  template: `<app-users-list [users]="users$"> </app-users-list>
+    <div class="users__table-row" *ngFor="let user of users$ | async">
+      {{ user.username }}
+    </div>`,
 })
 export class UsersListContainerComponent implements OnInit {
-  users$: Observable<UserCredentialsModel[]>;
+  //  users$: Observable<UserCredentialsModel[]>;
   id: string;
+  public users$: Observable<UserCredentialsModel[]> = this.store.pipe(
+    select(selectUserList)
+  );
 
   constructor(
     private store: Store<fromApp.AppState>,
@@ -36,11 +42,11 @@ export class UsersListContainerComponent implements OnInit {
     router: Router
   ) {
     this.store.dispatch(new GetUsers());
-    // this.store.pipe(select(getUsersInfo), take(1)).subscribe((data) => {
-    //   //   console.log("data", data["user"]);
-    //   console.log("data", data);
-    //   this.users$ = data["user"];
-    // });
+    this.store.pipe(select(selectUserList), take(1)).subscribe((data) => {
+      //   console.log("data", data["user"]);
+      console.log("data", data);
+      this.users$ = data["user"];
+    });
   }
 
   ngOnInit() {

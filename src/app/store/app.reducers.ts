@@ -64,7 +64,13 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 
 //export const metaReducers = metaReducersDev;
 
-export const getUserState = createFeatureSelector<UserState>("users");
-export const getUsersInfo = createSelector(getUserState, (state) => {
-  console.log("userstateinfo: ", state.users);
-});
+const selectUsers = (state: AppState) => state.users;
+export const selectUserList = createSelector(
+  selectUsers,
+  (state: UserState) => state.users
+);
+
+// export const getUserState = createFeatureSelector<UserState>("users");
+// export const getUsersInfo = createSelector(getUserState, (state) => {
+//   console.log("userstateinfo: ", state.users);
+// });
