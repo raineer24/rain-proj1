@@ -8,10 +8,11 @@ import {
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { logout } from "../../../store/actions/auth.actions";
 import { AppState } from "../../../store/app.reducers";
-
+import { selectSelectedUser } from "../../../store/app.reducers";
 import { selectAuthUserId } from "../../../store/reducers/auth.reducer";
 import { Router, ActivatedRoute } from "@angular/router";
-import { getUser } from "../../../store/actions/user.actions";
+import { GetUser } from "../../../store/actions/user.actions";
+//import { getUser } from "../../../store/actions/user.actions";
 import { ofType } from "@ngrx/effects";
 import * as AuthActions from "../../../store/actions/auth.actions";
 import {
@@ -23,20 +24,25 @@ import {
   takeUntil,
 } from "rxjs/operators";
 import { Subject, Observable, Subscription } from "rxjs";
-import { UserDetailsModel, UserFetch } from "src/app/core/models";
+import {
+  UserDetailsModel,
+  UserFetch,
+  UserCredentialsModel,
+} from "src/app/core/models";
 import { AnyFn } from "@ngrx/store/src/selector";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: "app-user-detail-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ` <h4>test</h4> `,
+  template: ` <h4>Profile : {{ user.username }}</h4> `,
 })
 export class UserDetailContainerComponent implements OnInit {
   profile$: Observable<UserDetailsModel>;
   dataId: string;
   destroyed$ = new Subject<boolean>();
   actionSub = new Subscription();
+  user: UserCredentialsModel;
 
   datus: Observable<any>;
   constructor(
@@ -46,7 +52,13 @@ export class UserDetailContainerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log("id", this.route.snapshot.params.id);
+    console.log("id", typeof this.route.snapshot.params.id);
+    this.store.dispatch(new GetUser(this.route.snapshot.params.id));
+    this.store
+      .pipe(select(selectSelectedUser))
+      .subscribe((data) => (this.user = data));
+    // this.store.dispatch(getUser({ id: this.route.snapshot.params.id }));
+
     // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
     //   console.log("user detail data", data);
     //   this.dataId = data;

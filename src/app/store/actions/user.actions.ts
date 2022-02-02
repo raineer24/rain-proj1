@@ -44,6 +44,6 @@ export const getUser = createAction(
 );
 
 export const getUserSuccess = createAction(
-  "[Auth] Get Current User Success",
+  "[User] Get Current User Success",
   props<{ payload: any }>()
 );

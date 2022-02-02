@@ -17,6 +17,6 @@ export class UserDetailComponent {
   ) {}
 
   ngOnInit(): void {
-    console.log("id", this._route.snapshot.params.id);
+    // console.log("id", this._route.snapshot.params.id);
   }
 }

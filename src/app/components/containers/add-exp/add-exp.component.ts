@@ -29,7 +29,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { default as _rollupMoment } from "moment";
 import { DatePipe } from "@angular/common";
 import * as AuthActions from "../../../store/actions/auth.actions";
-import { AppState } from "../../../store/app.state";
+import { AppState } from "../../../store/app.reducers";
 
 const moment = _rollupMoment || _moment;
 
@@ -86,8 +86,6 @@ export class AddExperienceComponent implements OnInit {
   }
 
   onSubmit() {
-    const data = this.formGroup.value;
-
     this.store.dispatch(
       AuthActions.createExpProfile({ payload: this.formGroup.value })
     );
