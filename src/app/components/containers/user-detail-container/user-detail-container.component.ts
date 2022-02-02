@@ -46,12 +46,12 @@ export class UserDetailContainerComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
-      console.log("user detail data", data);
-      this.dataId = data;
-      this.store.dispatch(getUser({ id: this.dataId }));
-    });
-
+    console.log("id", this.route.snapshot.params.id);
+    // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
+    //   console.log("user detail data", data);
+    //   this.dataId = data;
+    //   this.store.dispatch(getUser({ id: this.dataId }));
+    // });
     // this.actionsSubj
     //   .pipe(ofType(AuthActions.getUserSuccess), takeUntil(this.destroyed$))
     //   .subscribe((data: any) => {
