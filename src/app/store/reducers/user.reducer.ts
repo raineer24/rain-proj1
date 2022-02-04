@@ -67,6 +67,11 @@ export function userReducers(
         selectedUser: action.payload,
       };
     }
+    case UserActionTypes.CLEAR_STATE: {
+      return {
+        ...initialState,
+      };
+    }
 
     default: {
       return state;

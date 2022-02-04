@@ -39,6 +39,11 @@ export const initialState: AuthState = adapter.getInitialState({
 
 export const authReducer = createReducer(
   initialState,
+  on(AuthActions.getUserSuccess, (state, { payload }) => ({
+    ...state,
+    authUser: payload,
+    loading: false,
+  })),
 
   on(AuthActions.upsertProfileSuccess, (state, { profileId, u_profile }) => {
     console.log("profileId", profileId);

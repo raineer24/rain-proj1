@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { GetUser } from "../../../store/actions/user.actions";
 //import { getUser } from "../../../store/actions/user.actions";
 import { ofType } from "@ngrx/effects";
-import * as AuthActions from "../../../store/actions/auth.actions";
+import * as UserActions from "../../../store/actions/user.actions";
 import {
   skipWhile,
   skip,
@@ -35,7 +35,7 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 @Component({
   selector: "app-user-detail-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div *ngIf="user">
+  template: `<div>
     <h4>Profile : {{ user.username }} {{ user.id }}</h4>
   </div>`,
 })
@@ -45,6 +45,7 @@ export class UserDetailContainerComponent implements OnInit {
   destroyed$ = new Subject<boolean>();
   actionSub = new Subscription();
   public user: UserCredentialsModel;
+  storeSub!: Subscription;
 
   datus: Observable<any>;
   constructor(
@@ -56,9 +57,11 @@ export class UserDetailContainerComponent implements OnInit {
   ngOnInit() {
     console.log("id", typeof this.route.snapshot.params.id);
     this.store.dispatch(new GetUser(this.route.snapshot.params.id));
-    this.store.pipe(select(selectSelectedUser)).subscribe((data) => {
-      this.user = data;
-    });
+    this.storeSub = this.store
+      .pipe(select(selectSelectedUser))
+      .subscribe((data) => {
+        this.user = data;
+      });
     console.log("this.username", this.user.email);
 
     // this.store.dispatch(getUser({ id: this.route.snapshot.params.id }));
@@ -85,8 +88,8 @@ export class UserDetailContainerComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.destroyed$.next();
-    this.destroyed$.complete();
-    this.store.dispatch(new GetUser(this.route.snapshot.params.id));
+    this.storeSub.unsubscribe();
+    this.store.dispatch(new UserActions.ClearStateAction());
+    // this.store.dispatch(new GetUser(this.route.snapshot.params.id));
   }
 }

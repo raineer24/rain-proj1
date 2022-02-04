@@ -15,6 +15,11 @@ export enum UserActionTypes {
   GetUsersSuccess = "[Users List] Get users success",
   GetUser = "[Users] Get user",
   GetUserSuccess = "[Users] Get user success",
+  CLEAR_STATE = "CLEAR_STATE",
+}
+
+export class ClearStateAction implements Action {
+  readonly type = UserActionTypes.CLEAR_STATE;
 }
 
 export class GetUser implements Action {
@@ -34,7 +39,12 @@ export class GetUsersSuccess implements Action {
   constructor(public payload: UserCredentialsModel[]) {}
 }
 
-export type UserActions = GetUsers | GetUsersSuccess | GetUser | GetUserSuccess;
+export type UserActions =
+  | GetUsers
+  | GetUsersSuccess
+  | GetUser
+  | GetUserSuccess
+  | ClearStateAction;
 
 export const getUser = createAction(
   "GET USER",
