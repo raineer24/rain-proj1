@@ -35,14 +35,16 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 @Component({
   selector: "app-user-detail-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ` <h4>Profile : {{ user.username }}</h4> `,
+  template: `<div *ngIf="user">
+    <h4>Profile : {{ user.username }} {{ user.id }}</h4>
+  </div>`,
 })
 export class UserDetailContainerComponent implements OnInit {
   profile$: Observable<UserDetailsModel>;
   dataId: string;
   destroyed$ = new Subject<boolean>();
   actionSub = new Subscription();
-  user: UserCredentialsModel;
+  public user: UserCredentialsModel;
 
   datus: Observable<any>;
   constructor(
@@ -54,9 +56,11 @@ export class UserDetailContainerComponent implements OnInit {
   ngOnInit() {
     console.log("id", typeof this.route.snapshot.params.id);
     this.store.dispatch(new GetUser(this.route.snapshot.params.id));
-    this.store
-      .pipe(select(selectSelectedUser))
-      .subscribe((data) => (this.user = data));
+    this.store.pipe(select(selectSelectedUser)).subscribe((data) => {
+      this.user = data;
+    });
+    console.log("this.username", this.user.email);
+
     // this.store.dispatch(getUser({ id: this.route.snapshot.params.id }));
 
     // this.store.pipe(select(selectAuthUserId), take(1)).subscribe((data) => {
@@ -83,5 +87,6 @@ export class UserDetailContainerComponent implements OnInit {
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+    this.store.dispatch(new GetUser(this.route.snapshot.params.id));
   }
 }
