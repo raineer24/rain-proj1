@@ -6,11 +6,7 @@ import { AppState } from "../../../store/app.reducers";
 @Component({
   selector: "app-user-post",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div
-     test
-    </div>
-  `,
+  template: ` <div>test</div> `,
   styles: [``],
 })
 export class UserPostComponent implements OnInit {

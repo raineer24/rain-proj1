@@ -27,6 +27,7 @@ import { UsersListComponent } from "./components/presentational/users-list/users
 import { UserDetailComponent } from "./components/presentational/user-detail/user-detail.component";
 import { UsersListContainerComponent } from "./components/containers/users-list-container/users-list-container.component";
 import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
+import { UserPostComponent } from "./components/containers/posts/user-post.container";
 import { FlexLayoutModule } from "@angular/flex-layout";
 // a Meta reducer from ngx-localStorage (syncing store with storage).
 import { AppReducers, metaReducers } from "./store/app.reducers";
@@ -50,6 +51,7 @@ import { AppReducers, metaReducers } from "./store/app.reducers";
     UsersListContainerComponent,
     UserDetailComponent,
     UserDetailContainerComponent,
+    UserPostComponent,
   ],
   imports: [
     FlexLayoutModule,

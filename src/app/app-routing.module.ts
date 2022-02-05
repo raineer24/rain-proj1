@@ -11,6 +11,7 @@ import { AddEducationComponent } from "./components/containers/add-edu/add-edu.c
 import { UserDetailComponent } from "./components/presentational/user-detail/user-detail.component";
 import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { Router, ActivatedRoute } from "@angular/router";
+import { UserPostComponent } from "./components/containers/posts/user-post.container";
 const routes: Routes = [
   { path: "login", component: AuthPageComponent },
   { path: "register", component: RegisterPageComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: "user/edit/:id", component: CreateProfileComponent },
   { path: "user/add-exp", component: AddExperienceComponent },
   { path: "user/add-edu", component: AddEducationComponent },
+  { path: "posts", component: UserPostComponent },
   {
     path: "user",
     component: UserComponent,

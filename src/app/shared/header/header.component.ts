@@ -13,6 +13,9 @@ import { Component, Input } from "@angular/core";
           <li>
             <a routerLink="/dev">Users</a>
           </li>
+          <li>
+            <a routerLink="/posts">Blogs</a>
+          </li>
           <li *ngIf="isSigningUpEnabled">
             <a class="border" routerLink="/signing-up/organization/init"
               >Sign up</a
