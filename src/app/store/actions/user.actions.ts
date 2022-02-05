@@ -13,6 +13,22 @@ import { AnyFn } from "@ngrx/store/src/selector";
 export enum UserActionTypes {
   GetUsers = "[Users List] Get users",
   GetUsersSuccess = "[Users List] Get users success",
+  GetUser = "[Users] Get user",
+  GetUserSuccess = "[Users] Get user success",
+  CLEAR_STATE = "CLEAR_STATE",
+}
+
+export class ClearStateAction implements Action {
+  readonly type = UserActionTypes.CLEAR_STATE;
+}
+
+export class GetUser implements Action {
+  public readonly type = UserActionTypes.GetUser;
+  constructor(public payload: string) {}
+}
+export class GetUserSuccess implements Action {
+  public readonly type = UserActionTypes.GetUserSuccess;
+  constructor(public payload: UserCredentialsModel) {}
 }
 
 export class GetUsers implements Action {
@@ -23,7 +39,12 @@ export class GetUsersSuccess implements Action {
   constructor(public payload: UserCredentialsModel[]) {}
 }
 
-export type UserActions = GetUsers | GetUsersSuccess;
+export type UserActions =
+  | GetUsers
+  | GetUsersSuccess
+  | GetUser
+  | GetUserSuccess
+  | ClearStateAction;
 
 export const getUser = createAction(
   "GET USER",
@@ -33,6 +54,6 @@ export const getUser = createAction(
 );
 
 export const getUserSuccess = createAction(
-  "[Auth] Get Current User Success",
+  "[User] Get Current User Success",
   props<{ payload: any }>()
 );

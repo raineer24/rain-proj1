@@ -34,14 +34,14 @@ export interface UserModuleState {
 
 export interface UserState {
   users: UserCredentialsModel[];
-  user: UserDetailsModel;
+  selectedUser: UserCredentialsModel;
   pub: any;
   ourerror: string;
 }
 
 export const initialState: UserState = {
   users: null,
-  user: null,
+  selectedUser: null,
   pub: null,
   ourerror: null,
 };
@@ -59,6 +59,17 @@ export function userReducers(
       return {
         ...state,
         users: action.payload,
+      };
+    }
+    case UserActionTypes.GetUserSuccess: {
+      return {
+        ...state,
+        selectedUser: action.payload,
+      };
+    }
+    case UserActionTypes.CLEAR_STATE: {
+      return {
+        ...initialState,
       };
     }
 

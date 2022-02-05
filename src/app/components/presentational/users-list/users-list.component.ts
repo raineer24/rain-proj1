@@ -16,6 +16,7 @@ import { AppState } from "../../../store/app.reducers";
 import { Store, select } from "@ngrx/store";
 //import { UsersListItemDto } from "src/app/models/models";
 import { getUser } from "../../../store/actions/user.actions";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-users-list",
@@ -44,12 +45,7 @@ import { getUser } from "../../../store/actions/user.actions";
 
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-              <td
-                mat-cell
-                *matCellDef="let row"
-                [routerLink]="['/dev/', row.id]"
-                (click)="onUserSelected(row.id)"
-              >
+              <td mat-cell *matCellDef="let row" (click)="viewUser(row.id)">
                 View PRofile
               </td>
             </ng-container>
@@ -79,7 +75,7 @@ export class UsersListComponent implements OnInit, OnChanges {
   // @Input() users: UsersListItemDto[];
   @Output() userSelected = new EventEmitter<string>();
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private router: Router) {}
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -102,10 +98,11 @@ export class UsersListComponent implements OnInit, OnChanges {
     };
   }
 
-  onUserSelected(id: string) {
+  viewUser(id: string) {
     console.log("click");
+    this.router.navigate([`dev/${id}`]);
 
-    this.store.dispatch(getUser({ id }));
+    //this.store.dispatch(getUser({ id }));
     //console.log("dataSOURUCE", this.users);
     // const path = `/workspace/users/${userId}`;
     //  this.store.dispatch(fromRouter.go({ path: [path] }));

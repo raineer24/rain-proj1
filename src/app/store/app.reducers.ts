@@ -70,6 +70,11 @@ export const selectUserList = createSelector(
   (state: UserState) => state.users
 );
 
+export const selectSelectedUser = createSelector(
+  selectUsers,
+  (state: UserState) => state.selectedUser
+);
+
 // export const getUserState = createFeatureSelector<UserState>("users");
 // export const getUsersInfo = createSelector(getUserState, (state) => {
 //   console.log("userstateinfo: ", state.users);

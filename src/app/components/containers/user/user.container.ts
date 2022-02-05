@@ -41,7 +41,7 @@ export class UserComponent implements OnInit, OnDestroy {
   destroyed$ = new Subject<boolean>();
   isAddMode: boolean;
   id: string;
-  appState$: Observable<fromApp.AppState>;
+  appState$: Observable<AppState>;
   userInfo$: Observable<UserDetailsModel>;
   user$: Observable<UserDetailsModel>;
   constructor(
