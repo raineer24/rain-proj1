@@ -13,6 +13,12 @@
             <button mat-stroked-button type="button" (click)="image.click()">Choose Image</button>
             <input type="file" #image (change)="onSelectFile($event)">
           </div>
+          <div class="image-preview mb-3" *ngIf="post && post.imagePath && !imagePreview">
+            <img [src]="post.imagePath" [alt]="postForm.value.title" class="img-fluid">
+          </div>
+          <div class="image-preview mb-3" *ngIf="imagePreview !== '' && imagePreview && postForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="postForm.value.title" class="img-fluid">
+          </div>
           <mat-form-field>
             <textarea class="mt-3" matInput rows="8" formControlName="body" placeholder="Your thoughts"></textarea>
             <mat-error *ngIf="postForm.get('body').invalid">Please enter valid content</mat-error>

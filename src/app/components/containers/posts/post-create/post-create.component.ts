@@ -6,6 +6,7 @@ import { AppState } from "../../../../store/app.reducers";
 import { isLoading } from "../../../../store/app.reducers";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import * as SpinnerActions from "../../../../store/actions/spinner.actions";
+import { Posts } from "../../../../core/models/";
 @Component({
   selector: "app-post-create",
   templateUrl: "./post-create.component.html",
@@ -16,7 +17,8 @@ export class PostCreateComponent implements OnInit {
   isPostLoading$: Observable<boolean>;
   postForm: FormGroup;
   imagePreview: any;
-
+  post: Posts;
+  private mode = "create";
   constructor(
     private store: Store<AppState>,
     private actionsSubj: ActionsSubject,
@@ -39,11 +41,16 @@ export class PostCreateComponent implements OnInit {
     if (this.postForm.invalid) {
       return;
     }
+    if (this.mode === "create") {
+      const post = new FormData();
+    } else {
+    }
     this.store.dispatch(SpinnerActions.startSpinner());
   }
 
   onSelectFile(e: Event) {
     const file = (e.target as HTMLInputElement).files[0];
+    console.log("file", file);
     this.postForm.patchValue({
       image: file,
     });
