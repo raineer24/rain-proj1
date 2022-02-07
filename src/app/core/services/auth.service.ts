@@ -170,4 +170,9 @@ export class AuthService {
     //const url = `api/v2/users/register`;
     return this.http.post(url, data).pipe(map((data) => data));
   }
+
+  // Fetch user from local storage
+  getUserAuth() {
+    return JSON.parse(sessionStorage.getItem("auth"));
+  }
 }

@@ -7,6 +7,7 @@ import { isLoading } from "../../../../store/app.reducers";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import * as SpinnerActions from "../../../../store/actions/spinner.actions";
 import { Posts } from "../../../../core/models/";
+import { AuthService } from "../../../../core/services/auth.service";
 @Component({
   selector: "app-post-create",
   templateUrl: "./post-create.component.html",
@@ -19,11 +20,14 @@ export class PostCreateComponent implements OnInit {
   imagePreview: any;
   post: Posts;
   private mode = "create";
+  sessionStorageAuthData: string;
+  author: string;
   constructor(
     private store: Store<AppState>,
     private actionsSubj: ActionsSubject,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService
   ) {}
   ngOnInit() {
     this.postForm = this.fb.group({
@@ -35,6 +39,9 @@ export class PostCreateComponent implements OnInit {
       image: [null, Validators.required],
     });
     this.isLoading$ = this.store.pipe(select(isLoading));
+    this.sessionStorageAuthData = this.authService.getUserAuth();
+    this.author = this.sessionStorageAuthData["authUser"].id;
+    console.log("author", this.author);
   }
 
   onSavePost() {
@@ -43,6 +50,15 @@ export class PostCreateComponent implements OnInit {
     }
     if (this.mode === "create") {
       const post = new FormData();
+
+      post.append("id", undefined);
+      post.append("title", this.postForm.value.title);
+      post.append("body", this.postForm.value.body);
+      post.append("image", this.postForm.value.image);
+      post.append("author", this.author);
+
+      this.store.dispatch(PostActions.createPost({ post }));
+    } else if (this.mode === "edit") {
     } else {
     }
     this.store.dispatch(SpinnerActions.startSpinner());
