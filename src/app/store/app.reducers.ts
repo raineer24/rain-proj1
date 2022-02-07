@@ -14,17 +14,21 @@ import { AuthState } from "./reducers/auth.reducer";
 import { UserState, UserModuleState } from "./reducers/user.reducer";
 import { environment } from "../../environments/environment";
 import { HttpErrorsState } from "./reducers/http-errors.reducer";
+import * as fromSpinner from "./reducers/spinner.reducers";
+import { SpinnerState } from "./reducers/spinner.reducers";
 
 export interface AppState {
   auth: AuthState;
   users: UserState;
   httpErrors: HttpErrorsState;
+  spinner: fromSpinner.SpinnerState;
 }
 
 export const AppReducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,
   users: userReducers,
+  spinner: fromSpinner.spinnerReducer,
 };
 
 // export const getProfileState = createFeatureSelector<AppState>("profile");
@@ -63,6 +67,14 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 // ];
 
 //export const metaReducers = metaReducersDev;
+
+export const selectSpinnerState =
+  createFeatureSelector<SpinnerState>("spinner");
+
+export const isLoading = createSelector(
+  selectSpinnerState,
+  (state) => state.loading
+);
 
 const selectUsers = (state: AppState) => state.users;
 export const selectUserList = createSelector(
