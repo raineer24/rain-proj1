@@ -57,7 +57,7 @@ export class PostCreateComponent implements OnInit {
       post.append("image", this.postForm.value.image);
       post.append("author", this.author);
 
-      this.store.dispatch(PostActions.createPost({ post }));
+      //  this.store.dispatch(PostActions.createPost({ post }));
     } else if (this.mode === "edit") {
     } else {
     }

@@ -317,7 +317,10 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(logout),
       map(() => {
-        AuthService.clearToken();
+        console.log(localStorage.removeItem("auth"));
+        //localStorage.removeItem("auth");
+        localStorage.removeItem("auth");
+        // AuthService.clearToken();
         this.router.navigateByUrl("/login");
         return loggedOut();
       })

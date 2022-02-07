@@ -149,7 +149,7 @@ export class AuthService {
 
   updateProfile(profile: UserFetch) {
     console.log("update click", profile);
-    const user_id = JSON.parse(sessionStorage.getItem("auth"));
+    const user_id = JSON.parse(localStorage.getItem("auth"));
     console.log("user.id", user_id["authUser"].user_profile[0].users_id);
     let users_id = user_id["authUser"].user_profile[0].users_id;
 
@@ -173,6 +173,6 @@ export class AuthService {
 
   // Fetch user from local storage
   getUserAuth() {
-    return JSON.parse(sessionStorage.getItem("auth"));
+    return JSON.parse(localStorage.getItem("auth"));
   }
 }

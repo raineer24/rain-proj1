@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: "user/edit/:id", component: CreateProfileComponent },
   { path: "user/add-exp", component: AddExperienceComponent },
   { path: "user/add-edu", component: AddEducationComponent },
-  { path: "posts", component: UserPostComponent },
+  { path: "posts", component: UserPostComponent, canActivate: [AuthGuard] },
   {
     path: "user",
     component: UserComponent,

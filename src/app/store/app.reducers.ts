@@ -46,7 +46,7 @@ export function localStorageSyncReducer(
   return localStorageSync({
     keys: ["auth"],
     rehydrate: true,
-    storage: sessionStorage,
+    storage: localStorage,
   })(reducer);
 }
 
@@ -72,6 +72,13 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 //   createFeatureSelector<SpinnerState>("spinner");
 
 const selectSpinnerState = (state: AppState) => state.spinner;
+
+const selectAuthState = (state: AppState) => state.auth;
+
+export const isLoggedIn = createSelector(
+  selectAuthState,
+  (state) => state.isAuthenticated
+);
 
 export const isLoading = createSelector(
   selectSpinnerState,

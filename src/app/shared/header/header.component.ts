@@ -1,5 +1,11 @@
-import { Component, Input } from "@angular/core";
-
+import { Component, Input, OnInit, OnDestroy } from "@angular/core";
+import { isLoggedIn } from "../../store/app.reducers";
+import { Subscription } from "rxjs";
+import { Store, select, ActionsSubject } from "@ngrx/store";
+import { Observable, Subject } from "rxjs";
+//import { logout } from "../../../store/actions/auth.actions";
+import { AppState } from "../../store/app.reducers";
+import { map } from "rxjs/operators";
 @Component({
   selector: "app-header",
   styleUrls: ["header.component.scss"],
@@ -27,6 +33,28 @@ import { Component, Input } from "@angular/core";
     </div>
   </div>`,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
+  userId: string;
+  isLoggedIn = false;
+  timer: any;
   @Input() isSigningUpEnabled: boolean;
+
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit() {
+    // this.subscription = this.store
+    //   .select("auth")
+    //   .pipe(map((authState) => authState))
+    //   .subscribe((auth) => {
+    //     // console.log("auth", auth["authUser"].id);
+    //     this.userId = auth["authUser"] ? auth["authUser"].id : "";
+    //     this.isLoggedIn = !!auth["authUser"].id;
+    //   });
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.timer);
+    this.subscription.unsubscribe();
+  }
 }
