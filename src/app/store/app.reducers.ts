@@ -68,8 +68,10 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 
 //export const metaReducers = metaReducersDev;
 
-export const selectSpinnerState =
-  createFeatureSelector<SpinnerState>("spinner");
+// export const selectSpinnerState =
+//   createFeatureSelector<SpinnerState>("spinner");
+
+const selectSpinnerState = (state: AppState) => state.spinner;
 
 export const isLoading = createSelector(
   selectSpinnerState,

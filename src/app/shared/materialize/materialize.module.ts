@@ -48,8 +48,10 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatCheckboxModule,
     MatSnackBarModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
+    MatProgressSpinnerModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

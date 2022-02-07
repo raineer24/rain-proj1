@@ -3,7 +3,12 @@
   <div class="row justify-content-center">
     <div class="col-12 col-lg-8 mt-3">
       <mat-card>
-        <form></form>
+        <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
+        <form *ngIf="!(isLoading$ | async)" [formGroup]="postForm" (ngSubmit)="onSavePost()">
+          <button class="mt-2" mat-raised-button color="accent" type="submit">
+            Save
+          </button>
+        </form>
       </mat-card>
     </div>
   </div>
