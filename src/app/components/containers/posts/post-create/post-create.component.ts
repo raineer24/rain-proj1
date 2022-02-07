@@ -15,6 +15,7 @@ export class PostCreateComponent implements OnInit {
   isLoading$: Observable<boolean>;
   isPostLoading$: Observable<boolean>;
   postForm: FormGroup;
+  imagePreview: any;
 
   constructor(
     private store: Store<AppState>,
@@ -23,23 +24,35 @@ export class PostCreateComponent implements OnInit {
     private fb: FormBuilder
   ) {}
   ngOnInit() {
-    this.initForm();
-    this.isLoading$ = this.store.pipe(select(isLoading));
-  }
-
-  initForm() {
-    return (this.postForm = this.fb.group({
+    this.postForm = this.fb.group({
       title: ["", Validators.compose([Validators.required])],
       body: [
         "",
         Validators.compose([Validators.required, Validators.minLength(6)]),
       ],
       image: [null, Validators.required],
-    }));
-
-    //this.postsService.getPosts();
+    });
+    this.isLoading$ = this.store.pipe(select(isLoading));
   }
+
   onSavePost() {
+    if (this.postForm.invalid) {
+      return;
+    }
     this.store.dispatch(SpinnerActions.startSpinner());
+  }
+
+  onSelectFile(e: Event) {
+    const file = (e.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({
+      image: file,
+    });
+    this.postForm.get("image").updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      // this.imagePreview = this.sanitizer.bypassSecurityTrustResourceUrl(<string>reader.result);
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 }
