@@ -8,6 +8,7 @@ import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import * as SpinnerActions from "../../../../store/actions/spinner.actions";
 import { Posts } from "../../../../core/models/";
 import { AuthService } from "../../../../core/services/auth.service";
+import * as PostActions from "../../../../store/actions/post.actions";
 @Component({
   selector: "app-post-create",
   templateUrl: "./post-create.component.html",
@@ -57,7 +58,7 @@ export class PostCreateComponent implements OnInit {
       post.append("image", this.postForm.value.image);
       post.append("author", this.author);
 
-      //  this.store.dispatch(PostActions.createPost({ post }));
+      this.store.dispatch(PostActions.createPost({ post }));
     } else if (this.mode === "edit") {
     } else {
     }
