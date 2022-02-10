@@ -1,7 +1,7 @@
 export class Posts {
-  blog_id: string;
+  id: string;
   title: string;
-  content: string;
+  body: string;
   image_url: string;
   created_at: string;
   updated_at: string;
