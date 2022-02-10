@@ -22,11 +22,13 @@ export class PostCreateComponent implements OnInit {
   post: Posts;
   private mode = "create";
   sessionStorageAuthData: string;
+  private postId: string;
   author: string;
   constructor(
     private store: Store<AppState>,
     private actionsSubj: ActionsSubject,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private authService: AuthService
   ) {}
@@ -43,6 +45,16 @@ export class PostCreateComponent implements OnInit {
     this.sessionStorageAuthData = this.authService.getUserAuth();
     this.author = this.sessionStorageAuthData["authUser"].id;
     console.log("author", this.author);
+
+    // RETRIEVE POST FROM STORE TO POPULATE FORM //
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.get("postId")) {
+        this.mode = "edit";
+      } else {
+        this.mode = "create";
+        this.postId = undefined;
+      }
+    });
   }
 
   onSavePost() {

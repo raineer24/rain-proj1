@@ -44,7 +44,6 @@ export class PostEffects {
       mergeMap((createPost) =>
         this.postsService.createPost(createPost).pipe(
           map((data) => {
-            this.router.navigate(["/login"]);
             console.log("data", data);
 
             return createPostSuccess({ post: data["data"] });
