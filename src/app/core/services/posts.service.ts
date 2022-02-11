@@ -45,7 +45,7 @@ export class PostsService {
 
   public createPost(data) {
     console.log("triggered!");
-    const url = `${this.baseUrl}/api/v2/users`;
+    const url = `${this.baseUrl}/api/v2/posts`;
     const token = JSON.parse(localStorage.getItem("currentUser")).token;
     return this.http.post(url, data, {
       headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),

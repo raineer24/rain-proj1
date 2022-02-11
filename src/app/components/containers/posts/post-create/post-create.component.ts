@@ -9,6 +9,7 @@ import * as SpinnerActions from "../../../../store/actions/spinner.actions";
 import { Posts } from "../../../../core/models/";
 import { AuthService } from "../../../../core/services/auth.service";
 import * as PostActions from "../../../../store/actions/post.actions";
+import { PostsService } from "../../../../core/services/posts.service";
 @Component({
   selector: "app-post-create",
   templateUrl: "./post-create.component.html",
@@ -30,7 +31,8 @@ export class PostCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private postsService: PostsService
   ) {}
   ngOnInit() {
     console.log("this.mode", this.mode);
@@ -58,6 +60,21 @@ export class PostCreateComponent implements OnInit {
     });
   }
 
+  // onSubmit(e) {
+  //   if (e.target !== undefined) {
+  //     this.fd.append("image", e.target.files[0]);
+  //     return (this.postForm.value.image = this.fd);
+  //   }
+  //   this.fd.append("title", this.postForm.value.title);
+  //   this.fd.append("content", this.postForm.value.content);
+
+  //   return this.postsService.upload(this.fd).subscribe((data) => {
+  //     this.fd = new FormData();
+  //     console.log(`SAVED SUCCESSFULLY. ${JSON.stringify(data)}`);
+  //     this.postForm.reset();
+  //   });
+  // }
+
   onSavePost() {
     if (this.postForm.invalid) {
       return;
@@ -69,9 +86,15 @@ export class PostCreateComponent implements OnInit {
       post.append("title", this.postForm.value.title);
       post.append("body", this.postForm.value.body);
       post.append("image", this.postForm.value.image);
-      post.append("author", this.author);
+      post.append("users_id", this.author);
 
-      this.store.dispatch(PostActions.createPost({ post: post }));
+      //this.store.dispatch(PostActions.createPost({ post }));
+
+      return this.postsService.createPost(post).subscribe((data) => {
+        // this.fd = new FormData();
+        console.log(`SAVED SUCCESSFULLY. ${JSON.stringify(data)}`);
+        // this.postForm.reset();
+      });
     } else {
       this.mode === "edit";
     }
