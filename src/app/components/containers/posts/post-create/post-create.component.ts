@@ -88,13 +88,13 @@ export class PostCreateComponent implements OnInit {
       post.append("image", this.postForm.value.image);
       post.append("users_id", this.author);
 
-      //this.store.dispatch(PostActions.createPost({ post }));
+      this.store.dispatch(PostActions.createPost({ post }));
 
-      return this.postsService.createPost(post).subscribe((data) => {
-        // this.fd = new FormData();
-        console.log(`SAVED SUCCESSFULLY. ${JSON.stringify(data)}`);
-        // this.postForm.reset();
-      });
+      // return this.postsService.createPost(post).subscribe((data) => {
+      //   // this.fd = new FormData();
+      //   console.log(`SAVED SUCCESSFULLY. ${JSON.stringify(data)}`);
+      //   // this.postForm.reset();
+      // });
     } else {
       this.mode === "edit";
     }

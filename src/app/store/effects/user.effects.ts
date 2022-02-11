@@ -45,10 +45,6 @@ export class UserEffects {
 
     switchMap((users) => {
       console.log("users", users);
-
-      //const selectedUser = users.filter((user) => user.id === id)[0];
-      //return of(new GetUserSuccess(users));
-
       return this.authService.getUser(users).pipe(
         take(1),
         mergeMap((user: UserCredentialsModel) => {
@@ -56,42 +52,11 @@ export class UserEffects {
           const selectedUser = user["user"];
           console.log("selectedUSer", selectedUser);
           return of(new userActions.GetUserSuccess(selectedUser));
-          //  return of(new GetUserSuccess({payload: user['user']}));
-          // return getUserSuccess({ payload: user["user"] });
         }),
         catchError((error) => of(new SetError(error)))
       );
     })
   );
-
-  // getUser$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(getUser),
-  //     map((action) => action.id),
-  //     switchMap((payload) => {
-  //       console.log("payload", payload);
-  //       return this.authService.getUser(payload).pipe(
-  //         take(1),
-  //         map((user) => {
-  //           console.log("user", user);
-  //           return getUserSuccess({ payload: user["user"] });
-  //         }),
-  //         catchError((error) => of(new SetError(error)))
-  //       );
-  //     })
-  //   )
-  // );
-
-  // @Effect()
-  // getUser$ = this._actions$.pipe(
-  //   ofType<GetUser>(EUserActions.GetUser),
-  //   map((action) => action.payload),
-  //   withLatestFrom(this._store.pipe(select(selectUserList))),
-  //   switchMap(([id, users]) => {
-  //     const selectedUser = users.filter((user) => user._id === id)[0];
-  //     return of(new GetUserSuccess(selectedUser));
-  //   })
-  // );
 
   @Effect()
   getUsers$ = this.actions$.pipe(

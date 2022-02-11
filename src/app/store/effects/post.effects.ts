@@ -44,7 +44,7 @@ export class PostEffects {
       ofType(createPost),
       map((action) => action.post),
       switchMap((createPost) =>
-        this.authService.createPost(createPost).pipe(
+        this.postsService.createPost(createPost).pipe(
           map((data) => {
             console.log("data", data);
 
