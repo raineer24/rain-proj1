@@ -12,7 +12,7 @@ export const createPost = createAction(
 
 export const createPostSuccess = createAction(
   CREATE_POST_SUCCESS,
-  props<{ post: Posts }>()
+  props<{ post: any }>()
 );
 
 export const createPostFailed = createAction(CREATE_POST_FAILED);

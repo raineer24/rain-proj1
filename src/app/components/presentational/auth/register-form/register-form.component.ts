@@ -5,7 +5,7 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { AppState } from "../../../../store/app.state";
+import { AppState } from "../../../../store/app.reducers";
 import { register } from "../../../../store/actions/auth.actions";
 import { Store } from "@ngrx/store";
 
