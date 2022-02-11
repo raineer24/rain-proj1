@@ -21,6 +21,7 @@ import {
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
 import { PostsService } from "../../core/services/posts.service";
+import { AuthService } from "../../core/services/auth.service";
 import { selectUserList } from "../app.reducers";
 import { createPost, createPostSuccess } from "../actions/post.actions";
 import { SetError } from "../actions/http-errors.actions";
@@ -32,6 +33,7 @@ export class PostEffects {
   constructor(
     private readonly actions$: Actions,
     private postsService: PostsService,
+    private authService: AuthService,
     // private actions$: Actions,
     private router: Router,
     private store: Store<AppState>
@@ -41,12 +43,12 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(createPost),
       map((action) => action.post),
-      mergeMap((createPost) =>
-        this.postsService.createPost(createPost).pipe(
+      switchMap((createPost) =>
+        this.authService.createPost(createPost).pipe(
           map((data) => {
             console.log("data", data);
 
-            return createPostSuccess({ post: data["data"] });
+            return createPostSuccess({ post: data["postData"] });
           }),
           catchError((error) => of(new SetError(error)))
         )

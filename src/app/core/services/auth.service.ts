@@ -175,4 +175,13 @@ export class AuthService {
   getUserAuth() {
     return JSON.parse(localStorage.getItem("auth"));
   }
+
+  public createPost(data) {
+    console.log("triggered!");
+    const url = `${this.baseUrl}/api/v2/users`;
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    return this.http.post(url, data, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
+  }
 }

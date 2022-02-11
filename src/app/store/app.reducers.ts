@@ -15,13 +15,16 @@ import { UserState, UserModuleState } from "./reducers/user.reducer";
 import { environment } from "../../environments/environment";
 import { HttpErrorsState } from "./reducers/http-errors.reducer";
 import * as fromSpinner from "./reducers/spinner.reducers";
+import { postReducer } from "./reducers/post.reducer";
 import { SpinnerState } from "./reducers/spinner.reducers";
+import { PostState } from "./reducers/post.reducer";
 
 export interface AppState {
   auth: AuthState;
   users: UserState;
   httpErrors: HttpErrorsState;
   spinner: fromSpinner.SpinnerState;
+  posts: PostState;
 }
 
 export const AppReducers: ActionReducerMap<AppState> = {
@@ -29,6 +32,7 @@ export const AppReducers: ActionReducerMap<AppState> = {
   httpErrors: httpErrorsReducer,
   users: userReducers,
   spinner: fromSpinner.spinnerReducer,
+  posts: postReducer,
 };
 
 // export const getProfileState = createFeatureSelector<AppState>("profile");

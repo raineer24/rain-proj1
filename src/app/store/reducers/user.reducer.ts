@@ -12,22 +12,6 @@ import { UserDetailsModel, UserCredentialsModel } from "../../core/models";
 //import * as UserActions from "../actions/user.actions";
 import { UserActions, UserActionTypes } from "../actions/user.actions";
 
-// export const loadUsersSuccess = createAction(
-//   "[Users Management] Load Users Success",
-//   (users: UserCredentialsModel[]) => ({
-//     users,
-//     triggerAction: loadUsers.type,
-//   })
-// );
-
-// export const loadUsersFail = createAction(
-//   "[Users Management] Load Users Fail",
-//   (error: any) => ({
-//     error,
-//     triggerAction: loadUsers.type,
-//   })
-// );
-
 export interface UserModuleState {
   userDATU: UserState;
 }

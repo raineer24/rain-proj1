@@ -33,6 +33,7 @@ export class PostCreateComponent implements OnInit {
     private authService: AuthService
   ) {}
   ngOnInit() {
+    console.log("this.mode", this.mode);
     this.postForm = this.fb.group({
       title: ["", Validators.compose([Validators.required])],
       body: [
@@ -70,10 +71,11 @@ export class PostCreateComponent implements OnInit {
       post.append("image", this.postForm.value.image);
       post.append("author", this.author);
 
-      this.store.dispatch(PostActions.createPost({ post }));
-    } else if (this.mode === "edit") {
+      this.store.dispatch(PostActions.createPost({ post: post }));
     } else {
+      this.mode === "edit";
     }
+
     this.store.dispatch(SpinnerActions.startSpinner());
   }
 
