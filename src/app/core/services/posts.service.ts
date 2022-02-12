@@ -10,6 +10,7 @@ import {
   UserCredentialsModel,
   UserFetch,
   LoginUserQuery,
+  Posts,
 } from "../models";
 import { environment } from "../../../environments/environment";
 import { map, tap, catchError, first, switchMap } from "rxjs/operators";
@@ -50,5 +51,21 @@ export class PostsService {
     return this.http.post(url, data, {
       headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
     });
+  }
+
+  getPosts() {
+    const url = `${this.baseUrl}/api/v2/posts`;
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    console.log(url);
+    return this.http
+      .get<Posts[]>(url, {
+        headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+      })
+      .pipe(
+        map((data) => {
+          console.log(data);
+          return data;
+        })
+      );
   }
 }
