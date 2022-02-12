@@ -23,5 +23,8 @@ export const postReducer = createReducer(
   initialState,
   on(PostActions.createPostSuccess, (state, action) => {
     return adapter.addOne(action.post, { ...state });
+  }),
+  on(PostActions.getPostSuccess, (state, action) => {
+    return adapter.addMany(action.post, { ...state });
   })
 );

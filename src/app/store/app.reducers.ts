@@ -75,6 +75,8 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 // export const selectSpinnerState =
 //   createFeatureSelector<SpinnerState>("spinner");
 
+const selectPostsState = (state: AppState) => state.posts;
+
 const selectSpinnerState = (state: AppState) => state.spinner;
 
 const selectAuthState = (state: AppState) => state.auth;
@@ -83,6 +85,10 @@ export const isLoggedIn = createSelector(
   selectAuthState,
   (state) => state.isAuthenticated
 );
+
+export const generateAllPosts = createSelector(selectPostsState, (state) => {
+  console.log("state", state);
+});
 
 export const isLoading = createSelector(
   selectSpinnerState,

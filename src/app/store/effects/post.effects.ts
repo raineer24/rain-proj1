@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType, createEffect } from "@ngrx/effects";
 import { Router } from "@angular/router";
 // import * as AuthActions from "../../store/actions/auth.actions";
-import { UserCredentialsModel, UserFetch } from "../../core/models/";
+import { Posts, UserCredentialsModel, UserFetch } from "../../core/models/";
 // import { UserState } from "../../store/reducers/user.reducer";
 import { AppState } from "../../store/app.reducers";
 import * as userActions from "../actions/user.actions";
@@ -23,7 +23,11 @@ import { merge, Observable, of } from "rxjs";
 import { PostsService } from "../../core/services/posts.service";
 import { AuthService } from "../../core/services/auth.service";
 import { selectUserList } from "../app.reducers";
-import { createPost, createPostSuccess } from "../actions/post.actions";
+import {
+  createPost,
+  createPostSuccess,
+  getPostSuccess,
+} from "../actions/post.actions";
 import { SetError } from "../actions/http-errors.actions";
 import * as SpinnerActions from "../../store/actions/spinner.actions";
 import * as PostsActions from "../../store/actions/post.actions";
@@ -65,5 +69,32 @@ export class PostEffects {
         };
       })
     )
+  );
+
+  // @Effect() onGetUnpublishedPost$: Observable<Action> =
+  // this.actions$.ofType<addpostActions.GetUnpublishedPost>(addpostActions.AddNewPostActionTypes.GET_UNPUBLISHED_POST)
+  // .switchMap((action) => {
+  //     return this.addNewPostService
+  //     .GetUserUnpublishedPost()
+  //     .map(data => {
+  //         return new addpostActions.GetUnpublishedPostSuccess(data.value);
+  //       })
+  //       .catch((error) => {
+  //         return Observable.of(
+  //           new addpostActions.GetUnpublishedPostFail({error:error})
+  //         );
+  //       });
+
+  @Effect()
+  getPosts$ = this.actions$.pipe(
+    ofType(PostsActions.getAllPosts),
+    switchMap(() => {
+      return this.postsService.getPosts().pipe(
+        map((data) => {
+          console.log("data", data);
+          return getPostSuccess({ post: data["posts"] });
+        })
+      );
+    })
   );
 }
