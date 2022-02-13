@@ -17,6 +17,7 @@ import {
   exhaustMap,
   delay,
   withLatestFrom,
+  filter
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
@@ -31,7 +32,7 @@ import {
 import { SetError } from "../actions/http-errors.actions";
 import * as SpinnerActions from "../../store/actions/spinner.actions";
 import * as PostsActions from "../../store/actions/post.actions";
-
+import { generateAllPosts } from "../../store/app.reducers";
 @Injectable()
 export class PostEffects {
   constructor(
@@ -42,6 +43,26 @@ export class PostEffects {
     private router: Router,
     private store: Store<AppState>
   ) {}
+
+  readonly loadPostsIfNotLoaded$ = createEffect(() => {
+    return this.actions$.pipe(
+      // when the songs page is opened
+      ofType(PostsActions.opened),
+      // then select songs from the store
+         withLatestFrom((() => this.store.select(generateAllPosts)),
+      // and check if the songs are loaded
+      filter(([, songs]) => !songs),
+      // if not, load songs from the API
+      exhaustMap(() => {
+        return this.songsService.getSongs().pipe(
+          map((songs) => songsApiActions.songsLoadedSuccess({ songs })),
+          catchError((error: { message: string }) =>
+            of(songsApiActions.songsLoadedFailure({ error }))
+          )
+        );
+      })
+    );
+  });
 
   addPost$ = createEffect(() =>
     this.actions$.pipe(

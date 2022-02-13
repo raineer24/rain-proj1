@@ -98,7 +98,7 @@ export class PostCreateComponent implements OnInit {
     } else {
       this.mode === "edit";
     }
-
+    this.postForm.reset();
     this.store.dispatch(SpinnerActions.startSpinner());
   }
 

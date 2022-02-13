@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Posts } from "../../../../core/models/posts";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PostsService } from "../../../../core/services/posts.service";
@@ -21,8 +21,9 @@ import {
   templateUrl: "./posts-list.component.html",
   styleUrls: ["./posts-list.component.scss"],
 })
-export class PostsListComponent implements OnInit {
+export class PostsListComponent implements OnInit, OnDestroy {
   posts$: Observable<Posts[]>;
+  $postAppsSubscription: Observable<string>;
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
   ngOnInit() {
@@ -30,6 +31,8 @@ export class PostsListComponent implements OnInit {
 
     this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
       console.log("data", data);
+      //this.posts$ = data;
     });
   }
+  ngOnDestroy() {}
 }

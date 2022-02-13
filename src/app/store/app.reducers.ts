@@ -87,7 +87,8 @@ export const isLoggedIn = createSelector(
 );
 
 export const generateAllPosts = createSelector(selectPostsState, (state) => {
-  console.log("state", state);
+  console.log("state", state.posts);
+  state.posts;
 });
 
 export const isLoading = createSelector(

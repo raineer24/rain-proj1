@@ -46,26 +46,5 @@ export class UsersListContainerComponent implements OnInit {
     // });
   }
 
-  ngOnInit() {
-    // this.store.dispatch(new LoadUsers());
-    //this.users$ = this.store.select(getUsers);
-    //console.log("this users", this.users$);
-    // this.store.pipe(select(getUsers), take(1)).subscribe((data) => {
-    //   console.log("data", data);
-    //   this.users$ = data["user"];
-    // });
-    // const profile$ = this.store
-    //   .select(getUsersInfo)
-    //   .pipe(filter((profile) => profile !== null))
-    //   .subscribe((profile) => {
-    //     console.log("Users::", profile);
-    //   });
-  }
-  // onUserSelected(id: string) {
-  //   console.log("click");
-  //   const path = `dev/${id}`;
-  //   console.log("path", location.pathname[path]);
-
-  //   this.store.dispatch(getUser({ id: this.id }));
-  // }
+  ngOnInit() {}
 }

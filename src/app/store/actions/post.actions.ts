@@ -5,6 +5,8 @@ export const CREATE_POST = "[CREATE POST PAGE] CREATE_POST";
 export const CREATE_POST_SUCCESS = "[CREATE POST PAGE] CREATE_POST_SUCCESS";
 export const CREATE_POST_FAILED = "[CREATE POST PAGE] CREATE_POST_FAILED";
 
+export const opened = createAction("[Posts Page] Opened");
+
 //export const GET_POST = "[ POST ]";
 export const GET_POST_SUCCESS = "GET_POST_SUCCESS";
 export const GET_POST_FAILED = "GET_POST_FAILED";

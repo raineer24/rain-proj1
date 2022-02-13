@@ -5,6 +5,7 @@ import * as PostActions from "../actions/post.actions";
 
 export interface PostState extends EntityState<Posts> {
   selectPostId: string;
+  posts: Posts[];
 }
 
 export const selectPostId = (post: Posts) => post.id;
@@ -17,6 +18,7 @@ export const initPostsState = adapter.getInitialState();
 
 export const initialState: PostState = adapter.getInitialState({
   selectPostId: null,
+  posts: [],
 });
 
 export const postReducer = createReducer(
@@ -24,7 +26,9 @@ export const postReducer = createReducer(
   on(PostActions.createPostSuccess, (state, action) => {
     return adapter.addOne(action.post, { ...state });
   }),
-  on(PostActions.getPostSuccess, (state, action) => {
-    return adapter.addMany(action.post, { ...state });
-  })
+  on(PostActions.getPostSuccess, (state, { post }) => ({
+    ...state,
+    posts: post,
+    loading: false,
+  }))
 );
