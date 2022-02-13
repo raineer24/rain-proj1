@@ -86,10 +86,10 @@ export const isLoggedIn = createSelector(
   (state) => state.isAuthenticated
 );
 
-export const generateAllPosts = createSelector(selectPostsState, (state) => {
-  console.log("state", state.posts);
-  state.posts;
-});
+export const generateAllPosts = createSelector(
+  selectPostsState,
+  (state) => state.posts
+);
 
 export const isLoading = createSelector(
   selectSpinnerState,

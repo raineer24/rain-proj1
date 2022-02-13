@@ -17,7 +17,7 @@ import {
   exhaustMap,
   delay,
   withLatestFrom,
-  filter
+  filter,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
@@ -49,17 +49,20 @@ export class PostEffects {
       // when the songs page is opened
       ofType(PostsActions.opened),
       // then select songs from the store
-         withLatestFrom((() => this.store.select(generateAllPosts)),
+      withLatestFrom(this.store.select(generateAllPosts)),
       // and check if the songs are loaded
-      filter(([, songs]) => !songs),
+      // filter(([songs]) => !songs),
       // if not, load songs from the API
       exhaustMap(() => {
-        return this.songsService.getSongs().pipe(
-          map((songs) => songsApiActions.songsLoadedSuccess({ songs })),
-          catchError((error: { message: string }) =>
-            of(songsApiActions.songsLoadedFailure({ error }))
-          )
+        return this.postsService.getPosts().pipe(
+          map((data) => PostsActions.getPostSuccess({ post: data["posts"] })),
+          catchError((error) => of(new SetError(error)))
         );
+      }),
+      tap(() => {
+        setTimeout(() => {
+          this.router.navigateByUrl("/posts");
+        }, 2000);
       })
     );
   });
@@ -85,6 +88,7 @@ export class PostEffects {
     this.actions$.pipe(
       ofType(PostsActions.createPostSuccess),
       map((action) => {
+        PostsActions.opened;
         return {
           type: SpinnerActions.STOP_SPINNER,
         };

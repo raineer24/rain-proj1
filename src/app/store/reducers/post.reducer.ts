@@ -30,5 +30,6 @@ export const postReducer = createReducer(
     ...state,
     posts: post,
     loading: false,
-  }))
+  })),
+  on(PostActions.opened, (state) => ({ ...state, isLoading: true }))
 );

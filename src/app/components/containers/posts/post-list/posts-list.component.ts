@@ -9,12 +9,16 @@ import { getAllPosts } from "../../../../store/actions/post.actions";
 import * as PostActions from "../../../../store/actions/post.actions";
 import { generateAllPosts } from "../../../../store/app.reducers";
 import {
-  skipWhile,
-  skip,
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
   take,
+  exhaustMap,
+  delay,
+  withLatestFrom,
   filter,
-  first,
-  takeUntil,
 } from "rxjs/operators";
 @Component({
   selector: "posts-list",
@@ -22,17 +26,41 @@ import {
   styleUrls: ["./posts-list.component.scss"],
 })
 export class PostsListComponent implements OnInit, OnDestroy {
-  posts$: Observable<Posts[]>;
+  // posts$: Posts[];
   $postAppsSubscription: Observable<string>;
-
+  public posts$: Observable<Posts[]> = this.store.pipe(
+    select(generateAllPosts)
+  );
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
   ngOnInit() {
-    this.store.dispatch(getAllPosts());
+    // this.store.dispatch(getAllPosts());
+    // this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
+    //   console.log("data", data);
+    //   //this.posts$ = data;
+    // });
 
-    this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
+    this.store.dispatch(PostActions.opened());
+    this.posts$.subscribe((data) => {
       console.log("data", data);
-      //this.posts$ = data;
     });
+
+    // this.store
+    //   .select(generateAllPosts)
+    //   .pipe(
+    //     tap((songs) => {
+    //       // if the songs are not loaded
+    //       // if (!songs) {
+    //       //   // then dispatch the `loadSongs` action
+    //       //   this.store.dispatch(getAllPosts());
+    //       // }
+    //       this.store.dispatch(getAllPosts());
+    //     }),
+    //     take(1)
+    //   )
+    //   .subscribe((data) => {
+    //     console.log("data post", this.posts$);
+    //     this.posts$ = data;
+    //   });
   }
   ngOnDestroy() {}
 }
