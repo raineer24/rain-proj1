@@ -7,7 +7,7 @@ import { Subscription, Observable, of, Subject } from "rxjs";
 import { AppState } from "../../../../store/app.reducers";
 import { getAllPosts } from "../../../../store/actions/post.actions";
 import * as PostActions from "../../../../store/actions/post.actions";
-import { generateAllPosts } from "../../../../store/app.reducers";
+import { generateAllPosts, isLoading$ } from "../../../../store/app.reducers";
 import {
   catchError,
   map,
@@ -26,7 +26,9 @@ import {
   styleUrls: ["./posts-list.component.scss"],
 })
 export class PostsListComponent implements OnInit, OnDestroy {
+  isLoading$: Observable<boolean>;
   posts: Posts[];
+  storeSub!: Subscription;
   datus: any;
   $postAppsSubscription: Observable<string>;
   public posts$: Observable<Posts[]> = this.store.pipe(
@@ -34,14 +36,22 @@ export class PostsListComponent implements OnInit, OnDestroy {
   );
   constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
   ngOnInit() {
+    this.isLoading$ = this.store.select(isLoading$);
     this.store.dispatch(getAllPosts());
     // this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
     //   console.log("data", data);
     //   //this.posts$ = data;
     // });
 
-    this.store.dispatch(PostActions.opened());
+    // this.store.pipe(
+    //   select((state) => state.posts.posts),
+    //   filter((details) => !!details),
+    //   take(1)
+    // );
+
+    // this.store.dispatch(PostActions.opened());
     this.posts$.subscribe((data) => {
+      console.log("this.posts", this.posts);
       this.posts = data;
     });
 

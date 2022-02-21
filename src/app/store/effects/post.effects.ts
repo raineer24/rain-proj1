@@ -44,28 +44,18 @@ export class PostEffects {
     private store: Store<AppState>
   ) {}
 
-  readonly loadPostsIfNotLoaded$ = createEffect(() => {
-    return this.actions$.pipe(
-      // when the songs page is opened
-      ofType(PostsActions.opened),
-      // then select songs from the store
-      withLatestFrom(this.store.select(generateAllPosts)),
-      // and check if the songs are loaded
-      // filter(([songs]) => !songs),
-      // if not, load songs from the API
-      exhaustMap(() => {
-        return this.postsService.getPosts().pipe(
-          map((data) => PostsActions.getPostSuccess({ post: data["posts"] })),
-          catchError((error) => of(new SetError(error)))
-        );
-      }),
-      tap(() => {
-        setTimeout(() => {
-          this.router.navigateByUrl("/posts");
-        }, 2000);
-      })
-    );
-  });
+  // readonly loadPostsIfNotLoaded$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     // when the songs page is opened
+  //     ofType(PostsActions.getAllPosts),
+  //     // then select songs from the store
+  //     withLatestFrom(this.store.select(generateAllPosts)),
+  //     // and check if the songs are loaded
+  //     // filter(([songs]) => !songs),
+  //     // if not, load songs from the API
+  //     switchMap(() => this.postsService.getPosts())
+  //   );
+  // });
 
   addPost$ = createEffect(() =>
     this.actions$.pipe(
@@ -110,16 +100,32 @@ export class PostEffects {
   //         );
   //       });
 
-  @Effect()
-  getPosts$ = this.actions$.pipe(
-    ofType(PostsActions.getAllPosts),
-    switchMap(() => {
-      return this.postsService.getPosts().pipe(
-        map((data) => {
-          console.log("data", data);
-          return getPostSuccess({ post: data["posts"] });
-        })
-      );
-    })
+  // @Effect()
+  // getPosts$ = this.actions$.pipe(
+  //   ofType(PostsActions.getAllPosts),
+  //   switchMap(() => {
+  //     return this.postsService.getPosts().pipe(
+  //       map((data) => {
+  //         console.log("data", data);
+  //         return getPostSuccess({ post: data["posts"] });
+  //       })
+  //     );
+  //   })
+  // );
+
+  getPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PostsActions.getAllPosts),
+
+      // instead of returning an empty operator in catchError, let's return an empty array
+      switchMap(() =>
+        this.postsService
+          .getPosts()
+          .pipe(catchError((error) => of(new SetError(error))))
+      ),
+
+      // the main problem in your code was this "payload: books"; use, instead, "payload: {books}"
+      map((data) => getPostSuccess({ post: data["posts"] }))
+    )
   );
 }

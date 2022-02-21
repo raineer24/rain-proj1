@@ -91,6 +91,11 @@ export const generateAllPosts = createSelector(
   (state) => state.posts
 );
 
+export const isLoading$ = createSelector(
+  selectPostsState,
+  (state) => state.isLoading
+);
+
 export const isLoading = createSelector(
   selectSpinnerState,
   (state) => state.loading
