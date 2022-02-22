@@ -27,12 +27,6 @@ import { AuthService } from "../../core/services/auth.service";
 import { selectUserList } from "../app.reducers";
 
 import {
-  PostActionTypes,
-  GetPostsAction,
-  GetPostsSuccessAction,
-  GetPostsFailAction,
-} from "../actions/post.actions";
-import {
   createPost,
   createPostSuccess,
   getPostSuccess,
@@ -47,57 +41,9 @@ export class PostEffects {
     private readonly actions$: Actions,
     private postsService: PostsService,
     private authService: AuthService,
-    // private actions$: Actions,
     private router: Router,
     private store: Store<AppState>
   ) {}
-
-  // loadAll = createEffect(
-  //   () =>
-  //     this.actions.pipe(
-  //       ofType(DeviceUiActions.init),
-  //       switchMap((action) =>
-  //         of(action).pipe(withLatestFrom(this.store.pipe(select(devices))))
-  //       ),
-  //       filter(([, actualDevices]) => actualDevices === undefined),
-  //       switchMap(() => this.deviceService.findAll()),
-  //       ignoreElements()
-  //     ),
-  //   { dispatch: false }
-  // );
-
-  // loadAll = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(PostsActions.getAllPosts),
-  //       switchMap((action) =>
-  //         of(action).pipe(
-  //           withLatestFrom(this.store.pipe(select(generateAllPosts)))
-  //         )
-  //       ),
-  //       filter(([, posts]) => posts === undefined),
-  //       switchMap(() => this.postsService.PostsAll()),
-  //       ignoreElements()
-  //     )
-  //   //{ dispatch: false }
-  // );
-
-  // addPost$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(createPost),
-  //     map((action) => action.post),
-  //     switchMap((createPost) =>
-  //       this.postsService.createPost(createPost).pipe(
-  //         map((data) => {
-  //           console.log("data", data);
-
-  //           return createPostSuccess({ post: data["postData"] });
-  //         }),
-  //         catchError((error) => of(new SetError(error)))
-  //       )
-  //     )
-  //   )
-  // );
 
   addPost$ = createEffect(() =>
     this.actions$.pipe(
@@ -130,49 +76,6 @@ export class PostEffects {
     )
   );
 
-  // @Effect() onGetUnpublishedPost$: Observable<Action> =
-  // this.actions$.ofType<addpostActions.GetUnpublishedPost>(addpostActions.AddNewPostActionTypes.GET_UNPUBLISHED_POST)
-  // .switchMap((action) => {
-  //     return this.addNewPostService
-  //     .GetUserUnpublishedPost()
-  //     .map(data => {
-  //         return new addpostActions.GetUnpublishedPostSuccess(data.value);
-  //       })
-  //       .catch((error) => {
-  //         return Observable.of(
-  //           new addpostActions.GetUnpublishedPostFail({error:error})
-  //         );
-  //       });
-
-  // @Effect()
-  // getPosts$ = this.actions$.pipe(
-  //   ofType(PostsActions.getAllPosts),
-  //   switchMap(() => {
-  //     return this.postsService.getPosts().pipe(
-  //       map((data) => {
-  //         console.log("data", data);
-  //         return getPostSuccess({ post: data["posts"] });
-  //       })
-  //     );
-  //   })
-  // );
-
-  // getPost$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(PostsActions.getAllPosts),
-
-  //     // instead of returning an empty operator in catchError, let's return an empty array
-  //     switchMap(() =>
-  //       this.postsService
-  //         .getPosts()
-  //         .pipe(catchError((error) => of(new SetError(error))))
-  //     ),
-
-  //     // the main problem in your code was this "payload: books"; use, instead, "payload: {books}"
-  //     map((data) => getPostSuccess({ post: data["posts"] }))
-  //   )
-  // );
-
   GetPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.getAllPosts),
@@ -184,17 +87,4 @@ export class PostEffects {
       )
     )
   );
-
-  // @Effect() getPosts$ = this.actions$.pipe(
-  //   ofType<GetPostsAction>(PostActionTypes.GET_POSTS),
-  //   mergeMap(() =>
-  //     this.postsService.getPosts().pipe(
-  //       map((data) => {
-  //         console.log("efx data", data["posts"]);
-  //         return new GetPostsSuccessAction(data["posts"]);
-  //       }),
-  //       catchError((error) => of(new GetPostsFailAction(error)))
-  //     )
-  //   )
-  // );
 }

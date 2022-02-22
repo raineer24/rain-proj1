@@ -34,55 +34,16 @@ export class PostsListComponent implements OnInit, OnDestroy {
   datus: any;
   loading$: Observable<Boolean>;
   $postAppsSubscription: Observable<string>;
-  // public posts$: Observable<Posts[]> = this.store.pipe(
-  //   select(generateAllPosts)
-  // );
+
   posts$: Observable<Posts[]>;
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
-    // store.pipe(select(generateAllPosts)).subscribe((posts) => {
-    //   console.log("this.posts", this.posts);
-    //   this.posts = cloneDeep(posts);
-    // });
-  }
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
   ngOnInit() {
-    //  this.isLoading$ = this.store.select(isLoading$);
     this.store.dispatch(getAllPosts());
     this.posts$ = this.store.select((store) => store.posts.posts);
-    // this.store.dispatch(new GetPostsAction());
+
     this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
       console.log("data", data);
-      //this.posts$ = data;
     });
-
-    // this.store.pipe(
-    //   select((state) => state.posts.posts),
-    //   filter((details) => !!details),
-    //   take(1)
-    // );
-
-    // this.store.dispatch(PostActions.opened());
-    // this.posts$.subscribe((data) => {
-    //   console.log("this.posts", this.posts);
-    //   this.posts = data;
-    // });
-
-    // this.store
-    //   .select(generateAllPosts)
-    //   .pipe(
-    //     tap((songs) => {
-    //       // if the songs are not loaded
-    //       // if (!songs) {
-    //       //   // then dispatch the `loadSongs` action
-    //       //   this.store.dispatch(getAllPosts());
-    //       // }
-    //       this.store.dispatch(getAllPosts());
-    //     }),
-    //     take(1)
-    //   )
-    //   .subscribe((data) => {
-    //     console.log("data post", this.posts$);
-    //     this.posts$ = data;
-    //   });
   }
   ngOnDestroy() {}
 }
