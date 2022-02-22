@@ -33,30 +33,6 @@ import { SetError } from "../actions/http-errors.actions";
 
 @Injectable()
 export class AuthEffects {
-  // @Effect()
-  // createExperience: Observable<any> = this.actions$.pipe(
-  //   ofType(UserActions.UserActionTypes.CREATE_EXP_PROFILE),
-  //   map((action: UserActions.createExpProfile) => action.payload),
-  //   switchMap((payload) => {
-  //     console.log("payload create EXPERIENCE: ", payload);
-  //     return this.authService.createExp(payload).pipe(
-  //       take(1),
-  //       map((user) => {
-  //         console.log("create experience EFFECT: ", user.profileExpCreate);
-
-  //         let data = user.profileExpCreate;
-
-  //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-
-  //         // console.log("get profile Effect", user.body);
-
-  //         return new UserActions.createExpProfileeSuccess(data);
-  //       }),
-  //       catchError((err) => of(new UserActions.createExpProfileFail(err)))
-  //     );
-  //   })
-  // );
-
   createEducation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.createEduProfile),
@@ -104,50 +80,6 @@ export class AuthEffects {
       )
     )
   );
-
-  // createExperience$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActions.createExpProfile),
-  //     map((action) => action.payload),
-  //     switchMap((payload) => {
-  //       return this.authService.createExp(payload).pipe(
-  //         take(1),
-  //         map((user) => {
-  //           console.log("user", user);
-  //           return AuthActions.createExpProfileSuccess({
-  //             payload: user["user"],
-  //           });
-  //         }),
-  //         catchError((error) => of(new SetError(error)))
-  //       );
-  //     })
-  //   )
-  // );
-
-  // deleteEduProfile$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(AuthActions.deleteEduProfile),
-  //     map((action) => action.id),
-  //     switchMap((payload) => {
-  //       console.log("payload create EXPERIENCE: ", payload);
-  //       return this.authService.deleteEdu(payload).pipe(
-  //         take(1),
-  //         map((user) => {
-  //           console.log("delete edu profile: ", user);
-
-  //           // let data = user.profileExpCreate;
-
-  //           // store user details and jwt token in local storage to keep user logged in between page refreshes
-
-  //           // console.log("get profile Effect", user.body);
-
-  //           // return new UserActions.createExpProfileeSuccess(data);
-  //         }),
-  //         catchError((err) => of(new err()))
-  //       );
-  //     })
-  //   )
-  // );
 
   deleteEduProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -317,7 +249,10 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(logout),
       map(() => {
-        AuthService.clearToken();
+        console.log(localStorage.removeItem("auth"));
+        //localStorage.removeItem("auth");
+        localStorage.removeItem("auth");
+        // AuthService.clearToken();
         this.router.navigateByUrl("/login");
         return loggedOut();
       })

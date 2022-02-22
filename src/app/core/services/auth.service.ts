@@ -149,7 +149,7 @@ export class AuthService {
 
   updateProfile(profile: UserFetch) {
     console.log("update click", profile);
-    const user_id = JSON.parse(sessionStorage.getItem("auth"));
+    const user_id = JSON.parse(localStorage.getItem("auth"));
     console.log("user.id", user_id["authUser"].user_profile[0].users_id);
     let users_id = user_id["authUser"].user_profile[0].users_id;
 
@@ -169,5 +169,19 @@ export class AuthService {
     const url = `${this.baseUrl}/api/v2/users/register`;
     //const url = `api/v2/users/register`;
     return this.http.post(url, data).pipe(map((data) => data));
+  }
+
+  // Fetch user from local storage
+  getUserAuth() {
+    return JSON.parse(localStorage.getItem("auth"));
+  }
+
+  public createPost(data) {
+    console.log("triggered!");
+    const url = `${this.baseUrl}/api/v2/users`;
+    const token = JSON.parse(localStorage.getItem("currentUser")).token;
+    return this.http.post(url, data, {
+      headers: new HttpHeaders().set("Authorization", `Bearer ${token}`),
+    });
   }
 }

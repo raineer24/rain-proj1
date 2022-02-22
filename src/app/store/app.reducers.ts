@@ -14,17 +14,25 @@ import { AuthState } from "./reducers/auth.reducer";
 import { UserState, UserModuleState } from "./reducers/user.reducer";
 import { environment } from "../../environments/environment";
 import { HttpErrorsState } from "./reducers/http-errors.reducer";
+import * as fromSpinner from "./reducers/spinner.reducers";
+import { postReducer } from "./reducers/post.reducer";
+import { SpinnerState } from "./reducers/spinner.reducers";
+import { PostState } from "./reducers/post.reducer";
 
 export interface AppState {
   auth: AuthState;
   users: UserState;
   httpErrors: HttpErrorsState;
+  spinner: fromSpinner.SpinnerState;
+  posts: PostState;
 }
 
 export const AppReducers: ActionReducerMap<AppState> = {
   auth: authReducer,
   httpErrors: httpErrorsReducer,
   users: userReducers,
+  spinner: fromSpinner.spinnerReducer,
+  posts: postReducer,
 };
 
 // export const getProfileState = createFeatureSelector<AppState>("profile");
@@ -42,7 +50,7 @@ export function localStorageSyncReducer(
   return localStorageSync({
     keys: ["auth"],
     rehydrate: true,
-    storage: sessionStorage,
+    storage: localStorage,
   })(reducer);
 }
 
@@ -63,6 +71,35 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 // ];
 
 //export const metaReducers = metaReducersDev;
+
+// export const selectSpinnerState =
+//   createFeatureSelector<SpinnerState>("spinner");
+
+const selectPostsState = (state: AppState) => state.posts;
+
+const selectSpinnerState = (state: AppState) => state.spinner;
+
+const selectAuthState = (state: AppState) => state.auth;
+
+export const isLoggedIn = createSelector(
+  selectAuthState,
+  (state) => state.isAuthenticated
+);
+
+export const generateAllPosts = createSelector(
+  selectPostsState,
+  (state) => state.posts
+);
+
+export const isLoading$ = createSelector(
+  selectPostsState,
+  (state) => state.isLoading
+);
+
+export const isLoading = createSelector(
+  selectSpinnerState,
+  (state) => state.loading
+);
 
 const selectUsers = (state: AppState) => state.users;
 export const selectUserList = createSelector(

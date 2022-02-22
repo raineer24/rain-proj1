@@ -39,6 +39,13 @@ export const initialState: AuthState = adapter.getInitialState({
 
 export const authReducer = createReducer(
   initialState,
+  on(AuthActions.loggedOut, (state, action) => {
+    return {
+      ...state,
+      authUser: undefined,
+      isAuthenticated: false,
+    };
+  }),
   on(AuthActions.getUserSuccess, (state, { payload }) => ({
     ...state,
     authUser: payload,

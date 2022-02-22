@@ -1,0 +1,33 @@
+<div class="container">
+  <h3>post create compnent </h3>
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8 mt-3">
+      <mat-card>
+        <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
+        <form *ngIf="!(isLoading$ | async)" [formGroup]="postForm" (ngSubmit)="onSavePost()">
+          <mat-form-field>
+            <input type="text" matInput formControlName="title" placeholder="Post title">
+            <mat-error *ngIf="postForm.get('title').invalid">Please enter a valid title</mat-error>
+          </mat-form-field>
+          <div class="my-3">
+            <button mat-stroked-button type="button" (click)="image.click()">Choose Image</button>
+            <input type="file" #image (change)="onSelectFile($event)">
+          </div>
+          <div class="image-preview mb-3" *ngIf="post && post.imagePath && !imagePreview">
+            <img [src]="post.imagePath" [alt]="postForm.value.title" class="img-fluid">
+          </div>
+          <div class="image-preview mb-3" *ngIf="imagePreview !== '' && imagePreview && postForm.get('image').valid">
+            <img [src]="imagePreview" [alt]="postForm.value.title" class="img-fluid">
+          </div>
+          <mat-form-field>
+            <textarea class="mt-3" matInput rows="8" formControlName="body" placeholder="Your thoughts"></textarea>
+            <mat-error *ngIf="postForm.get('body').invalid">Please enter valid content</mat-error>
+          </mat-form-field>
+          <button class="mt-2" mat-raised-button color="accent" type="submit">
+            Save
+          </button>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+</div>
