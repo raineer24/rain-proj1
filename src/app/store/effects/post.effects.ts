@@ -18,12 +18,20 @@ import {
   delay,
   withLatestFrom,
   filter,
+  ignoreElements,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
 import { PostsService } from "../../core/services/posts.service";
 import { AuthService } from "../../core/services/auth.service";
 import { selectUserList } from "../app.reducers";
+
+import {
+  PostActionTypes,
+  GetPostsAction,
+  GetPostsSuccessAction,
+  GetPostsFailAction,
+} from "../actions/post.actions";
 import {
   createPost,
   createPostSuccess,
@@ -44,18 +52,35 @@ export class PostEffects {
     private store: Store<AppState>
   ) {}
 
-  // readonly loadPostsIfNotLoaded$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     // when the songs page is opened
-  //     ofType(PostsActions.getAllPosts),
-  //     // then select songs from the store
-  //     withLatestFrom(this.store.select(generateAllPosts)),
-  //     // and check if the songs are loaded
-  //     // filter(([songs]) => !songs),
-  //     // if not, load songs from the API
-  //     switchMap(() => this.postsService.getPosts())
-  //   );
-  // });
+  // loadAll = createEffect(
+  //   () =>
+  //     this.actions.pipe(
+  //       ofType(DeviceUiActions.init),
+  //       switchMap((action) =>
+  //         of(action).pipe(withLatestFrom(this.store.pipe(select(devices))))
+  //       ),
+  //       filter(([, actualDevices]) => actualDevices === undefined),
+  //       switchMap(() => this.deviceService.findAll()),
+  //       ignoreElements()
+  //     ),
+  //   { dispatch: false }
+  // );
+
+  // loadAll = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(PostsActions.getAllPosts),
+  //       switchMap((action) =>
+  //         of(action).pipe(
+  //           withLatestFrom(this.store.pipe(select(generateAllPosts)))
+  //         )
+  //       ),
+  //       filter(([, posts]) => posts === undefined),
+  //       switchMap(() => this.postsService.PostsAll()),
+  //       ignoreElements()
+  //     )
+  //   //{ dispatch: false }
+  // );
 
   addPost$ = createEffect(() =>
     this.actions$.pipe(
@@ -113,19 +138,44 @@ export class PostEffects {
   //   })
   // );
 
-  getPost$ = createEffect(() =>
+  // getPost$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(PostsActions.getAllPosts),
+
+  //     // instead of returning an empty operator in catchError, let's return an empty array
+  //     switchMap(() =>
+  //       this.postsService
+  //         .getPosts()
+  //         .pipe(catchError((error) => of(new SetError(error))))
+  //     ),
+
+  //     // the main problem in your code was this "payload: books"; use, instead, "payload: {books}"
+  //     map((data) => getPostSuccess({ post: data["posts"] }))
+  //   )
+  // );
+
+  GetPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.getAllPosts),
-
-      // instead of returning an empty operator in catchError, let's return an empty array
-      switchMap(() =>
-        this.postsService
-          .getPosts()
-          .pipe(catchError((error) => of(new SetError(error))))
-      ),
-
-      // the main problem in your code was this "payload: books"; use, instead, "payload: {books}"
-      map((data) => getPostSuccess({ post: data["posts"] }))
+      mergeMap(() =>
+        this.postsService.getPosts().pipe(
+          map((post) => PostsActions.getPostSuccess({ post: post["posts"] })),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
     )
   );
+
+  // @Effect() getPosts$ = this.actions$.pipe(
+  //   ofType<GetPostsAction>(PostActionTypes.GET_POSTS),
+  //   mergeMap(() =>
+  //     this.postsService.getPosts().pipe(
+  //       map((data) => {
+  //         console.log("efx data", data["posts"]);
+  //         return new GetPostsSuccessAction(data["posts"]);
+  //       }),
+  //       catchError((error) => of(new GetPostsFailAction(error)))
+  //     )
+  //   )
+  // );
 }

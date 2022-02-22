@@ -57,17 +57,18 @@ export class PostsService {
     });
   }
 
-  PostsAll(): Observable<Posts[]> {
-    return this.http.get<Posts[]>(`${this.baseUrl}/api/v2/posts`).pipe(
-      tap((devices) => {
-        this.store.dispatch(PostsActions.getPostSuccess({ post: devices }));
-      }),
-      catchError((error) => {
-        this.store.dispatch(new ErrorActions.SetError(error));
-        return Observable.throw(error);
-      })
-    );
-  }
+  // PostsAll(): Observable<Posts[]> {
+  //   return this.http.get<Posts[]>(`${this.baseUrl}/api/v2/posts`).pipe(
+  //     tap((devices) => {
+  //       console.log("devicdes", devices);
+  //       this.store.dispatch(PostsActions.getPostSuccess({ post: devices }));
+  //     }),
+  //     catchError((error) => {
+  //       this.store.dispatch(new ErrorActions.SetError(error));
+  //       return Observable.throw(error);
+  //     })
+  //   );
+  // }
 
   // findAll(): Observable<Device[]> {
   //   return this.httpClient

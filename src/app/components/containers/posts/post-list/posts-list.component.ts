@@ -8,6 +8,7 @@ import { AppState } from "../../../../store/app.reducers";
 import { getAllPosts } from "../../../../store/actions/post.actions";
 import * as PostActions from "../../../../store/actions/post.actions";
 import { generateAllPosts, isLoading$ } from "../../../../store/app.reducers";
+import { GetPostsAction } from "../../../../store/actions/post.actions";
 import {
   catchError,
   map,
@@ -20,6 +21,7 @@ import {
   withLatestFrom,
   filter,
 } from "rxjs/operators";
+import { cloneDeep } from "lodash";
 @Component({
   selector: "posts-list",
   templateUrl: "./posts-list.component.html",
@@ -27,17 +29,26 @@ import {
 })
 export class PostsListComponent implements OnInit, OnDestroy {
   isLoading$: Observable<boolean>;
-  posts: Posts[];
+  // posts: Posts[];
   storeSub!: Subscription;
   datus: any;
+  loading$: Observable<Boolean>;
   $postAppsSubscription: Observable<string>;
-  public posts$: Observable<Posts[]> = this.store.pipe(
-    select(generateAllPosts)
-  );
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {}
+  // public posts$: Observable<Posts[]> = this.store.pipe(
+  //   select(generateAllPosts)
+  // );
+  posts$: Observable<Posts[]>;
+  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+    // store.pipe(select(generateAllPosts)).subscribe((posts) => {
+    //   console.log("this.posts", this.posts);
+    //   this.posts = cloneDeep(posts);
+    // });
+  }
   ngOnInit() {
-    this.isLoading$ = this.store.select(isLoading$);
+    //  this.isLoading$ = this.store.select(isLoading$);
     this.store.dispatch(getAllPosts());
+    this.posts$ = this.store.select((store) => store.posts.posts);
+    // this.store.dispatch(new GetPostsAction());
     // this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
     //   console.log("data", data);
     //   //this.posts$ = data;
@@ -50,10 +61,10 @@ export class PostsListComponent implements OnInit, OnDestroy {
     // );
 
     // this.store.dispatch(PostActions.opened());
-    this.posts$.subscribe((data) => {
-      console.log("this.posts", this.posts);
-      this.posts = data;
-    });
+    // this.posts$.subscribe((data) => {
+    //   console.log("this.posts", this.posts);
+    //   this.posts = data;
+    // });
 
     // this.store
     //   .select(generateAllPosts)
