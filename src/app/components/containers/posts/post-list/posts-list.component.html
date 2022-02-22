@@ -1,8 +1,20 @@
 <h4>Post List COmponent</h4>
-<div *ngFor="let post of posts">
+<div *ngFor="let post of posts$ | async">
   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <div class="card-header post-title">
       {{post.title}}
     </div>
   </div>
 </div>
+<!-- <h1>My Posts</h1>
+<div class="posts">
+  <p *ngIf="!(posts$ | async)?.length">No posts to show...</p>
+  <ul>
+    <li *ngFor="let post of posts$ | async; let i = index">
+      <p>{{post.title}}</p>
+      <p>{{post.body}}</p>
+
+      <hr>
+    </li>
+  </ul>
+</div> -->

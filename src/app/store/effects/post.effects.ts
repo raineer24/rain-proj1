@@ -18,12 +18,14 @@ import {
   delay,
   withLatestFrom,
   filter,
+  ignoreElements,
 } from "rxjs/operators";
 import { Store, select, ActionsSubject } from "@ngrx/store";
 import { merge, Observable, of } from "rxjs";
 import { PostsService } from "../../core/services/posts.service";
 import { AuthService } from "../../core/services/auth.service";
 import { selectUserList } from "../app.reducers";
+
 import {
   createPost,
   createPostSuccess,
@@ -39,23 +41,9 @@ export class PostEffects {
     private readonly actions$: Actions,
     private postsService: PostsService,
     private authService: AuthService,
-    // private actions$: Actions,
     private router: Router,
     private store: Store<AppState>
   ) {}
-
-  // readonly loadPostsIfNotLoaded$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     // when the songs page is opened
-  //     ofType(PostsActions.getAllPosts),
-  //     // then select songs from the store
-  //     withLatestFrom(this.store.select(generateAllPosts)),
-  //     // and check if the songs are loaded
-  //     // filter(([songs]) => !songs),
-  //     // if not, load songs from the API
-  //     switchMap(() => this.postsService.getPosts())
-  //   );
-  // });
 
   addPost$ = createEffect(() =>
     this.actions$.pipe(
@@ -63,11 +51,13 @@ export class PostEffects {
       map((action) => action.post),
       switchMap((createPost) =>
         this.postsService.createPost(createPost).pipe(
-          map((data) => {
-            console.log("data", data);
-
-            return createPostSuccess({ post: data["postData"] });
-          }),
+          take(1),
+          mergeMap((data) => [
+            PostsActions.createPostSuccess({
+              post: data["postData"],
+            }),
+            PostsActions.getAllPosts(),
+          ]),
           catchError((error) => of(new SetError(error)))
         )
       )
@@ -86,46 +76,15 @@ export class PostEffects {
     )
   );
 
-  // @Effect() onGetUnpublishedPost$: Observable<Action> =
-  // this.actions$.ofType<addpostActions.GetUnpublishedPost>(addpostActions.AddNewPostActionTypes.GET_UNPUBLISHED_POST)
-  // .switchMap((action) => {
-  //     return this.addNewPostService
-  //     .GetUserUnpublishedPost()
-  //     .map(data => {
-  //         return new addpostActions.GetUnpublishedPostSuccess(data.value);
-  //       })
-  //       .catch((error) => {
-  //         return Observable.of(
-  //           new addpostActions.GetUnpublishedPostFail({error:error})
-  //         );
-  //       });
-
-  // @Effect()
-  // getPosts$ = this.actions$.pipe(
-  //   ofType(PostsActions.getAllPosts),
-  //   switchMap(() => {
-  //     return this.postsService.getPosts().pipe(
-  //       map((data) => {
-  //         console.log("data", data);
-  //         return getPostSuccess({ post: data["posts"] });
-  //       })
-  //     );
-  //   })
-  // );
-
-  getPost$ = createEffect(() =>
+  GetPosts$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PostsActions.getAllPosts),
-
-      // instead of returning an empty operator in catchError, let's return an empty array
-      switchMap(() =>
-        this.postsService
-          .getPosts()
-          .pipe(catchError((error) => of(new SetError(error))))
-      ),
-
-      // the main problem in your code was this "payload: books"; use, instead, "payload: {books}"
-      map((data) => getPostSuccess({ post: data["posts"] }))
+      mergeMap(() =>
+        this.postsService.getPosts().pipe(
+          map((post) => PostsActions.getPostSuccess({ post: post["posts"] })),
+          catchError((error) => of(new SetError(error)))
+        )
+      )
     )
   );
 }
