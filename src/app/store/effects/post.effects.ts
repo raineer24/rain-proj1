@@ -82,17 +82,36 @@ export class PostEffects {
   //   //{ dispatch: false }
   // );
 
+  // addPost$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(createPost),
+  //     map((action) => action.post),
+  //     switchMap((createPost) =>
+  //       this.postsService.createPost(createPost).pipe(
+  //         map((data) => {
+  //           console.log("data", data);
+
+  //           return createPostSuccess({ post: data["postData"] });
+  //         }),
+  //         catchError((error) => of(new SetError(error)))
+  //       )
+  //     )
+  //   )
+  // );
+
   addPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createPost),
       map((action) => action.post),
       switchMap((createPost) =>
         this.postsService.createPost(createPost).pipe(
-          map((data) => {
-            console.log("data", data);
-
-            return createPostSuccess({ post: data["postData"] });
-          }),
+          take(1),
+          mergeMap((data) => [
+            PostsActions.createPostSuccess({
+              post: data["postData"],
+            }),
+            PostsActions.getAllPosts(),
+          ]),
           catchError((error) => of(new SetError(error)))
         )
       )

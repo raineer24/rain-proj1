@@ -49,10 +49,10 @@ export class PostsListComponent implements OnInit, OnDestroy {
     this.store.dispatch(getAllPosts());
     this.posts$ = this.store.select((store) => store.posts.posts);
     // this.store.dispatch(new GetPostsAction());
-    // this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
-    //   console.log("data", data);
-    //   //this.posts$ = data;
-    // });
+    this.store.pipe(select(generateAllPosts), take(1)).subscribe((data) => {
+      console.log("data", data);
+      //this.posts$ = data;
+    });
 
     // this.store.pipe(
     //   select((state) => state.posts.posts),
