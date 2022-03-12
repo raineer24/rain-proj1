@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "https://nerblog-app.herokuapp.com",
+  apiUrl: "https://pg-knex.herokuapp.com",
 };
