@@ -77,7 +77,7 @@ export class PostEffects {
   );
 
   GetPosts$ = createEffect(() =>
-    this.actions$.pipe(
+    this.actions$.pipe(  
       ofType(PostsActions.getAllPosts),
       mergeMap(() =>
         this.postsService.getPosts().pipe(
