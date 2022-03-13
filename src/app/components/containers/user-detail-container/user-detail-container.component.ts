@@ -35,16 +35,29 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 @Component({
   selector: "app-user-detail-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div>
-    <h4>Profile : {{ user.username }} {{ user.id }}</h4>
+  template: `<div class="container">
+    <div class="row">
+      <div class="row-header">
+        <mat-card class="example-card"
+          ><mat-card-content></mat-card-content>User detail Component
+          <div class="td">
+            <ul>
+              <li>Name: {{ user.first_name }}</li>
+              <li>Username: {{ user.username }}</li>
+            </ul>
+          </div></mat-card
+        >
+      </div>
+    </div>
   </div>`,
+  styleUrls: ["./user-detail-container.component.scss"],
 })
 export class UserDetailContainerComponent implements OnInit {
   profile$: Observable<UserDetailsModel>;
   dataId: string;
   destroyed$ = new Subject<boolean>();
   actionSub = new Subscription();
-  public user: UserCredentialsModel;
+  public user: any;
   storeSub!: Subscription;
 
   datus: Observable<any>;
@@ -60,9 +73,11 @@ export class UserDetailContainerComponent implements OnInit {
     this.storeSub = this.store
       .pipe(select(selectSelectedUser))
       .subscribe((data) => {
+        console.log("data", data);
         this.user = data;
       });
-    console.log("this.username", this.user.email);
+
+    //console.log("this.username", this.user.email);
 
     // this.store.dispatch(getUser({ id: this.route.snapshot.params.id }));
 
