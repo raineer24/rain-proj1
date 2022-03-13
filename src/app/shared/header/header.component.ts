@@ -23,13 +23,13 @@ import { map } from "rxjs/operators";
         <span>Social Media Management</span>
         <span class="example-spacer"></span>
         <button mat-button routerLink="/"><mat-icon>home</mat-icon></button>
-        <button mat-button routerLink="/posts">
+        <button mat-button [routerLink]="['posts']" *ngIf="loggedIn$ | async">
           <span class="material-icons">post_add</span>
         </button>
         <button mat-button routerLink="/dev">
           <span class="material-icons">people</span>
         </button>
-        <button mat-button routerLink="/home">
+        <button mat-button [routerLink]="['home']">
           <span class="material-icons">work</span>
         </button>
       </mat-toolbar>
@@ -37,13 +37,18 @@ import { map } from "rxjs/operators";
   </div>`,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  loggedIn$: Observable<boolean>;
   subscription: Subscription;
   userId: string;
   isLoggedIn = false;
   timer: any;
   @Input() isSigningUpEnabled: boolean;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+    this.loggedIn$ = this.store.select(
+      (state) => state["auth"].isAuthenticated
+    );
+  }
 
   ngOnInit() {
     // this.subscription = this.store
