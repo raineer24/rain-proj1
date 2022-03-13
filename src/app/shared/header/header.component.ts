@@ -30,7 +30,7 @@ import { map } from "rxjs/operators";
           <span class="material-icons">people</span>
         </button>
         <button mat-button routerLink="/home">
-          <span class="material-icons">home</span>
+          <span class="material-icons">work</span>
         </button>
       </mat-toolbar>
     </div>
