@@ -29,6 +29,9 @@ import { map } from "rxjs/operators";
         <button mat-button routerLink="/dev">
           <span class="material-icons">people</span>
         </button>
+        <button mat-button routerLink="/home">
+          <span class="material-icons">home</span>
+        </button>
       </mat-toolbar>
     </div>
   </div>`,
