@@ -39,14 +39,19 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
     <div class="row">
       <div class="row-header">
         <mat-card class="example-card"
-          ><mat-card-content></mat-card-content>User detail Component
-          <div class="td">
-            <ul>
-              <li>Name: {{ user.first_name }}</li>
-              <li>Username: {{ user.username }}</li>
-            </ul>
-          </div></mat-card
-        >
+          ><mat-card-content fxLayout="column">
+            <div class="td">
+              <ul>
+                <li>Name: {{ user.first_name }}</li>
+                <li>Username: {{ user.username }}</li>
+                <li>
+                  <div class="food-image">
+                    <img src="{{ user.image_url }}" />
+                  </div>
+                </li>
+              </ul></div></mat-card-content
+          >User detail Component
+        </mat-card>
       </div>
     </div>
   </div>`,
