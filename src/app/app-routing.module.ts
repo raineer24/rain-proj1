@@ -12,11 +12,14 @@ import { UserDetailComponent } from "./components/presentational/user-detail/use
 import { UserDetailContainerComponent } from "./components/containers/user-detail-container/user-detail-container.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { UserPostComponent } from "./components/containers/posts/user-post.container";
+import { HomeComponent } from "./components/containers/home/home.component";
+import { FlexLayoutModule } from "@angular/flex-layout";
 const routes: Routes = [
   { path: "login", component: AuthPageComponent },
   { path: "register", component: RegisterPageComponent },
   { path: "add", component: CreateProfileComponent },
   { path: "dev", component: UsersListContainerComponent },
+  { path: "home", component: HomeComponent },
   { path: "dev/:id", component: UserDetailContainerComponent },
   { path: "user/edit/:id", component: CreateProfileComponent },
   { path: "user/add-exp", component: AddExperienceComponent },
