@@ -20,14 +20,17 @@ import {
   takeUntil,
 } from "rxjs/operators";
 import { GetUsers } from "../../../store/actions/user.actions";
+import * as SpinnerActions from "../../../store/actions/spinner.actions";
+import { isLoading } from "../../../store/app.reducers";
 //import { getUsers } from "src/app/store/reducers/user.reducer";
 @Component({
   selector: "app-users-list-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<app-users-list [users]="users$"> </app-users-list> `,
+  template: ` <app-users-list [users]="users$"> </app-users-list> `,
 })
 export class UsersListContainerComponent implements OnInit {
   //  users$: Observable<UserCredentialsModel[]>;
+  isLoading$: Observable<boolean>;
   id: string;
   public users$: Observable<UserCredentialsModel[]> = this.store.pipe(
     select(selectUserList)
@@ -38,6 +41,7 @@ export class UsersListContainerComponent implements OnInit {
     location: Location,
     router: Router
   ) {
+    this.store.dispatch(SpinnerActions.startSpinner());
     this.store.dispatch(new GetUsers());
     // this.store.pipe(select(selectUserList), take(1)).subscribe((data) => {
     //   //   console.log("data", data["user"]);
@@ -46,5 +50,7 @@ export class UsersListContainerComponent implements OnInit {
     // });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isLoading$ = this.store.pipe(select(isLoading));
+  }
 }

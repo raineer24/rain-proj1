@@ -10,6 +10,7 @@ import {
 } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { Observable } from "rxjs";
 import { MatTableDataSource } from "@angular/material/table";
 import { UserDetailsModel, UserCredentialsModel } from "../../../core/models";
 import { AppState } from "../../../store/app.reducers";
@@ -17,13 +18,15 @@ import { Store, select } from "@ngrx/store";
 //import { UsersListItemDto } from "src/app/models/models";
 import { getUser } from "../../../store/actions/user.actions";
 import { ActivatedRoute, Router } from "@angular/router";
-
+import * as SpinnerActions from "../../../store/actions/spinner.actions";
+import { isLoading } from "../../../store/app.reducers";
 @Component({
   selector: "app-users-list",
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ["users-list.component.scss"],
   template: ` <h2>USERS LIST COMPONENT</h2>
     <mat-card>
+      <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
       <mat-card-content
         fxLayout="column"
         fxFlexAlign="center center"
@@ -68,6 +71,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class UsersListComponent implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<UserCredentialsModel>();
+  isLoading$: Observable<boolean>;
   displayedColumns = ["username", "email", "image_url", "id"];
   id: string;
   //@Input() users: UserCredentialsModel[];
@@ -85,7 +89,8 @@ export class UsersListComponent implements OnInit, OnChanges {
       console.log("DATA", data);
       this.dataSource.data = data;
     });
-
+    this.store.dispatch(SpinnerActions.startSpinner());
+    this.isLoading$ = this.store.pipe(select(isLoading));
     // console.log("dta", this.dataSource);
 
     // this.dataSource.filterPredicate = (data: any, filter) => {

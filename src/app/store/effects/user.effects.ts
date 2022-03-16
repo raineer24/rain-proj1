@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
 // import { UserState } from "../../store/reducers/user.reducer";
 import { AppState } from "../../store/app.reducers";
+import * as SpinnerActions from "../../store/actions/spinner.actions";
 import * as userActions from "../actions/user.actions";
 
 import {
@@ -65,5 +66,16 @@ export class UserEffects {
     switchMap((user: UserCredentialsModel[]) => {
       return of(new userActions.GetUsersSuccess(user["user"]));
     })
+  );
+
+  getUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userActions.UserActionTypes.GetUsersSuccess),
+      map((action) => {
+        return {
+          type: SpinnerActions.STOP_SPINNER,
+        };
+      })
+    )
   );
 }

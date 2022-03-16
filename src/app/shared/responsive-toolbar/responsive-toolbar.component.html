@@ -1,0 +1,37 @@
+<mat-toolbar fxLayout="row" color="primary">
+  <button mat-icon-button>
+    <mat-icon>switch_account</mat-icon>
+  </button>
+  <span fxFlex>Social Management</span>
+  <span *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
+    [fxShow.sm]="item.showOnTablet">
+    <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf="item.alwaysShow || 
+  (!item.alwaysShow && !loggedIn$ && !item.onlyForLogged)">
+      <button mat-button>
+        <mat-icon class="mr">{{item.icon}}</mat-icon>
+
+        {{item.label}}
+      </button>
+    </a>
+
+  </span>
+
+  <ng-container>
+    <button fxShow fxHide.gt-xs mat-icon-button [matMenuTriggerFor]="dropMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #dropMenu="matMenu">
+      <ng-container *ngFor="let item of menuItems">
+        <div [fxShow]="!item.showOnDesktop" [fxShow.sm]="!item.showOnTablet" [fxShow.xs]="!item.showOnMobile"
+          [routerLink]="item.routerLink">
+          <button mat-menu-item>
+            <mat-icon class="mr">{{item.icon}}</mat-icon>
+            {{item.label}}
+          </button>
+          <mat-divider></mat-divider>
+        </div>
+      </ng-container>
+    </mat-menu>
+  </ng-container>
+</mat-toolbar>
+<router-outlet></router-outlet>
