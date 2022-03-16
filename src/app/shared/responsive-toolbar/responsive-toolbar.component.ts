@@ -52,6 +52,16 @@ export class ResponsiveToolbarComponent implements OnInit {
       onlyForLogged: false,
       alwaysShow: true,
     },
+    {
+      label: "Showcase",
+      icon: "people",
+      showOnMobile: false,
+      showOnTablet: false,
+      showOnDesktop: true,
+      routerLink: "dev",
+      onlyForLogged: false,
+      alwaysShow: true,
+    },
   ];
 
   constructor(private store: Store<AppState>) {
