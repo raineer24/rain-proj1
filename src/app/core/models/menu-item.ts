@@ -5,4 +5,6 @@ export interface MenuItem {
   showOnTablet: boolean;
   showOnDesktop: boolean;
   routerLink: string;
+  onlyForLogged: boolean;
+  alwaysShow: boolean;
 }

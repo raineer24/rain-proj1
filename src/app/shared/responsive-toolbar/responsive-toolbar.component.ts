@@ -1,11 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { MenuItem } from "../../core/models/menu-item";
+import { Store, select, ActionsSubject } from "@ngrx/store";
+import { Observable, Subject } from "rxjs";
+import { AppState } from "../../store/app.reducers";
 @Component({
   selector: "app-responsive-toolbar",
   templateUrl: "./responsive-toolbar.component.html",
   styleUrls: ["./responsive-toolbar.component.scss"],
 })
 export class ResponsiveToolbarComponent implements OnInit {
+  loggedIn$: Observable<boolean>;
+
   menuItems: MenuItem[] = [
     {
       label: "Sign Up",
@@ -14,6 +19,8 @@ export class ResponsiveToolbarComponent implements OnInit {
       showOnTablet: true,
       showOnDesktop: true,
       routerLink: "register",
+      onlyForLogged: false,
+      alwaysShow: true,
     },
     {
       label: "Login",
@@ -22,6 +29,8 @@ export class ResponsiveToolbarComponent implements OnInit {
       showOnTablet: true,
       showOnDesktop: true,
       routerLink: "login",
+      onlyForLogged: false,
+      alwaysShow: true,
     },
     {
       label: "Posts",
@@ -30,6 +39,8 @@ export class ResponsiveToolbarComponent implements OnInit {
       showOnTablet: true,
       showOnDesktop: true,
       routerLink: "posts",
+      onlyForLogged: true,
+      alwaysShow: true,
     },
     {
       label: "Showcase",
@@ -38,10 +49,19 @@ export class ResponsiveToolbarComponent implements OnInit {
       showOnTablet: false,
       showOnDesktop: true,
       routerLink: "home",
+      onlyForLogged: false,
+      alwaysShow: true,
     },
   ];
 
-  constructor() {}
+  constructor(private store: Store<AppState>) {
+    this.loggedIn$ = this.store.select(
+      (state) => state["auth"].isAuthenticated
+    );
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.menuItems);
+    console.log(this.loggedIn$);
+  }
 }

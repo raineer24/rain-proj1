@@ -3,12 +3,19 @@
     <mat-icon>switch_account</mat-icon>
   </button>
   <span fxFlex>Social Management</span>
-  <button mat-button *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
-    [fxShow.sm]="item.showOnTablet" [routerLink]="item.routerLink">
-    <mat-icon class="mr">{{item.icon}}</mat-icon>
+  <span *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
+    [fxShow.sm]="item.showOnTablet">
+    <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf="item.alwaysShow || 
+  (!item.alwaysShow && !loggedIn$ && !item.onlyForLogged)">
+      <button mat-button>
+        <mat-icon class="mr">{{item.icon}}</mat-icon>
 
-    {{item.label}}
-  </button>
+        {{item.label}}
+      </button>
+    </a>
+
+  </span>
+
   <ng-container>
     <button fxShow fxHide.gt-xs mat-icon-button [matMenuTriggerFor]="dropMenu">
       <mat-icon>more_vert</mat-icon>
