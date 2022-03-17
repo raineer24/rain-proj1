@@ -53,7 +53,7 @@ export class ResponsiveToolbarComponent implements OnInit {
       alwaysShow: true,
     },
     {
-      label: "Showcase",
+      label: "Users",
       icon: "people",
       showOnMobile: false,
       showOnTablet: false,

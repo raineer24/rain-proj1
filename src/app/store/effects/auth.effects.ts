@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import * as AuthActions from "../../store/actions/auth.actions";
 import { UserCredentialsModel, UserFetch } from "../../core/models/";
 import { AppState } from "../../store/app.reducers";
+import * as SpinnerActions from "../../store/actions/spinner.actions";
 
 import {
   catchError,
@@ -238,11 +239,28 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(loginSuccess),
-        tap(() => {
+        map(() => {
           this.router.navigateByUrl("/");
+          return {
+            type: SpinnerActions.STOP_SPINNER,
+          };
         })
-      ),
-    { dispatch: false }
+      )
+    // { dispatch: false }
+  );
+
+  registerSuccess = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(registerSuccess),
+        map(() => {
+          //this.router.navigateByUrl("/");
+          return {
+            type: SpinnerActions.STOP_SPINNER,
+          };
+        })
+      )
+    // { dispatch: false }
   );
 
   logout$ = createEffect(() =>

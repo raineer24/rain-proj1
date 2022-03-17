@@ -31,15 +31,17 @@ import {
 } from "src/app/core/models";
 import { AnyFn } from "@ngrx/store/src/selector";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
-
+import * as SpinnerActions from "../../../store/actions/spinner.actions";
+import { isLoading } from "../../../store/app.reducers";
 @Component({
   selector: "app-user-detail-container",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div class="container">
+    <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
     <div class="row">
       <div class="row-header">
-        <mat-card class="example-card"
-          ><mat-card-content fxLayout="column">
+        <mat-card class="example-card">
+          <mat-card-content fxLayout="column">
             <div class="td">
               <ul>
                 <li>Name: {{ user.first_name }}</li>
@@ -58,6 +60,7 @@ import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
   styleUrls: ["./user-detail-container.component.scss"],
 })
 export class UserDetailContainerComponent implements OnInit {
+  isLoading$: Observable<boolean>;
   profile$: Observable<UserDetailsModel>;
   dataId: string;
   destroyed$ = new Subject<boolean>();
@@ -74,6 +77,7 @@ export class UserDetailContainerComponent implements OnInit {
 
   ngOnInit() {
     console.log("id", typeof this.route.snapshot.params.id);
+    this.store.dispatch(SpinnerActions.startSpinner());
     this.store.dispatch(new GetUser(this.route.snapshot.params.id));
     this.storeSub = this.store
       .pipe(select(selectSelectedUser))
@@ -81,6 +85,7 @@ export class UserDetailContainerComponent implements OnInit {
         console.log("data", data);
         this.user = data;
       });
+    this.isLoading$ = this.store.pipe(select(isLoading));
 
     //console.log("this.username", this.user.email);
 

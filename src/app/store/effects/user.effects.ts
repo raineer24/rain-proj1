@@ -68,9 +68,20 @@ export class UserEffects {
     })
   );
 
-  getUserSuccess$ = createEffect(() =>
+  getUsersSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(userActions.UserActionTypes.GetUsersSuccess),
+      map((action) => {
+        return {
+          type: SpinnerActions.STOP_SPINNER,
+        };
+      })
+    )
+  );
+
+  getUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(userActions.UserActionTypes.GetUserSuccess),
       map((action) => {
         return {
           type: SpinnerActions.STOP_SPINNER,
