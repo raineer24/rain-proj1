@@ -9,7 +9,8 @@ import { AppState } from "../../../../store/app.reducers";
 import { Store } from "@ngrx/store";
 //import { RegisterUser } from "../../../../store/actions/auth.actions";
 import { UserCredentialsModel } from "../../../../core/models/users/user-credentials.model";
-
+import * as SpinnerActions from "../../../../store/actions/spinner.actions";
+import { isLoading } from "../../../../store/app.reducers";
 @Component({
   selector: "app-register-page",
   templateUrl: "./register-page.component.html",

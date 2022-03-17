@@ -6,9 +6,12 @@ import {
   Validators,
   AbstractControl,
 } from "@angular/forms";
-import { Store } from "@ngrx/store";
+import { Subscription, Observable, of, Subject } from "rxjs";
+import { Store, select, ActionsSubject } from "@ngrx/store";
 import { login } from "../../../store/actions/auth.actions";
 import { UserCredentialsModel, LoginUserDto } from "../../../core/models";
+import * as SpinnerActions from "../../../store/actions/spinner.actions";
+import { isLoading } from "../../../store/app.reducers";
 
 @Component({
   selector: "app-auth-page",
@@ -17,7 +20,7 @@ import { UserCredentialsModel, LoginUserDto } from "../../../core/models";
 })
 export class AuthPageComponent implements OnInit {
   form: FormGroup;
-
+  isLoading$: Observable<boolean>;
   constructor(
     private formBuilder: FormBuilder,
     private store: Store<AppState>
@@ -27,6 +30,8 @@ export class AuthPageComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       password: ["", Validators.required],
     });
+
+    this.isLoading$ = this.store.pipe(select(isLoading));
   }
 
   onLogin() {
@@ -36,6 +41,7 @@ export class AuthPageComponent implements OnInit {
       password: this.form.get("password").value,
     };
     console.log("payload", payload);
+    this.store.dispatch(SpinnerActions.startSpinner());
     this.store.dispatch(login(payload));
   }
 }

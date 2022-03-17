@@ -1,4 +1,5 @@
 <mat-card *ngIf="form; else noForm">
+  <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
   <mat-card-header class="card-header-container">
     <img mat-card-image src="/assets//edublock-logo-login.png" class="card-header-container-image">
   </mat-card-header>

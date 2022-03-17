@@ -7,7 +7,10 @@ import {
 } from "@angular/forms";
 import { AppState } from "../../../../store/app.reducers";
 import { register } from "../../../../store/actions/auth.actions";
-import { Store } from "@ngrx/store";
+import { Store, select } from "@ngrx/store";
+import * as SpinnerActions from "../../../../store/actions/spinner.actions";
+import { isLoading } from "../../../../store/app.reducers";
+import { Subscription, Observable, of, Subject } from "rxjs";
 
 @Component({
   selector: "app-register-form",
@@ -15,6 +18,7 @@ import { Store } from "@ngrx/store";
   styleUrls: ["./register-form.component.scss"],
 })
 export class RegisterFormComponent implements OnInit {
+  isLoading$: Observable<boolean>;
   public form: FormGroup;
   @Output() register: EventEmitter<void> = new EventEmitter<void>();
   emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";
@@ -22,6 +26,7 @@ export class RegisterFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private store: Store<AppState>) {}
   fd = new FormData();
   ngOnInit(): void {
+    this.isLoading$ = this.store.pipe(select(isLoading));
     this.initForm();
   }
 
@@ -65,6 +70,7 @@ export class RegisterFormComponent implements OnInit {
     const payload = this.fd;
 
     this.store.dispatch(register({ payload }));
+    this.store.dispatch(SpinnerActions.startSpinner());
   }
 
   onChange(event) {

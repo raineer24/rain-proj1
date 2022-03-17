@@ -89,7 +89,7 @@ export class UsersListComponent implements OnInit, OnChanges {
       console.log("DATA", data);
       this.dataSource.data = data;
     });
-    this.store.dispatch(SpinnerActions.startSpinner());
+    //this.store.dispatch(SpinnerActions.startSpinner());
     this.isLoading$ = this.store.pipe(select(isLoading));
     // console.log("dta", this.dataSource);
 
