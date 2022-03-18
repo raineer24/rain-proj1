@@ -35,7 +35,7 @@ export class ResponsiveToolbarComponent implements OnInit {
     {
       label: "Users",
       icon: "people",
-      showOnMobile: true,
+      showOnMobile: false,
       showOnTablet: true,
       showOnDesktop: true,
       routerLink: "dev",
@@ -46,7 +46,7 @@ export class ResponsiveToolbarComponent implements OnInit {
       label: "Showcase",
       icon: "slideshow",
       showOnMobile: false,
-      showOnTablet: false,
+      showOnTablet: true,
       showOnDesktop: true,
       routerLink: "home",
       onlyForLogged: false,
