@@ -2,11 +2,13 @@
   <button [routerLink]="['/']" mat-icon-button>
     <mat-icon>switch_account</mat-icon>
   </button>
-  <span [routerLink]="['/']" fxFlex>Social Management</span>
+  <span [routerLink]="['/']" fxFlex>Web App Management</span>
   <span *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
     [fxShow.sm]="item.showOnTablet">
-    <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf="item.alwaysShow || 
-  (!item.alwaysShow && !loggedIn$ && !item.onlyForLogged)">
+    <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
+  (!item.alwaysShow && !loggedIn$ && !item.onlyForLogged) ||
+  (!item.alwaysShow && loggedIn$ && item.onlyForLogged) ||
+  (!item.alwaysShow && loggedIn$ && item.onlyForLogged)">
       <button mat-button>
         <mat-icon class="mr">{{item.icon}}</mat-icon>
 
