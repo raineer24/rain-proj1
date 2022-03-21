@@ -9,7 +9,7 @@ import { map } from "rxjs/operators";
 @Component({
   selector: "app-header",
   styleUrls: ["header.component.scss"],
-  template: `<app-responsive-toolbar></app-responsive-toolbar>`,
+  template: `<app-responsive-toolbar color="primary"></app-responsive-toolbar>`,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   loggedIn$: Observable<boolean>;

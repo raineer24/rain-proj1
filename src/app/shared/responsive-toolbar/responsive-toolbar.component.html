@@ -2,24 +2,15 @@
   <button [routerLink]="['/']" mat-icon-button>
     <mat-icon>switch_account</mat-icon>
   </button>
-  <span [routerLink]="['/']" fxFlex>Web App Management</span>
-  <span *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
-    [fxShow.sm]="item.showOnTablet">
-    <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
-  (!item.alwaysShow && !loggedIn$ && !item.onlyForLogged) ||
-  (!item.alwaysShow && loggedIn$ && item.onlyForLogged) ||
-  (!item.alwaysShow && loggedIn$ && item.onlyForLogged)">
-      <button mat-button>
-        <mat-icon class="mr">{{item.icon}}</mat-icon>
+  <span [routerLink]="['/']" fxFlex>App Management</span>
+  <button mat-button *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
+    [fxShow.sm]="item.showOnTablet" [routerLink]="item.routerLink">
+    <mat-icon class="mr">{{item.icon}}</mat-icon>
 
-        {{item.label}}
-      </button>
-    </a>
-
-  </span>
-
+    {{item.label}}
+  </button>
   <ng-container>
-    <button class="vert" fxShow fxHide.gt-xs mat-icon-button [matMenuTriggerFor]="dropMenu">
+    <button mat-icon-button [matMenuTriggerFor]="dropMenu">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #dropMenu="matMenu">
@@ -36,4 +27,3 @@
     </mat-menu>
   </ng-container>
 </mat-toolbar>
-<router-outlet></router-outlet>
