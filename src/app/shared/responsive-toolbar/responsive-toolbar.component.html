@@ -2,7 +2,7 @@
   <button [routerLink]="['/']" mat-icon-button>
     <mat-icon>switch_account</mat-icon>
   </button>
-  <span [routerLink]="['/']" fxFlex>Social Management</span>
+  <span [routerLink]="['/']" fxFlex>Web App Management</span>
   <span *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
     [fxShow.sm]="item.showOnTablet">
     <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
