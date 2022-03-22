@@ -18,6 +18,9 @@ import { Subscription, Observable, of, Subject } from "rxjs";
   styleUrls: ["./register-form.component.scss"],
 })
 export class RegisterFormComponent implements OnInit {
+  size = false;
+  selectedFile: string | Blob;
+  defaultImage = "https://www.w3schools.com/howto/img_avatar.png";
   isLoading$: Observable<boolean>;
   public form: FormGroup;
   @Output() register: EventEmitter<void> = new EventEmitter<void>();
@@ -56,7 +59,7 @@ export class RegisterFormComponent implements OnInit {
       this.register.emit(this.form.value);
     }
 
-    this.fd.append("image", this.myFile);
+    this.fd.append("image", this.selectedFile);
     this.fd.append("email", this.form.value.email);
     this.fd.append("password", this.form.value.password);
     this.fd.append("username", this.form.value.username);
@@ -78,6 +81,28 @@ export class RegisterFormComponent implements OnInit {
       console.log("event", event.target.files[0]);
       this.myFile = event.target.files[0];
       console.log("file", this.myFile);
+    }
+  }
+
+  fileInputChange(event) {
+    this.defaultImage = event.target.files[0];
+    this.selectedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.defaultImage = event.target.result;
+    };
+    console.log(event.target.files[0]);
+    if (event.target.files[0].size >= 5000000) {
+      this.size = true;
+      console.log(this.size);
+      this.form.controls.image.setErrors({ valid: false });
+    } else {
+      this.size = false;
+      console.log(this.size);
+
+      this.form.controls.image.setErrors({ valid: true });
+      this.form.controls.image.setValue(event.target.files[0].name);
     }
   }
 }
