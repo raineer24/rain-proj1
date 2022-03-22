@@ -1,77 +1,29 @@
-.login {
-    height: 100%;
-    .card {
-        border-radius: 8px;
-        border: 1px solid #dadce0;
-        min-width: 480px;
-        padding: 45px 40px;
-        box-sizing: border-box;
-        .text {
-            font-size: 30px;
-            margin-bottom: 24px;
-        }
-        .create-link {
-            color: #1a73e8;
-        }
-        .button-click {
-            background-color: #1a73e8;
-            color: white;
-        }
-    }
-}
-
-.profile {
-    height: 100%;
+.example-card {
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+  .center-content {
+      margin-top: 100px;
+      text-align: -webkit-center;
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
     width: 100%;
-    border-radius: 50%;
-}
-.hoverable {
-    position: relative;
-    display: block;
-    cursor: pointer;
-    height: 100px;
-    width: 100px;
-    border: 5px solid #000;
-    border-radius: 50%;
-    margin-bottom: 20px;
-}
-.hoverable .hover-text {
-    position: absolute;
-    display: none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-.hoverable .background {
-    position: absolute;
-    display: none;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.5);
-    pointer-events: none;
-    border-radius: 50%;
-    z-index: 1;
-}
-.hoverable:hover .hover-text {
-    display: block;
-}
-.hoverable:hover .background {
-    display: block;
-}
-
-#fileInput {
-    display: none;
-}
-
-@media only screen and (max-width: 600px) {
-    .login {
-        height: 100%;
-        .card {
-            min-width: 100%;
-            width: 100%;
-        }
-    }
-}
+  }
+  
+  .example-full-width {
+      margin-top: 10px;
+    width: 100%;
+  }
+  .mat-button{
+      margin-top: 10px;
+    width: 100%;
+    color: white;
+    height: 40px;
+    background-color: #3F51B5;
+  }
