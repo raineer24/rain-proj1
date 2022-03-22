@@ -2,7 +2,7 @@
   <mat-card class="example-card" *ngIf="form; else noForm">
     <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
     <mat-card-header>
-      <mat-card-title>Login/Register</mat-card-title>
+      <mat-card-title>Login</mat-card-title>
       <mat-card-subtitle>Web App Management</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
@@ -22,8 +22,8 @@
             </mat-form-field>
             <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="login.emit()">Login
             </button>
-            <a mat-button routerLink="/register" class="form-control-button">If you do not have an account you can
-              register
+            <a mat-button routerLink="/register" class="form-control-button">You don't have an account? You can
+              register here
               here</a>
           </mat-tab>
 
