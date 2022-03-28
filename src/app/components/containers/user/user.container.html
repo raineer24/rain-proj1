@@ -1,79 +1,29 @@
-<div class="container mt-4">
-  <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
-  <div *ngIf="appState$ | async as state">
-    <div class="col-12 my-3">
-      <h2 class="single-group-heading text-center mt-4">Hi {{ state.auth.authUser.username | titlecase }}!</h2>
-    </div>
-
-
-    <ng-container class="col-sm-12" *ngIf="state.auth.authUser?.user_profile == 0; else profile">
-      <h4>You have not yet setup a profile, please add some info</h4>
-      <button [routerLink]="['/add']">CREATE PROFILE</button>
-    </ng-container>
-    <ng-template #profile>
-      <div *ngFor="let profile of state.auth.authUser?.user_profile">
-        <mat-toolbar class="nav">
-          <a mat-button routerLink="edit/{{ profile.users_id }}">Edit Profile</a>
-          <a mat-button routerLink="add-exp">Add Experience</a>
-          <a mat-button routerLink="add-edu">Add Education</a>
-        </mat-toolbar>
-      </div>
-    </ng-template>
-    <app-user-detail-bootstrap></app-user-detail-bootstrap>
-
-    <div class="container">
-      <h2 class='my-2'>Experience Credentials</h2>
-      <div class="row">
-        <div class="table">
-          <div class="table-row">
-            <div class="table-head">Company</div>
-            <div class="table-head">Title</div>
-            <div class="table-head">Years</div>
-            <div class="table-head"></div>
-          </div>
-          <div *ngFor="let data of state.auth.authUser?.user_experience; let i = index" class="table-row">
-            <div class="table-cell">{{data.company_name}}</div>
-            <div class="table-cell">{{data.job_title }}</div>
-            <div class="table-cell">
-              {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
-        }}
-            </div>
-            <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
-                  class="fa fa-trash"></i></button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-12 mt-3">
-        <h2>Education Credentials</h2>
-        <div class="row">
-          <div class="table">
-            <div class="table-row">
-              <div class="table-head">School</div>
-              <div class="table-head">Degree</div>
-              <div class="table-head">Years</div>
-              <div class="table-head"></div>
-            </div>
-            <div *ngFor="let data of state.auth.authUser?.user_education; let i = index" class="table-row">
-              <div class="table-cell">{{data.school_name}}</div>
-              <div class="table-cell">{{data.degree_name }}</div>
-              <div class="table-cell">
-                {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
-        }}
-              </div>
-              <div class="table-cell"> <button (click)="deleteEdu(data.user_education_detail_id)"><i
-                    class="fa fa-trash"></i></button></div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-    </div>
-
-
+<div fxLayout="row" class="app-comp-header">
+  <div fxFlex>
+    <h5 class="app-title">Dashboards</h5>
+    <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
   </div>
+
+</div>
+<div class="app-comp-body app-dashboards" *ngIf="appState$ | async as state">
+  <mat-card class="app-dashboard-card">
+    <mat-card-content fxLayout="row wrap">
+      <ng-container *ngIf="state.auth.authUser?.user_profile == 0; else profile">
+        <div class="app-create" [routerLink]="['/admin/dashboardbuilder']">
+          <div class="app-create-button">
+            <mat-icon class="app-create-icon">add</mat-icon>
+            <span>Create a new dashboard</span>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #profile>
+        <div fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" class="app-dashboard-container">
+          <div class="app-dashboard">
+            test
+          </div>
+        </div>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 </div>
