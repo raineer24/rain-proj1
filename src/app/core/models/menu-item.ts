@@ -7,4 +7,5 @@ export interface MenuItem {
   routerLink: string;
   onlyForLogged: boolean;
   alwaysShow: boolean;
+  show: boolean;
 }

@@ -1,82 +1,89 @@
-<div fxLayout="row" class="app-comp-header">
-  <div fxFlex>
-    <h5 class="app-title">Dashboards</h5>
-    <button type="button" mat-stroked-button (click)="logoutx()">Logout</button>
-  </div>
-
-</div>
-<div class="app-comp-body app-dashboards" *ngIf="appState$ | async as state">
-  <mat-card class="app-dashboard-card">
-    <mat-card-content fxLayout="row wrap">
-      <ng-container *ngIf="state.auth.authUser?.user_profile == 0; else profile">
-        <div class="app-create" [routerLink]="['/admin/dashboardbuilder']">
-          <div class="app-create-button">
-            <mat-icon class="app-create-icon">add</mat-icon>
-            <span>Create a new dashboard</span>
-          </div>
-        </div>
+<div class="mat-app-background">
+  <mat-toolbar>
+    <mat-toolbar-row style="background-color: #3f51b5; color: #fafafa;
+          border-bottom-style: solid; border-bottom-width: 1px;
+          border-bottom-color: black;">Dashboard
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div>
+    <div class="card-deck-container">
+      <mat-card>
+        <mat-card-title>No Courses Yet</mat-card-title>
+        <hr>
+        <button mat-button>Start Registering For Courses Now!</button>
+        <button mat-button>Start Registering For Courses Now!</button>
+        <button mat-button>Start Registering For Courses Now!</button>
+      </mat-card>
+      <ng-container fxLayout="row">
+        <mat-card [ngStyle]="{'width':'320' + 'px'}">
+          <h2>test</h2>
+          <mat-card-subtitle>test
+          </mat-card-subtitle>
+          <hr>
+          <mat-card-content>
+            <table>
+              <tr>
+                <td>Instructor:</td>
+                <td><a style="font-weight: bold">test</a></td>
+              </tr>
+              <tr>
+                <td>Contact Email: </td>
+                <td><a> test</a></td>
+              </tr>
+              <tr>
+                <td>Enrolled: </td>
+                <td><a style="font-weight: bold">test</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <a> Available Spots: </a>
+                </td>
+                <td>
+                  <a style="font-weight: bold">test</a>
+                </td>
+              </tr>
+            </table>
+          </mat-card-content>
+          <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
+          <span class="fill"></span>
+          <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button>
+        </mat-card>
       </ng-container>
-
-      <ng-template #profile>
-        <div fxFlex="25" fxFlex.md="33" fxFlex.sm="50" fxFlex.xs="100" class="app-dashboard-container">
-          <div class="app-dashboard">
-            <mat-tab-group mat-align-tabs="start" style="background: white">
-
-              <mat-tab label="{{state.auth.authUser.username}}">
-                <div *ngFor="let profile of state.auth.authUser?.user_profile">
-                  <button mat-button routerLink="edit/{{ profile.users_id }}" color="primary">
-                    Edit Profile</button>
-                  <button mat-button color="primary">
-                    Add Education</button>
-                  <button mat-button color="primary">
-                    Add Experience</button>
-                </div>
-                <table>
-                  <tr>
-                    <ng-template ngFor let-data [ngForOf]="state.auth.authUser?.user_experience" let-e="index">
-                      <td VALIGN="top">
-
-                        <mat-card class="notes-card" style="margin-left: 10px">
-                          <mat-card-header>
-                            <div mat-card-avatar class="notes-icon"></div>
-                            <mat-card-title>
-                              {{data?.company_name}}
-                            </mat-card-title>
-                            <mat-card-subtitle>
-                              {{data?.notes?.creation_date_time | date : 'd.M.yyyy'}}
-                            </mat-card-subtitle>
-                          </mat-card-header>
-                          <mat-card-content>
-                            {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
-        }}
-                          </mat-card-content>
-                          <mat-card-actions>
-                            <table>
-                              <tr>
-                                <td>
-                                  <button mat-button style="color: black">
-                                    Edit
-                                  </button>
-                                </td>
-                                <td>
-                                  <button mat-button style="color: darkred">Delete
-                                  </button>
-                                </td>
-                              </tr>
-                            </table>
-                          </mat-card-actions>
-                        </mat-card>
-
-                      </td>
-                    </ng-template>
-                  </tr>
-                </table>
-              </mat-tab>
-
-            </mat-tab-group>
-          </div>
-        </div>
-      </ng-template>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
+  <div>
+    <div class="card-deck-container" *ngIf="appState$ | async as state">
+      <ng-container *ngFor="let course of state.auth.authUser?.user_experience" fxLayout="row">
+        <mat-card [routerLink]="['/nav/courses/view-course']" mat-button [ngStyle]="{'width':'320' + 'px'}">
+          <h2>welcome!</h2>
+          <!--            <mat-card-subtitle>{{course.category}}-->
+          <!--            </mat-card-subtitle>-->
+          <hr>
+          <mat-card-content>
+            <table>
+              <tr>
+                <td>Last Day for Enrollment: </td>
+                <td><a style="font-weight: bold">test</a></td>
+              </tr>
+              <tr>
+                <td>Enrolled:</td>
+                <td>
+                  <a style="font-weight: bold">test</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Available Spots: </td>
+                <td>
+                  <a style="font-weight: bold">test</a>
+                  <br />
+                  <strong> CLASS IS FULL </strong>
+                </td>
+              </tr>
+            </table>
+          </mat-card-content>
+          <span class="fill"></span>
+        </mat-card>
+      </ng-container>
+    </div>
+  </div>
 </div>

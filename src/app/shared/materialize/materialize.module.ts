@@ -33,6 +33,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 @NgModule({
   imports: [
     MatToolbarModule,
+    MatSidenavModule,
     MatListModule,
     MatIconModule,
     MatButtonModule,
@@ -74,6 +75,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
     MatCheckboxModule,
     MatSnackBarModule,
     MatDatepickerModule,
+    MatSidenavModule,
   ],
 })
 export class MaterialModule {}
