@@ -1,29 +1,40 @@
-<mat-toolbar fxLayout="row" color="primary">
-  <button [routerLink]="['/']" mat-icon-button>
-    <mat-icon>switch_account</mat-icon>
-  </button>
-  <span [routerLink]="['/']" fxFlex>App Management</span>
-  <button mat-button *ngFor="let item of menuItems" [fxShow]="item.showOnDesktop" [fxShow.xs]="item.showOnMobile"
-    [fxShow.sm]="item.showOnTablet" [routerLink]="item.routerLink">
-    <mat-icon class="mr">{{item.icon}}</mat-icon>
+<header>
+  <mat-toolbar fxLayout="row" id="navegation">
+    <span fxFlex routerLink='/'>Web App Management</span>
 
-    {{item.label}}
-  </button>
-  <ng-container>
-    <button mat-icon-button [matMenuTriggerFor]="dropMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #dropMenu="matMenu">
-      <ng-container *ngFor="let item of menuItems">
-        <div [fxShow]="!item.showOnDesktop" [fxShow.sm]="!item.showOnTablet" [fxShow.xs]="!item.showOnMobile"
-          [routerLink]="item.routerLink">
-          <button mat-menu-item>
-            <mat-icon class="mr">{{item.icon}}</mat-icon>
-            {{item.label}}
-          </button>
-          <mat-divider></mat-divider>
-        </div>
-      </ng-container>
-    </mat-menu>
-  </ng-container>
-</mat-toolbar>
+
+    <span *ngFor="let item of menuItems" fxHide.sm fxHide.xs>
+      <!-- 1. dla każdego 2. dla niezalogowanego 3. dla zalogowanego uzytkownika 4. dla zalogowanego admina -->
+      <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
+  (!item.alwaysShow && !item.onlyForLogged) ||
+  (!item.alwaysShow && item.onlyForLogged && !item.onlyForAdmin) ||
+  (!item.alwaysShow && item.onlyForLogged && item.onlyForAdmin)">
+        <button mat-button>
+          <mat-icon class="mr">{{item.icon}}</mat-icon>
+          <span> {{ item.label }} </span>
+
+        </button>
+      </a>
+    </span>
+
+    <ng-container>
+      <button mat-icon-button [matMenuTriggerFor]="menu" fxHide fxShow.sm fxShow.xs>
+        <mat-icon>dehaze</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let item of menuItems">
+          <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
+        (!item.alwaysShow && !item.onlyForLogged) ||
+        (!item.alwaysShow && item.onlyForLogged && !item.onlyForAdmin) ||
+        (!item.alwaysShow && item.onlyForLogged && item.onlyForAdmin)">
+            <button mat-menu-item>
+              <mat-icon class="mr">{{item.icon}}</mat-icon>
+              <span> {{ item.label }} </span>
+
+            </button>
+          </a>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  </mat-toolbar>
+</header>

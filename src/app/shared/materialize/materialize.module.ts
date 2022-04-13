@@ -28,10 +28,13 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatTreeModule } from "@angular/material/tree";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
     MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
@@ -49,9 +52,12 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatSnackBarModule,
     MatDatepickerModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
   ],
   exports: [
+    MatListModule,
     MatProgressSpinnerModule,
+    MatTooltipModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -69,6 +75,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     MatCheckboxModule,
     MatSnackBarModule,
     MatDatepickerModule,
+    MatSidenavModule,
   ],
 })
 export class MaterialModule {}

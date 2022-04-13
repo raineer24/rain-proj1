@@ -21,26 +21,29 @@ export class ResponsiveToolbarComponent implements OnInit {
       routerLink: "register",
       onlyForLogged: false,
       alwaysShow: true,
+      show: true,
     },
     {
       label: "Login",
       icon: "login",
       showOnMobile: false,
-      showOnTablet: true,
+      showOnTablet: false,
       showOnDesktop: true,
       routerLink: "login",
       onlyForLogged: false,
       alwaysShow: true,
+      show: true,
     },
     {
       label: "Users",
       icon: "people",
       showOnMobile: false,
-      showOnTablet: true,
+      showOnTablet: false,
       showOnDesktop: true,
       routerLink: "dev",
       onlyForLogged: false,
       alwaysShow: true,
+      show: true,
     },
     {
       label: "Showcase",
@@ -51,6 +54,7 @@ export class ResponsiveToolbarComponent implements OnInit {
       routerLink: "home",
       onlyForLogged: false,
       alwaysShow: true,
+      show: true,
     },
     {
       label: "Posts",
@@ -61,6 +65,7 @@ export class ResponsiveToolbarComponent implements OnInit {
       routerLink: "posts",
       onlyForLogged: true,
       alwaysShow: true,
+      show: true,
     },
   ];
 
