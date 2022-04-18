@@ -27,76 +27,101 @@
 
       </mat-card>
 
+      <div class="card-deck-container">
+        <div fxLayout="row">
+          <ng-container *ngIf="state.auth.authUser?.user_experience == 0; else user_exp">
 
-      <div fxLayout="row">
-        <mat-card [ngStyle]="{'width':'320' + 'px'}">
-          <h2>Experience Credentials</h2>
+            <mat-card>No User Experience Found</mat-card>
 
-          <hr>
-          <mat-card-content>
-            <div class="row">
-              <div class="table">
-                <div class="table-row">
-                  <div class="table-head">Company</div>
-                  <div class="table-head">Title</div>
-                  <div class="table-head">Years</div>
-                  <div class="table-head"></div>
-                </div>
-                <div *ngFor="let data of state.auth.authUser?.user_experience; let i = index" class="table-row">
-                  <div class="table-cell">{{data.company_name}}</div>
-                  <div class="table-cell">{{data.job_title }}</div>
-                  <div class="table-cell">
-                    {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
+
+
+          </ng-container>
+          <ng-template #user_exp>
+            <mat-card [ngStyle]="{'width':'320' + 'px'}">
+              <h2>Experience Credentials</h2>
+
+              <hr>
+              <mat-card-content>
+                <div class="row">
+                  <div class="table">
+                    <div class="table-row">
+                      <div class="table-head">Company</div>
+                      <div class="table-head">Title</div>
+                      <div class="table-head">Years</div>
+                      <div class="table-head"></div>
+                    </div>
+                    <div *ngFor="let data of state.auth.authUser?.user_experience; let i = index" class="table-row">
+                      <div class="table-cell">{{data.company_name}}</div>
+                      <div class="table-cell">{{data.job_title }}</div>
+                      <div class="table-cell">
+                        {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
         }}
+                      </div>
+                      <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
+                            class="fa fa-trash"></i></button>
+                      </div>
+
+                    </div>
                   </div>
-                  <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
-                        class="fa fa-trash"></i></button>
-                  </div>
-
                 </div>
-              </div>
-            </div>
-          </mat-card-content>
-          <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
-          <span class="fill"></span>
-          <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
-        </mat-card>
+              </mat-card-content>
+              <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
+              <span class="fill"></span>
+              <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
+            </mat-card>
+          </ng-template>
 
-      </div>
-      <div fxLayout="row">
-        <mat-card [ngStyle]="{'width':'320' + 'px'}">
-          <h2>Education Credentials</h2>
 
-          <hr>
-          <mat-card-content>
-            <div class="row">
-              <div class="table">
-                <div class="table-row">
-                  <div class="table-head">School</div>
-                  <div class="table-head">Degree</div>
-                  <div class="table-head">Years</div>
-                  <div class="table-head"></div>
-                </div>
-                <div *ngFor="let data of state.auth.authUser?.user_education; let i = index" class="table-row">
-                  <div class="table-cell">{{data.school_name}}</div>
-                  <div class="table-cell">{{data.degree_name }}</div>
-                  <div class="table-cell">
-                    {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
+        </div>
+        <div fxLayout="row">
+          <ng-container *ngIf="state.auth.authUser?.user_education == 0; else user_edu">
+            <mat-card>
+
+              <h4>No User Education Data found</h4>
+
+
+            </mat-card>
+
+
+          </ng-container>
+          <ng-template #user_edu>
+            <mat-card [ngStyle]="{'width':'320' + 'px'}">
+              <h2>Education Credentials</h2>
+
+              <hr>
+              <mat-card-content>
+                <div class="row">
+                  <div class="table">
+                    <div class="table-row">
+                      <div class="table-head">School</div>
+                      <div class="table-head">Degree</div>
+                      <div class="table-head">Years</div>
+                      <div class="table-head"></div>
+                    </div>
+                    <div *ngFor="let data of state.auth.authUser?.user_education; let i = index" class="table-row">
+                      <div class="table-cell">{{data.school_name}}</div>
+                      <div class="table-cell">{{data.degree_name }}</div>
+                      <div class="table-cell">
+                        {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
         }}
-                  </div>
-                  <div class="table-cell"> <button (click)="deleteUser(data.user_education_detail_id)"><i
-                        class="fa fa-trash"></i></button>
-                  </div>
+                      </div>
+                      <div class="table-cell"> <button (click)="deleteUser(data.user_education_detail_id)"><i
+                            class="fa fa-trash"></i></button>
+                      </div>
 
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </mat-card-content>
-          <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
-          <span class="fill"></span>
-          <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
-        </mat-card>
+              </mat-card-content>
+              <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
+              <span class="fill"></span>
+              <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
+            </mat-card>
+          </ng-template>
+
+        </div>
       </div>
+
     </div>
   </div>
 
