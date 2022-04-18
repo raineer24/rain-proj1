@@ -19,8 +19,8 @@
         <ng-template #profile>
           <div *ngFor="let profile of state.auth.authUser?.user_profile">
 
-            <button mat-button>Edit Profile Information</button>
-            <button mat-button>Add Experience Information</button>
+            <button mat-button routerLink="edit/{{ profile.users_id }}">Edit Profile Information</button>
+            <button mat-button routerLink="add-exp">Add Experience Information</button>
             <button mat-button>Add Education Information</button>
           </div>
         </ng-template>
@@ -28,76 +28,76 @@
       </mat-card>
 
 
-      <ng-container fxLayout="row">
+      <div fxLayout="row">
         <mat-card [ngStyle]="{'width':'320' + 'px'}">
-          <h2>test</h2>
-          <mat-card-subtitle>test
-          </mat-card-subtitle>
+          <h2>Experience Credentials</h2>
+
           <hr>
           <mat-card-content>
-            <table>
-              <tr>
-                <td>Instructor:</td>
-                <td><a style="font-weight: bold">test</a></td>
-              </tr>
-              <tr>
-                <td>Contact Email: </td>
-                <td><a> test</a></td>
-              </tr>
-              <tr>
-                <td>Enrolled: </td>
-                <td><a style="font-weight: bold">test</a></td>
-              </tr>
-              <tr>
-                <td>
-                  <a> Available Spots: </a>
-                </td>
-                <td>
-                  <a style="font-weight: bold">test</a>
-                </td>
-              </tr>
-            </table>
+            <div class="row">
+              <div class="table">
+                <div class="table-row">
+                  <div class="table-head">Company</div>
+                  <div class="table-head">Title</div>
+                  <div class="table-head">Years</div>
+                  <div class="table-head"></div>
+                </div>
+                <div *ngFor="let data of state.auth.authUser?.user_experience; let i = index" class="table-row">
+                  <div class="table-cell">{{data.company_name}}</div>
+                  <div class="table-cell">{{data.job_title }}</div>
+                  <div class="table-cell">
+                    {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
+        }}
+                  </div>
+                  <div class="table-cell"> <button (click)="deleteUser(data.user_experience_detail_id)"><i
+                        class="fa fa-trash"></i></button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </mat-card-content>
           <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
           <span class="fill"></span>
-          <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button>
+          <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
         </mat-card>
-      </ng-container>
-    </div>
-  </div>
-  <div>
-    <div class="card-deck-container" *ngIf="appState$ | async as state">
-      <ng-container *ngFor="let course of state.auth.authUser?.user_experience" fxLayout="row">
-        <mat-card [routerLink]="['/nav/courses/view-course']" mat-button [ngStyle]="{'width':'320' + 'px'}">
-          <h2>welcome!</h2>
-          <!--            <mat-card-subtitle>{{course.category}}-->
-          <!--            </mat-card-subtitle>-->
+
+      </div>
+      <div fxLayout="row">
+        <mat-card [ngStyle]="{'width':'320' + 'px'}">
+          <h2>Education Credentials</h2>
+
           <hr>
           <mat-card-content>
-            <table>
-              <tr>
-                <td>Last Day for Enrollment: </td>
-                <td><a style="font-weight: bold">test</a></td>
-              </tr>
-              <tr>
-                <td>Enrolled:</td>
-                <td>
-                  <a style="font-weight: bold">test</a>
-                </td>
-              </tr>
-              <tr>
-                <td>Available Spots: </td>
-                <td>
-                  <a style="font-weight: bold">test</a>
-                  <br />
-                  <strong> CLASS IS FULL </strong>
-                </td>
-              </tr>
-            </table>
+            <div class="row">
+              <div class="table">
+                <div class="table-row">
+                  <div class="table-head">School</div>
+                  <div class="table-head">Degree</div>
+                  <div class="table-head">Years</div>
+                  <div class="table-head"></div>
+                </div>
+                <div *ngFor="let data of state.auth.authUser?.user_education; let i = index" class="table-row">
+                  <div class="table-cell">{{data.school_name}}</div>
+                  <div class="table-cell">{{data.degree_name }}</div>
+                  <div class="table-cell">
+                    {{ data.start_date | date: 'M/d/yyyy' }}-{{ (data.end_date === null) ? 'Now' :  data.end_date | date: 'M/d/yyyy' 
+        }}
+                  </div>
+                  <div class="table-cell"> <button (click)="deleteUser(data.user_education_detail_id)"><i
+                        class="fa fa-trash"></i></button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </mat-card-content>
+          <!--            <a [routerLink]="['/nav/courses/view-course']" [queryParams]="{ course: course.id}" mat-button>Announcements</a>-->
           <span class="fill"></span>
+          <!-- <button [routerLink]="['/nav/courses/view-course']" mat-button>Syllabus</button> -->
         </mat-card>
-      </ng-container>
+      </div>
     </div>
   </div>
+
 </div>
