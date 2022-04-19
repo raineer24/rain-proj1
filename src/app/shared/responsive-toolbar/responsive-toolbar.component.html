@@ -5,10 +5,10 @@
 
     <span *ngFor="let item of menuItems" fxHide.sm fxHide.xs>
       <!-- 1. dla każdego 2. dla niezalogowanego 3. dla zalogowanego uzytkownika 4. dla zalogowanego admina -->
-      <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
-  (!item.alwaysShow && !item.onlyForLogged) ||
-  (!item.alwaysShow && item.onlyForLogged && !item.onlyForAdmin) ||
-  (!item.alwaysShow && item.onlyForLogged && item.onlyForAdmin)">
+      <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf="item.alwaysShow || 
+  (!item.alwaysShow && !isloggedIn$ && !item.onlyForLogged) ||
+  (!item.alwaysShow && isloggedIn$ && item.onlyForLogged && !item.onlyForAdmin) ||
+  (!item.alwaysShow && isloggedIn$ && item.onlyForLogged && item.onlyForAdmin)">
         <button mat-button>
           <mat-icon class="mr">{{item.icon}}</mat-icon>
           <span> {{ item.label }} </span>
@@ -23,10 +23,10 @@
       </button>
       <mat-menu #menu="matMenu">
         <ng-container *ngFor="let item of menuItems">
-          <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf=" item.alwaysShow || 
-        (!item.alwaysShow && !item.onlyForLogged) ||
-        (!item.alwaysShow && item.onlyForLogged && !item.onlyForAdmin) ||
-        (!item.alwaysShow && item.onlyForLogged && item.onlyForAdmin)">
+          <a href='{{ item.href }}' routerLink='{{ item.routerLink }}' *ngIf="item.alwaysShow || 
+        (!item.alwaysShow && !isloggedIn$ && !item.onlyForLogged) ||
+        (!item.alwaysShow && isloggedIn$ && item.onlyForLogged && !item.onlyForAdmin) ||
+        (!item.alwaysShow && isloggedIn$ && item.onlyForLogged && item.onlyForAdmin)">
             <button mat-menu-item>
               <mat-icon class="mr">{{item.icon}}</mat-icon>
               <span> {{ item.label }} </span>
@@ -34,6 +34,12 @@
             </button>
           </a>
         </ng-container>
+        <a *ngIf="isloggedIn$" href (click)="logoutx()">
+          <button mat-menu-item>
+            <mat-icon class="mr">cancel</mat-icon>
+            Logout
+          </button>
+        </a>
       </mat-menu>
     </ng-container>
   </mat-toolbar>
