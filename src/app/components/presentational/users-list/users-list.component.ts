@@ -32,41 +32,43 @@ import { isLoading } from "../../../store/app.reducers";
         fxFlexAlign="center center"
         fxLayoutGap="20px"
       >
-        <div fxLayout="row wrap" fxLayoutAlign="center center">
-          test
-          <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="username">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Username
-              </th>
-              <td mat-cell *matCellDef="let row">{{ row.username }}</td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-              <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-            </ng-container>
+        <div fxLayout="column" fxLayoutAlign="start center">
+          <div>
+            <table mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Username
+                </th>
+                <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+              </ng-container>
 
-            <ng-container matColumnDef="id">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-              <td mat-cell *matCellDef="let row" (click)="viewUser(row.id)">
-                View PRofile
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                <td mat-cell *matCellDef="let row" (click)="viewUser(row.id)">
+                  View PRofile
+                </td>
+              </ng-container>
 
-            <ng-container matColumnDef="image_url">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let element">
-                <img
-                  class="mr-1 rounded-circle"
-                  src="{{ element.image_url }}"
-                  style="width: 26px;height: 26px;"
-                />
-              </td>
-            </ng-container>
+              <ng-container matColumnDef="image_url">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <img
+                    class="mr-1 rounded-circle"
+                    src="{{ element.image_url }}"
+                    style="width: 26px;height: 26px;"
+                  />
+                </td>
+              </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table></div></mat-card-content
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </div> </mat-card-content
     ></mat-card>`,
 })
 export class UsersListComponent implements OnInit, OnChanges {
