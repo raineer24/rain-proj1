@@ -24,57 +24,12 @@ import { isLoading } from "../../../store/app.reducers";
   selector: "app-users-list",
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ["users-list.component.scss"],
-  template: ` <h2>USERS LIST COMPONENT</h2>
-    <mat-card>
-      <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
-      <mat-card-content
-        fxLayout="column"
-        fxFlexAlign="center center"
-        fxLayoutGap="20px"
-      >
-        <div fxLayout="column" fxLayoutAlign="start center">
-          <div>
-            <table mat-table [dataSource]="dataSource">
-              <ng-container matColumnDef="username">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Username
-                </th>
-                <td mat-cell *matCellDef="let row">{{ row.username }}</td>
-              </ng-container>
-              <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-                <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-                <td mat-cell *matCellDef="let row" (click)="viewUser(row.id)">
-                  View PRofile
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="image_url">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                  <img
-                    class="mr-1 rounded-circle"
-                    src="{{ element.image_url }}"
-                    style="width: 26px;height: 26px;"
-                  />
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-            </table>
-          </div>
-        </div> </mat-card-content
-    ></mat-card>`,
+  templateUrl: "./users-list.component.html",
 })
 export class UsersListComponent implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<UserCredentialsModel>();
   isLoading$: Observable<boolean>;
-  displayedColumns = ["username", "email", "image_url", "id"];
+  displayedColumns = ["image_url", "username", "email", "id"];
   id: string;
   //@Input() users: UserCredentialsModel[];
   @Input() users;
