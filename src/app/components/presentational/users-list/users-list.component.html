@@ -1,0 +1,50 @@
+<h2>USERS LIST COMPONENT</h2>
+<div class="example-container mat-elevation-z8">
+  <mat-spinner *ngIf="isLoading$ | async" class="mx-auto"></mat-spinner>
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <!-- First Column ID-->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> View </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to View Profile" class="iconbutton"
+          (click)="viewUser(element.id)" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button> </mat-cell>
+    </ng-container>
+
+    <!-- Second Column -->
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+    </ng-container>
+
+    <!-- Third Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="form-group">
+          <a target="_blank" href="#">{{element.email}}</a>
+        </div>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="image_url">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Image </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img [src]="element.image_url" width="80px" height="80px" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- Action Column -->
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> View </mat-header-cell>
+      <mat-cell *matCellDef="let element"> <button mat-icon-button matTooltip="Click to View Profile" class="iconbutton"
+          (click)="viewUser(element.id)" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button> </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>
