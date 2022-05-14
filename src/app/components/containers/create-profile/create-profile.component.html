@@ -1,117 +1,120 @@
-<div fxLayout="row" fxLayoutAlign="center" class="login-card">
-  <div fxLayout="column" fxLayoutAlign="center" class="login-card">
-    <h1>create profile component</h1>
-    <div fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayout="row" fxLayoutAlign="center center" class="login-wrapper">
+    <mat-card class="box">
+
+
       <a [routerLink]="['/user']">Go To Home</a>
 
       <h1 *ngIf="!isAddMode">Edit User</h1>
       <h1 *ngIf="isAddMode">Add User</h1>
+      <form [formGroup]="profForm" class="example-form" (ngSubmit)="onFormSubmit()">
+        <mat-card-content>
+          <app-dropdown [basicForm]="profForm" [status]="selectedStatus" (jobSelected)="setJob($event)"
+            [selected]="dropdownSelected" [isDisabled]="disableForm">
+          </app-dropdown>
+          <div fxLayout="row" fxLayoutAlign="center center" class="row" fxLayoutGap="5px">
 
-      <form fxLayoutAlign="strech" fxLayout="column" [formGroup]="profForm" class="form" (ngSubmit)="onFormSubmit()">
-        <app-dropdown [basicForm]="profForm" [status]="selectedStatus" (jobSelected)="setJob($event)"
-          [selected]="dropdownSelected" [isDisabled]="disableForm">
-        </app-dropdown>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-icon>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </mat-icon>
-          <mat-form-field class="example">
-            <mat-label>Company</mat-label>
-            <input matInput placeholder="Company" name="company_name" required formControlName="company_name">
-            <mat-hint>Could be your own company or one you work for</mat-hint>
-            <mat-error *ngIf="profForm.get('company_name').hasError('required')">
-              Company is Required!
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-icon>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </mat-icon>
-          <mat-form-field class="example">
-            <mat-label>Website</mat-label>
-            <input matInput placeholder="Website" name="website" formControlName="website" required>
-            <mat-hint>Could be your own or a company website</mat-hint>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-icon>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </mat-icon>
-          <mat-form-field class="example">
-            <mat-label>Location</mat-label>
-            <input matInput placeholder="Location" name="job_location" formControlName="job_location" required>
-            <mat-hint>City or city & state suggested (eg. Cebu, Manila)</mat-hint>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-icon>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </mat-icon>
-          <mat-form-field class="example">
-            <mat-label>Skills</mat-label>
-            <input matInput placeholder="Skills" name="skills" formControlName="areas_of_expertise" required>
-            <mat-hint>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP</mat-hint>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-icon>
-            <i class="fa fa-user-circle" aria-hidden="true"></i>
-          </mat-icon>
-          <mat-form-field class="example">
-            <mat-label>Short Bio</mat-label>
-            <textarea matInput placeholder="Github Username" name="bio" formControlName="bio" required></textarea>
-            <mat-hint>Tell us a little about yourself</mat-hint>
-          </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <div class="mb-3">
-            <button type="button" (click)="show=!show">Add Social Network Links</button>
-            <span>Optional</span>
-          </div>
-          <div *ngIf="show">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span>
-                  <mat-icon svgIcon="thumbs-up"></mat-icon>
-                </span>
-              </div>
-              <input type="text" placeholder="Twitter Profile Url" formControlName="twitter_handle">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span>
-                  <mat-icon svgIcon="fb"></mat-icon>
-                </span>
-              </div>
-              <input type="text" placeholder="Facebook Page Url" formControlName="facebook_handle">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span>
-                  <mat-icon svgIcon="utube"></mat-icon>
-                </span>
-              </div>
-              <input type="text" placeholder="Youtube Channel Url" formControlName="youtube_handle">
-            </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span>
-                  <mat-icon svgIcon="inst"></mat-icon>
-                </span>
-              </div>
-              <input type="text" placeholder="Instagram page Url" formControlName="instagram_handle">
-            </div>
+            <mat-icon>
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </mat-icon>
+            <mat-form-field class="example">
+              <mat-label>Company</mat-label>
+              <input matInput placeholder="Company" name="company_name" required formControlName="company_name">
+              <mat-hint>Could be your own company or one you work for</mat-hint>
+              <mat-error *ngIf="profForm.get('company_name').hasError('required')">
+                Company is Required!
+              </mat-error>
+            </mat-form-field>
 
           </div>
-          <button [disabled]="profForm.invalid" mat-raised-button>Submit</button>
-        </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </mat-icon>
+            <mat-form-field class="example">
+              <mat-label>Website</mat-label>
+              <input matInput placeholder="Website" name="website" formControlName="website" required>
+              <mat-hint>Could be your own or a company website</mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </mat-icon>
+            <mat-form-field class="example">
+              <mat-label>Location</mat-label>
+              <input matInput placeholder="Location" name="job_location" formControlName="job_location" required>
+              <mat-hint>City or city & state suggested (eg. Cebu, Manila)</mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </mat-icon>
+            <mat-form-field class="example">
+              <mat-label>Skills</mat-label>
+              <input matInput placeholder="Skills" name="skills" formControlName="areas_of_expertise" required>
+              <mat-hint>Please use comma separated values (eg. HTML,CSS,JavaScript,PHP</mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+            </mat-icon>
+            <mat-form-field class="example">
+              <mat-label>Short Bio</mat-label>
+              <textarea matInput placeholder="Github Username" name="bio" formControlName="bio" required></textarea>
+              <mat-hint>Tell us a little about yourself</mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <div class="mb-3">
+              <button type="button" (click)="show=!show">Add Social Network Links</button>
+              <span>Optional</span>
+            </div>
+            <div *ngIf="show">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>
+                    <mat-icon svgIcon="thumbs-up"></mat-icon>
+                  </span>
+                </div>
+                <input type="text" placeholder="Twitter Profile Url" formControlName="twitter_handle">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>
+                    <mat-icon svgIcon="fb"></mat-icon>
+                  </span>
+                </div>
+                <input type="text" placeholder="Facebook Page Url" formControlName="facebook_handle">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>
+                    <mat-icon svgIcon="utube"></mat-icon>
+                  </span>
+                </div>
+                <input type="text" placeholder="Youtube Channel Url" formControlName="youtube_handle">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span>
+                    <mat-icon svgIcon="inst"></mat-icon>
+                  </span>
+                </div>
+                <input type="text" placeholder="Instagram page Url" formControlName="instagram_handle">
+              </div>
+
+            </div>
+            <button [disabled]="profForm.invalid" mat-raised-button>Submit</button>
+          </div>
+
+        </mat-card-content>
 
 
       </form>
+    </mat-card>
 
 
-    </div>
 
   </div>
-</div>
