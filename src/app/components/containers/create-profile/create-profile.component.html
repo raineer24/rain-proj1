@@ -66,12 +66,21 @@
               <mat-hint>Tell us a little about yourself</mat-hint>
             </mat-form-field>
           </div>
+          <div style="text-align: left; margin-bottom: 5px" fxShow.gt-sm="true">
+            <button mat-raised-button color="primary" (click)="show=!show">
+              <span>Add Social Network Links</span>
+              <i class="material-icons">edit</i>
+            </button>
+
+
+          </div>
           <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
-            <div class="mb-3">
+            <!-- <div class="mb-3">
               <button type="button" (click)="show=!show">Add Social Network Links</button>
               <span>Optional</span>
-            </div>
-            <div *ngIf="show">
+            </div> -->
+
+            <mat-card *ngIf="show">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span>
@@ -105,8 +114,10 @@
                 <input type="text" placeholder="Instagram page Url" formControlName="instagram_handle">
               </div>
 
-            </div>
+            </mat-card>
+
             <button [disabled]="profForm.invalid" mat-raised-button>Submit</button>
+
           </div>
 
         </mat-card-content>
