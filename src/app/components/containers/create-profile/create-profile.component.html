@@ -67,7 +67,7 @@
             </mat-form-field>
           </div>
           <div style="text-align: left; margin-bottom: 5px" fxShow.gt-sm="true">
-            <button mat-raised-button color="primary" (click)="show=!show">
+            <button mat-raised-button type="button" color="primary" (click)="show=!show">
               <span>Add Social Network Links</span>
               <i class="material-icons">edit</i>
             </button>
@@ -87,7 +87,7 @@
                     <mat-icon svgIcon="thumbs-up"></mat-icon>
                   </span>
                 </div>
-                <input type="text" placeholder="Twitter Profile Url" formControlName="twitter_handle">
+                <input matInput type="text" placeholder="Twitter Profile Url" formControlName="twitter_handle">
               </div>
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
