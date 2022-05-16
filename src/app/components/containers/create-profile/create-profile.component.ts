@@ -44,6 +44,7 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
   dropdownSelected: string;
   selectedStatus: String = "";
   destroyed$ = new Subject<boolean>();
+  buttonName = "Add Social Network Links";
 
   show = false;
   constructor(
@@ -128,7 +129,16 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  toggle() {}
+  toggle() {
+    this.show = !this.show;
+
+    if (this.show) {
+      this.buttonName = "Hide Social Network Links";
+      console.log(this.show);
+    } else {
+      this.buttonName = "Add Social Network Links";
+    }
+  }
 
   ngOnDestroy() {
     this.destroyed$.next();
