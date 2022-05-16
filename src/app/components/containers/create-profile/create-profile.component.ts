@@ -127,6 +127,9 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
         });
     }
   }
+
+  toggle() {}
+
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
@@ -164,23 +167,6 @@ export class CreateProfileComponent implements OnInit, OnDestroy {
       AuthActions.createProfile({ payload: this.profForm.value })
     );
   }
-
-  // async save() {
-  //   if (this.productItemForm.valid) {
-  //     this.store.dispatch(
-  //       productActions.upsertProductItem({
-  //         productId: this.productId,
-  //         productItem: <ProductItem>{
-  //           itemId: this.item.value.id,
-  //           itemName: this.item.value.name,
-  //           unitCost: this.item.value.unitCost,
-  //           quantity: this.quantity.value,
-  //           uom: "piece",
-  //         },
-  //       })
-  //     );
-  //   }
-  // }
 
   private updateUser() {
     const payload = {
