@@ -1,65 +1,22 @@
-.container {
-    margin: 0 auto;
-    article {
-        min-height: 500px;
-    }
-    .row-header{
-        h1 {
-            font-size: 2em;
-            color: #6e0023;
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-    }
-    .row {
-        width: 80%;
-        margin: 0 auto;
-    }
-    .second-card {
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-    .td{
-      ul {
-          list-style:none;
-      }
-      padding: 5px;
-      box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),
-                  0 2px 2px 0 rgba(0,0,0,.14),
-                  0 1px 5px 0 rgba(0,0,0,.12);
+.user-card {
+	margin-bottom: 1.2rem;
+	background-color: #ffff0091 !important;
+}
+.user-avatar {
+	text-align: center;
+}
 
-    }
+.user-avatar img{
+	width:100%; 
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 0.625rem;
 }
-.example-loading-shade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 56px;
-    right: 0;
-    background: rgba(0, 0, 0, 0.15);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.odd {
-    background: #A5D6A7;
-}
-.even {
-    background: rgb(87, 212, 91);
-}
- @media only screen and (max-width: 599px){
-    mat-card{
-      width: 100% !important;
-    }
 
-    mat-card img {
-        object-fit: cover;
-        width: 100%;
-    }
-
-    .food-info {
-        margin: 5%;
-    }
- }
+.stats{
+	background-color: #593196;
+	float: left;
+	padding-top: 0.4rem;
+	padding-bottom: 0.4rem;
+	border-left: 1px solid #fffc;
+}
